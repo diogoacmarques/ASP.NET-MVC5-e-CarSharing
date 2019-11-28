@@ -194,15 +194,56 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
+    <Compile Include="Areas\Administration\Controllers\AccountsController.cs" />
+    <Compile Include="Areas\Administration\Controllers\BrandsController.cs" />
+    <Compile Include="Areas\Administration\Controllers\ModelsController.cs" />
+    <Compile Include="Areas\Administration\Controllers\TypesController.cs" />
+    <Compile Include="Areas\Administration\Models\CreateAccount.cs" />
+    <Compile Include="Areas\Administration\Models\LissUsers.cs" />
+    <Compile Include="Areas\Administration\Models\ListAccounts.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911271650222_InitialCreate.cs" />
+    <Compile Include="Migrations\201911271650222_InitialCreate.Designer.cs">
+      <DependentUpon>201911271650222_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911271827265_ModeloInicial.cs" />
+    <Compile Include="Migrations\201911271827265_ModeloInicial.Designer.cs">
+      <DependentUpon>201911271827265_ModeloInicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911271827337_ModeloInicial1.cs" />
+    <Compile Include="Migrations\201911271827337_ModeloInicial1.Designer.cs">
+      <DependentUpon>201911271827337_ModeloInicial1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911271940086_ModeloInicial2.cs" />
+    <Compile Include="Migrations\201911271940086_ModeloInicial2.Designer.cs">
+      <DependentUpon>201911271940086_ModeloInicial2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911280137389_inicial.cs" />
+    <Compile Include="Migrations\201911280137389_inicial.Designer.cs">
+      <DependentUpon>201911280137389_inicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Brand.cs" />
+    <Compile Include="Models\Colour.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Rent.cs" />
+    <Compile Include="Models\RentCondition.cs" />
+    <Compile Include="Models\AccountLevels.cs" />
+    <Compile Include="Models\Type.cs" />
+    <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\VehiclePassengers.cs" />
+    <Compile Include="Models\VehicleState.cs" />
+    <Compile Include="Models\VehicleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -220,6 +261,16 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Areas\Administration\Views\web.config" />
+    <Content Include="Areas\Administration\Views\Brands\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Brands\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Administration\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Administration\Views\Brands\Delete.cshtml" />
+    <Content Include="Areas\Administration\Views\Brands\Edit.cshtml" />
+    <Content Include="Areas\Administration\Views\Accounts\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Accounts\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\Accounts\Delete.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -265,9 +316,13 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Vehicle\Index.cshtml" />
+    <Content Include="Views\Vehicle\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Administration\Views\Models\" />
+    <Folder Include="Areas\Administration\Views\Type\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -281,6 +336,23 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201911271650222_InitialCreate.resx">
+      <DependentUpon>201911271650222_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911271827265_ModeloInicial.resx">
+      <DependentUpon>201911271827265_ModeloInicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911271827337_ModeloInicial1.resx">
+      <DependentUpon>201911271827337_ModeloInicial1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911271940086_ModeloInicial2.resx">
+      <DependentUpon>201911271940086_ModeloInicial2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911280137389_inicial.resx">
+      <DependentUpon>201911280137389_inicial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

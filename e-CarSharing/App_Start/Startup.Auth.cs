@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using e_CarSharing.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace e_CarSharing
 {
@@ -18,6 +19,9 @@ namespace e_CarSharing
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            CreateLevels();
+           // CreateLocalAdmins();
+
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -63,6 +67,53 @@ namespace e_CarSharing
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+        }
+
+        private void CreateLevels()
+        {
+            ApplicationDbContext DbContext = new ApplicationDbContext();
+            RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(DbContext));
+
+            if (roleManager.RoleExists(AccountLevels.ADMINISTRATOR) == false)
+            {
+                var role = new IdentityRole
+                {
+                    Id = AccountLevels.ADMINISTRATOR_ID.ToString(),
+                    Name = AccountLevels.ADMINISTRATOR
+                };
+                roleManager.Create(role);
+            }
+
+            if (roleManager.RoleExists(AccountLevels.PRIVATE) == false)
+            {
+                var role = new IdentityRole
+                {
+                    Id = AccountLevels.PRIVATE_ID.ToString(),
+                    Name = AccountLevels.PRIVATE
+                };
+                roleManager.Create(role);
+            }
+
+            if (roleManager.RoleExists(AccountLevels.PROFESSIONAL) == false)
+            {
+                var role = new IdentityRole
+                {
+                    Id = AccountLevels.PROFESSIONAL_ID.ToString(),
+                    Name = AccountLevels.PROFESSIONAL
+                };
+                roleManager.Create(role);
+            }
+        }
+
+        private void CreateLocalAdmins()
+        {
+            ApplicationDbContext DbContext = new ApplicationDbContext();
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(DbContext));
+
+            var user = new ApplicationUser { Id = "admin", UserName = "admin", Email = "admin@ecarsharing.pt" };
+            userManager.Create(user, "Vx_1234");
+
+            userManager.AddToRole(user.Id, AccountLevels.ADMINISTRATOR);
         }
     }
 }

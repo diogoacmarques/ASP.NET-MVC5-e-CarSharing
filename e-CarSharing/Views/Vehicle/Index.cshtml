@@ -1,0 +1,49 @@
+﻿@*@model e_CarSharing.Models.SearchVehicleViewModel*@
+@*@using PagedList.Mvc;*@
+
+@model IEnumerable<e_CarSharing.Models.Vehicle>
+
+@{
+    ViewBag.Title = "All Vehicles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Todos os Veiculos</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = -1 }) |
+                @Html.ActionLink("Details", "Details", new { id = -1 }) |
+                @Html.ActionLink("Remover", "Delete", new { id = -1 })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    @Html.ActionLink("Home", "Index", "Home", new { htmlAttributes = new { @class = "btn btn-primary" } })
+</div>
