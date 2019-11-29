@@ -1,4 +1,5 @@
-﻿@model e_CarSharing.Areas.Administration.Models.ListAccounts
+﻿@model e_CarSharing.Areas.Administration.Models.Account
+
 <br />
 <h3>Deseja eliminar este item?</h3>
 <div>
@@ -17,7 +18,7 @@
             </div>
             <div class="col-md-pull-1 col-md-5">
                 @*@Html.ActionLink("Link P/ Pagina do User", "VerifyAvailablility", "Rents", new { area = "", id = Model.Id }, new { @class = "btn btn-primary btn-large ", target = "_blank" })*@
-                <button type="button" class="btn btn-primary " onclick="location.href='@Url.Action("UserProfile","Users", new { id = Model.Id })'">
+                <button disabled type="button" class="btn btn-primary " onclick="location.href='@Url.Action("UserProfile","Users", new { id = Model.Id })'">
                     <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp; Perfil do Proprietário
                 </button>
             </div>

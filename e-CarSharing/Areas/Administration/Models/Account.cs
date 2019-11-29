@@ -6,8 +6,10 @@ using System.Web;
 
 namespace e_CarSharing.Areas.Administration.Models
 {
-    public class CreateAccount
+    public class Account
     {
+        public string Id { get; set; }
+
         [Required]
         public string UserName { get; set; }
 
@@ -23,5 +25,7 @@ namespace e_CarSharing.Areas.Administration.Models
         [DataType(dataType: DataType.Password)]
         [Compare("Password", ErrorMessage = "As senhas inseridas não correspondem.")]
         public string ConfirmPassword { get; set; }
+
+        public string Type { get; set; }
     }
 }

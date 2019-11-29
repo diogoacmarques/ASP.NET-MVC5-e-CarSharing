@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace e_CarSharing.Models
 {
@@ -13,9 +14,9 @@ namespace e_CarSharing.Models
     }
 
 
-    //public class SearchVehicleViewModel
-    //{
-    //    public IPagedList<Vehicle> Vehicles { get; set; }
+    public class SearchVehicleViewModel
+    {
+        public IPagedList<Vehicle> Vehicles { get; set; }
     //    public SelectList States { get; set; }
 
     //    [Display(Name = "Estado")]
@@ -36,5 +37,5 @@ namespace e_CarSharing.Models
     //    public SelectList Models { get; set; }
     //    [Display(Name = "Modelos")]
     //    public string ModelId { get; set; }
-    //}
+    }
 }

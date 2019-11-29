@@ -31,7 +31,6 @@ namespace e_CarSharing.Models
         public Brand Brand { get; set; }
 
         public bool Deleted { get; set; }
-
         public virtual ICollection<Vehicle> Vehicles { get; set; }
     }
 }

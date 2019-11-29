@@ -15,6 +15,7 @@ namespace e_CarSharing.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -57,6 +58,8 @@ namespace e_CarSharing.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if(User.Identity.IsAuthenticated == true)
+                return RedirectToAction("Index", "Home");
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -73,9 +76,24 @@ namespace e_CarSharing.Controllers
                 return View(model);
             }
 
+
+
+
+            ApplicationUser user = null;
+            try
+            {
+                user = db.Users.Where(u => u.UserName == model.Username).First();
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "Tentativa de login inválida.");
+                return View(model);
+            }
+
+   
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -139,7 +157,13 @@ namespace e_CarSharing.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+
+            if (User.Identity.IsAuthenticated == true)
+                return RedirectToAction("Index", "Home");
+
+            var model = new RegisterViewModel();
+            model.Levels = AccountLevels.GetLevelsListForRegister();
+            return View(model);
         }
 
         //
@@ -151,21 +175,153 @@ namespace e_CarSharing.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+               
+                if (db.Users.Where(u => u.UserName == model.Username).Any() == true)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    model.Levels = AccountLevels.GetLevelsListForRegister();
+                    ModelState.AddModelError("", "Já existe um utilizador com o Username introduzido");
+                    return View(model);
                 }
-                AddErrors(result);
+
+                if (model.Level == AccountLevels.PRIVATE)
+                {
+                    bool check = false;
+
+                    #region ParticularTesting
+                //    if (model.BirthDate.HasValue == false)
+                //    {
+                //        ModelState.AddModelError("1", "Énecessário introduzir a Data de Nascimento");
+                //        flag = true;
+                //    }
+
+                //    if (model.DriverLicenseEmissionDate.HasValue == false)
+                //    {
+                //        ModelState.AddModelError("2", "É necessário introduzir a Data de Emissão da Carta de Condução");
+                //        flag = true;
+                //    }
+
+                //    if (model.DriverLicenseEndDate.HasValue == false)
+                //    {
+                //        ModelState.AddModelError("3", "É necessário introduzir a Data de Caducação da Carta de Condução");
+                //        flag = true;
+                //    }
+
+                //    if (model.DriverLicenseNumber == null)
+                //    {
+                //        ModelState.AddModelError("4", "É necessário introduzir o Número da Carta de Condução");
+                //        flag = true;
+                //    }
+
+                //    if (((DateTime)model.BirthDate).AddYears(18) < DateTime.Now.Date)
+                //    {
+                //        ModelState.AddModelError("5", "É necessário ter no minimo 18 anos de idade");
+                //        flag = true;
+                //    }
+
+                //    if (((DateTime)model.DriverLicenseEmissionDate) < ((DateTime)model.DriverLicenseEndDate))
+                //    {
+                //        ModelState.AddModelError("6", "É a Data de Emissão da Carta de Condução deve ser inferior à Data de Caducação");
+                //        flag = true;
+                //    }
+                //    if (((DateTime)model.DriverLicenseEndDate) < DateTime.Now.Date)
+                //    {
+                //        ModelState.AddModelError("7", "Carta de Condução Caducada");
+                //        flag = true;
+                //    }
+                    #endregion
+
+                    if (check == true)
+                    {
+                        model.Levels = AccountLevels.GetLevelsListForRegister();
+                        return View(model);
+                    }
+
+                    var user = new ApplicationUser
+                    {
+                        UserName = model.Username,
+                        Email = model.Email,
+                //        Id = model.BI,
+                //        UserStateId = UsersStatesConstants.USERSTATE_PENDING_ID,
+                //        BirthDate = model.BirthDate,
+                //        DriverLicenseEmissionDate = model.DriverLicenseEmissionDate,
+                //        DriverLicenseNumber = model.DriverLicenseNumber,
+                //        MobilePhoneNumber = model.MobilePhoneNumber,
+                //        DriverLicenseEndDate = model.DriverLicenseEndDate,
+                //        TelephoneNumber = model.TelephoneNumber,
+                    };
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    await UserManager.AddToRoleAsync(user.Id, model.Level);
+
+                    //var DemanderEvaluation = new DemanderEvaluation() { UserId = user.Id };
+                    //db.DemanderEvaluations.Add(DemanderEvaluation);
+                    //var SupplierEvaluation = new SupplierEvaluation() { UserId = user.Id };
+                //    db.SupplierEvaluations.Add(SupplierEvaluation);
+                    db.SaveChanges();
+
+                //    ViewBag.State = UsersStatesConstants.USERSTATE_PENDING_STRING;
+                //    return View("RedirectLoginFailAndRegister");
+                }
+
+                if(model.Level == AccountLevels.PROFESSIONAL)
+                    {
+                        var user = new ApplicationUser
+                        {
+                            UserName = model.Username,
+                            Email = model.Email,
+                    //        Id = model.BI,
+                    //        UserStateId = UsersStatesConstants.USERSTATE_PENDING_ID,
+                    //        BirthDate = model.BirthDate,
+                    //        DriverLicenseEmissionDate = model.DriverLicenseEmissionDate,
+                    //        DriverLicenseNumber = model.DriverLicenseNumber,
+                    //        MobilePhoneNumber = model.MobilePhoneNumber,
+                    //        DriverLicenseEndDate = model.DriverLicenseEndDate,
+                    //        TelephoneNumber = model.TelephoneNumber,
+                        };
+
+
+                        var result = UserManager.CreateAsync(user, model.Password);
+                        if (result.Succeeded)
+                        {
+                            await UserManager.AddToRoleAsync(user.Id, model.Level);
+                        //    var SupplierEvaluation = new SupplierEvaluation() { UserId = user.Id };
+                        //    db.SupplierEvaluations.Add(SupplierEvaluation);
+                            db.SaveChanges();
+                            return RedirectToAction("Index", "Home");
+                        }
+
+                        AddErrors(result);
+                        return HttpNotFound();
+                }
+
+
+
+
+
+                    
+
+
+
+
+
+
+
+
+                ////default
+                //var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //var result = await UserManager.CreateAsync(user, model.Password);
+                //if (result.Succeeded)
+                //{
+                //    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    
+                //    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                //    // Send an email with this link
+                //    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                //    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                //    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                //    return RedirectToAction("Index", "Home");
+                //}
+                //AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form

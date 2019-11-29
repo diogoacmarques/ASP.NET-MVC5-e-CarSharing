@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace e_CarSharing.Areas.Administration.Controllers
 {
-    [Authorize(Roles = AccountLevels.ADMINISTRATOR)]
+    //[Authorize(Roles = AccountLevels.ADMINISTRATOR)]
     public class BrandsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -78,7 +78,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Brand brand = db.Brands.Find(id);
-            if (db.Vehicles.Where(v => v.BrandId == brand.BrandId && v.Deleted == false).Count() != 0 || db.Models.Where(m => m.BrandId == brand.BrandId && m.Deleted == false).Count() != 0)
+            if (db.Vehicles.Where(v => v.BrandId == brand.BrandId && v.Deleted == false).Count() != 0 || db.Brands.Where(m => m.BrandId == brand.BrandId && m.Deleted == false).Count() != 0)
             {
                 ViewBag.AlertText = " A marca não pode ser eliminada por estar em utilização!";
                 ViewBag.ShowAlert = true;

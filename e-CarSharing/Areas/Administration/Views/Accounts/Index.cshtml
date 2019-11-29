@@ -1,4 +1,4 @@
-﻿@model IEnumerable<e_CarSharing.Areas.Administration.Models.ListAccounts>
+﻿@model IEnumerable<e_CarSharing.Areas.Administration.Models.Account>
 
 @{
     ViewBag.Title = "Create";
@@ -10,11 +10,16 @@
 <br />
 
 <p>
+    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("ListAll","Accounts", new { @area = "Administration",id = "Administrador" })'">
+        <span class="glyphicon glyphicon-search"></span>&nbsp;Filtrar
+    </button> 
     <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Create","Accounts", new { @area = "Administration" })'">
         <span class="glyphicon glyphicon-plus"></span>&nbsp;Criar&nbsp;Novo
     </button>
 </p>
 <hr />
+
+
 @if (Model.Count() != 0)
 {
     <table class="table table-bordered table-responsive table-condensed table-striped">
@@ -25,28 +30,22 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th> 
             <th>Ações</th>
         </tr>
 
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id, @area = "Administration" })
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.ActionLink("Eliminar", "Delete", new { Area = "Administration" ,id = item.Id})
+                </td>
+            </tr>
         }
 
     </table>

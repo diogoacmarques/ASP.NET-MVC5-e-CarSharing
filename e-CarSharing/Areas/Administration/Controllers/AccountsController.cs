@@ -19,41 +19,67 @@ namespace e_CarSharing.Areas.Administration.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Administration/Accounts
-        public ActionResult Index()//list all
+        public ActionResult Index()
         {
-            string userid = User.Identity.GetUserId();
-            var users = db.Users;
-               // .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountLevels.ADMINISTRATOR_ID.ToString()) == 0 ? true : false)).Any());
-                //.Where(u => u.UserStateId == UsersStatesConstants.USERSTATE_ACTIVE_ID);
+            var all = db.Users;
 
-            var admins = from u in users
-                         select new ListAccounts()
-                         {
-                             Id = u.Id,
-                             UserName = u.UserName,
-                             Email = u.Email
-                         };
+            var listToReturn = from u in all
+                               select new Account()
+                               {
+                                   Id = u.Id,
+                                   UserName = u.UserName,
+                                   Email = u.Email,
+                               };
 
-            var adminsExceptAtual = admins.Where(a => string.Compare(a.Id, userid) != 0 ? true : false).ToList();
-            return View(adminsExceptAtual);
+
+            return View(listToReturn);
         }
-
-
-
-
 
 
         public ActionResult Create() //####################################################################
         {
+            //IdentityResult ir;
+
+            //var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+            //ir = rm.Create(new IdentityRole(AccountLevels.ADMINISTRATOR));
+            //ir = rm.Create(new IdentityRole(AccountLevels.PRIVATE));
+            //ir = rm.Create(new IdentityRole(AccountLevels.PROFESSIONAL));
+
+            //var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+
+            //var user = new ApplicationUser()
+            //{
+            //    UserName = "eusoujadmi",
+            //    Email = "here@there.org"
+            //};
+
+
+            //if (db.Users.Where(u => u.UserName == user.UserName).Count() != 0)
+            //{
+            //    ModelState.AddModelError("1", "Já existe um Administrador com esse Username");
+            //    user.UserName = user.UserName + "x";
+            //    return View(user);
+            //}
+            //ir = um.Create(user, "ChangeMe");
+            //ir = um.AddToRole(user.Id, AccountLevels.PRIVATE); //Default Administrator, edit to change
+            //db.SaveChanges();
+
+
+            //if (!um.IsInRole(user.Id, AccountLevels.ADMINISTRATOR))
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}else
+            //    return HttpNotFound();
+
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Email,UserName,Password,ConfirmPassword")] CreateAccount model)
+        public ActionResult Create([Bind(Include = "Email,UserName,Password,ConfirmPassword")] Account model)
         {
             if (ModelState.IsValid)
             {
-
+              
                 if (db.Users.Where(u => u.UserName == model.UserName).Count() != 0)
                 {
                     ModelState.AddModelError("1", "Já existe um Administrador com esse Username");
@@ -73,7 +99,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
             return NewMethod(model);
         }
 
-        private ActionResult NewMethod(CreateAccount model)
+        private ActionResult NewMethod(Account model)
         {
             return View(model);
         }
@@ -94,7 +120,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
             {
                 return RedirectToAction("Index", "Accounts", new { @area = "Administration" });
             }
-            var usertoview = new ListAccounts() { Email = user.Email, Id = user.Id, UserName = user.UserName };
+            var usertoview = new Account() { Email = user.Email, Id = user.Id, UserName = user.UserName };
             return View(usertoview);
         }
 
@@ -120,15 +146,74 @@ namespace e_CarSharing.Areas.Administration.Controllers
         }
 
 
-
-
-
         public ActionResult Edit()//#################################################################################
         {
             return View();
         }
 
 
+
+        public ActionResult ListAll(string id)
+        {
+
+            var tmp = id;
+            ViewBag.typeOfAccount = AccountLevels.GetLevelsList();
+            ViewBag.typeOfAccountSelected = id;
+
+            if (id == AccountLevels.ADMINISTRATOR)
+            {
+               
+                var AccountList = db.Users
+                 .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountLevels.ADMINISTRATOR_ID.ToString()) == 0 ? true : false)).Any());
+
+                var listToReturn = from u in AccountList
+                                   select new Account()
+                                {
+                                    Id = u.Id,
+                                    UserName = u.UserName,
+                                    Email = u.Email,
+                                    Type = AccountLevels.ADMINISTRATOR
+                                };
+
+                return View(listToReturn);
+            }
+            else if (id == AccountLevels.PROFESSIONAL)
+            {
+                var AccountList = db.Users
+                 .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountLevels.PROFESSIONAL_ID.ToString()) == 0 ? true : false)).Any());
+
+                var listToReturn = from u in AccountList
+                                   select new Account()
+                                   {
+                                       Id = u.Id,
+                                       UserName = u.UserName,
+                                       Email = u.Email,
+                                       Type = AccountLevels.PROFESSIONAL
+                                   };
+
+                return View(listToReturn);
+            }
+            else if (id == AccountLevels.PRIVATE)
+            {
+                var AccountList = db.Users
+               .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountLevels.PRIVATE_ID.ToString()) == 0 ? true : false)).Any());
+
+                var listToReturn = from u in AccountList
+                                   select new Account()
+                                   {
+                                       Id = u.Id,
+                                       UserName = u.UserName,
+                                       Email = u.Email,
+                                       Type = AccountLevels.PRIVATE
+                                   };
+
+                return View(listToReturn);
+            }
+            else
+                return RedirectToAction("Index", "Accounts", new { @area = "Administration" });
+
+
+        }
 
 
     }
