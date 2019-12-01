@@ -91,7 +91,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
                 //user.UserStateId = UsersStatesConstants.USERSTATE_ACTIVE_ID;
                 userManager.Create(user, model.Password);
                 db.SaveChanges();
-                userManager.AddToRole(user.Id, AccountLevels.ADMINISTRATOR);
+                userManager.AddToRole(user.Id, AccountStaticRoles.ADMINISTRATOR);
                 db.SaveChanges();
                 return RedirectToAction("Index", "Accounts", new { @area = "Administration" });
             }
@@ -157,14 +157,14 @@ namespace e_CarSharing.Areas.Administration.Controllers
         {
 
             var tmp = id;
-            ViewBag.typeOfAccount = AccountLevels.GetLevelsList();
+            ViewBag.typeOfAccount = AccountStaticRoles.GetRolesList();
             ViewBag.typeOfAccountSelected = id;
 
-            if (id == AccountLevels.ADMINISTRATOR)
+            if (id == AccountStaticRoles.ADMINISTRATOR)
             {
                
                 var AccountList = db.Users
-                 .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountLevels.ADMINISTRATOR_ID.ToString()) == 0 ? true : false)).Any());
+                 .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountStaticRoles.ADMINISTRATOR_ID.ToString()) == 0 ? true : false)).Any());
 
                 var listToReturn = from u in AccountList
                                    select new Account()
@@ -172,15 +172,15 @@ namespace e_CarSharing.Areas.Administration.Controllers
                                     Id = u.Id,
                                     UserName = u.UserName,
                                     Email = u.Email,
-                                    Type = AccountLevels.ADMINISTRATOR
+                                    Type = AccountStaticRoles.ADMINISTRATOR
                                 };
 
                 return View(listToReturn);
             }
-            else if (id == AccountLevels.PROFESSIONAL)
+            else if (id == AccountStaticRoles.PROFESSIONAL)
             {
                 var AccountList = db.Users
-                 .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountLevels.PROFESSIONAL_ID.ToString()) == 0 ? true : false)).Any());
+                 .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountStaticRoles.PROFESSIONAL_ID.ToString()) == 0 ? true : false)).Any());
 
                 var listToReturn = from u in AccountList
                                    select new Account()
@@ -188,15 +188,15 @@ namespace e_CarSharing.Areas.Administration.Controllers
                                        Id = u.Id,
                                        UserName = u.UserName,
                                        Email = u.Email,
-                                       Type = AccountLevels.PROFESSIONAL
+                                       Type = AccountStaticRoles.PROFESSIONAL
                                    };
 
                 return View(listToReturn);
             }
-            else if (id == AccountLevels.PRIVATE)
+            else if (id == AccountStaticRoles.PRIVATE)
             {
                 var AccountList = db.Users
-               .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountLevels.PRIVATE_ID.ToString()) == 0 ? true : false)).Any());
+               .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountStaticRoles.PRIVATE_ID.ToString()) == 0 ? true : false)).Any());
 
                 var listToReturn = from u in AccountList
                                    select new Account()
@@ -204,7 +204,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
                                        Id = u.Id,
                                        UserName = u.UserName,
                                        Email = u.Email,
-                                       Type = AccountLevels.PRIVATE
+                                       Type = AccountStaticRoles.PRIVATE
                                    };
 
                 return View(listToReturn);

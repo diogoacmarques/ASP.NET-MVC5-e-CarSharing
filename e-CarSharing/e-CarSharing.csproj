@@ -242,7 +242,7 @@
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Rent.cs" />
     <Compile Include="Models\RentCondition.cs" />
-    <Compile Include="Models\AccountLevels.cs" />
+    <Compile Include="Models\AccountStaticRoles.cs" />
     <Compile Include="Models\Type.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Models\VehiclePassengers.cs" />

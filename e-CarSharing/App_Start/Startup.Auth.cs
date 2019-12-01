@@ -74,32 +74,32 @@ namespace e_CarSharing
             ApplicationDbContext DbContext = new ApplicationDbContext();
             RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(DbContext));
 
-            if (roleManager.RoleExists(AccountLevels.ADMINISTRATOR) == false)
+            if (roleManager.RoleExists(AccountStaticRoles.ADMINISTRATOR) == false)
             {
                 var role = new IdentityRole
                 {
-                    Id = AccountLevels.ADMINISTRATOR_ID.ToString(),
-                    Name = AccountLevels.ADMINISTRATOR
+                    Id = AccountStaticRoles.ADMINISTRATOR_ID.ToString(),
+                    Name = AccountStaticRoles.ADMINISTRATOR
                 };
                 roleManager.Create(role);
             }
 
-            if (roleManager.RoleExists(AccountLevels.PRIVATE) == false)
+            if (roleManager.RoleExists(AccountStaticRoles.PRIVATE) == false)
             {
                 var role = new IdentityRole
                 {
-                    Id = AccountLevels.PRIVATE_ID.ToString(),
-                    Name = AccountLevels.PRIVATE
+                    Id = AccountStaticRoles.PRIVATE_ID.ToString(),
+                    Name = AccountStaticRoles.PRIVATE
                 };
                 roleManager.Create(role);
             }
 
-            if (roleManager.RoleExists(AccountLevels.PROFESSIONAL) == false)
+            if (roleManager.RoleExists(AccountStaticRoles.PROFESSIONAL) == false)
             {
                 var role = new IdentityRole
                 {
-                    Id = AccountLevels.PROFESSIONAL_ID.ToString(),
-                    Name = AccountLevels.PROFESSIONAL
+                    Id = AccountStaticRoles.PROFESSIONAL_ID.ToString(),
+                    Name = AccountStaticRoles.PROFESSIONAL
                 };
                 roleManager.Create(role);
             }
@@ -113,7 +113,7 @@ namespace e_CarSharing
             var user = new ApplicationUser { Id = "admin", UserName = "admin", Email = "admin@ecarsharing.pt" };
             userManager.Create(user, "Vx_1234");
 
-            userManager.AddToRole(user.Id, AccountLevels.ADMINISTRATOR);
+            userManager.AddToRole(user.Id, AccountStaticRoles.ADMINISTRATOR);
         }
     }
 }

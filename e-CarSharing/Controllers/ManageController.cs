@@ -7,14 +7,19 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using e_CarSharing.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Security;
 
 namespace e_CarSharing.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+       
+          
 
         public ManageController()
         {
@@ -54,6 +59,10 @@ namespace e_CarSharing.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+
+            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+            var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -64,13 +73,28 @@ namespace e_CarSharing.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var userRole = "";
+
+
+            var allRoles = AccountStaticRoles.GetRolesList();
+            foreach(var r in allRoles)
+            {
+                if (um.IsInRole(userId, r.Value))
+                {
+                    userRole = r.Value;
+                    break;
+                }
+                  
+            }
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                Role = userRole,
             };
             return View(model);
         }

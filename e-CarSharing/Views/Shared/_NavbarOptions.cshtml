@@ -6,19 +6,18 @@
 *@
 @if (true)
 {
-    //if (User.IsInRole(AccountLevels.ADMINISTRATOR))
+    //if (User.IsInRole(AccountStaticRoles.ADMINISTRATOR))
     //{
         <ul class="nav navbar-nav">
-            <li><a><span class="fas fa-car"></span> You're an admin</a> </li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <span class="fas fa-car"></span>   Contas  <span class="glyphicon glyphicon-collapse-down"></span>
                 </a>
                 <ul class="dropdown-menu" style="background-color:cornflowerblue">
                     <li class="dropdown-header" style="font-size:15px;">Gestão</li>
-                    <li>@Html.ActionLink("Administradores", "Index", "Accounts", new { Area = "Administration", id = AccountLevels.ADMINISTRATOR_ID},null)</li>
+                    <li>@Html.ActionLink("Administradores", "Index", "Accounts", new { Area = "Administration", id = AccountStaticRoles.ADMINISTRATOR_ID},null)</li>
                     <li>@Html.ActionLink("ListAll", "ListAll", "Accounts", new { Area = "Administration"},null)</li>
-                    <li>@Html.ActionLink("Utilizadores", "Index", "Accounts", new { Area = "Administration", id = AccountLevels.PRIVATE_ID }, null)</li>
+                    <li>@Html.ActionLink("Utilizadores", "Index", "Accounts", new { Area = "Administration", id = AccountStaticRoles.PRIVATE_ID }, null)</li>
                     <li class="divider"></li>
                     <li class="dropdown-header" style="font-size:15px;">Caracteristicas</li>
                     <li>@Html.ActionLink("Marcas", "Index", "Brands", new { area = "Administration" }, null)</li>

@@ -9,24 +9,32 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using e_CarSharing.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace e_CarSharing.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+      
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        //vars
+        private ApplicationDbContext db = new ApplicationDbContext();
+        private UserManager<ApplicationUser> _um;
+
         public AccountController()
         {
+            _um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
         public ApplicationSignInManager SignInManager
@@ -162,7 +170,7 @@ namespace e_CarSharing.Controllers
                 return RedirectToAction("Index", "Home");
 
             var model = new RegisterViewModel();
-            model.Levels = AccountLevels.GetLevelsListForRegister();
+            model.Roles = AccountStaticRoles.GetRolesListForRegister();
             return View(model);
         }
 
@@ -178,12 +186,12 @@ namespace e_CarSharing.Controllers
                
                 if (db.Users.Where(u => u.UserName == model.Username).Any() == true)
                 {
-                    model.Levels = AccountLevels.GetLevelsListForRegister();
+                    model.Roles = AccountStaticRoles.GetRolesListForRegister();
                     ModelState.AddModelError("", "Já existe um utilizador com o Username introduzido");
                     return View(model);
                 }
 
-                if (model.Level == AccountLevels.PRIVATE)
+                if (model.Role == AccountStaticRoles.PRIVATE)
                 {
                     bool check = false;
 
@@ -228,11 +236,11 @@ namespace e_CarSharing.Controllers
                 //        ModelState.AddModelError("7", "Carta de Condução Caducada");
                 //        flag = true;
                 //    }
-                    #endregion
+                    #endregion //comented
 
                     if (check == true)
                     {
-                        model.Levels = AccountLevels.GetLevelsListForRegister();
+                        model.Roles = AccountStaticRoles.GetRolesListForRegister();
                         return View(model);
                     }
 
@@ -249,8 +257,8 @@ namespace e_CarSharing.Controllers
                 //        DriverLicenseEndDate = model.DriverLicenseEndDate,
                 //        TelephoneNumber = model.TelephoneNumber,
                     };
-                    var result = await UserManager.CreateAsync(user, model.Password);
-                    await UserManager.AddToRoleAsync(user.Id, model.Level);
+                    var result = await _um.CreateAsync(user, model.Password);
+                    await _um.AddToRoleAsync(user.Id, model.Role);
 
                     //var DemanderEvaluation = new DemanderEvaluation() { UserId = user.Id };
                     //db.DemanderEvaluations.Add(DemanderEvaluation);
@@ -258,11 +266,12 @@ namespace e_CarSharing.Controllers
                 //    db.SupplierEvaluations.Add(SupplierEvaluation);
                     db.SaveChanges();
 
-                //    ViewBag.State = UsersStatesConstants.USERSTATE_PENDING_STRING;
-                //    return View("RedirectLoginFailAndRegister");
+                    //    ViewBag.State = UsersStatesConstants.USERSTATE_PENDING_STRING;
+                    //    return View("RedirectLoginFailAndRegister");
+                    return RedirectToAction("Index", "Home");
                 }
 
-                if(model.Level == AccountLevels.PROFESSIONAL)
+                if(model.Role == AccountStaticRoles.PROFESSIONAL)
                     {
                         var user = new ApplicationUser
                         {
@@ -279,18 +288,16 @@ namespace e_CarSharing.Controllers
                         };
 
 
-                        var result = UserManager.CreateAsync(user, model.Password);
-                        if (result.Succeeded)
-                        {
-                            await UserManager.AddToRoleAsync(user.Id, model.Level);
+                    var result = _um.CreateAsync(user, model.Password);
+                    await _um.AddToRoleAsync(user.Id, model.Role);
                         //    var SupplierEvaluation = new SupplierEvaluation() { UserId = user.Id };
                         //    db.SupplierEvaluations.Add(SupplierEvaluation);
-                            db.SaveChanges();
-                            return RedirectToAction("Index", "Home");
-                        }
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                    
 
-                        AddErrors(result);
-                        return HttpNotFound();
+                    //AddErrors(result);
+                    //return HttpNotFound();
                 }
 
 

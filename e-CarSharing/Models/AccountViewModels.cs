@@ -73,7 +73,7 @@ namespace e_CarSharing.Models
         [Display(Name = "Userame")]
         public string Username { get; set; }
 
-        //[Required]
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -89,10 +89,10 @@ namespace e_CarSharing.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        public System.Web.Mvc.SelectList Levels { get; set; }
+        public System.Web.Mvc.SelectList Roles { get; set; }
 
         [Required]
-        public string Level { get; set; }
+        public string Role { get; set; }
     }
 
     public class ResetPasswordViewModel

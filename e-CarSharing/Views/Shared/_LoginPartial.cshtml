@@ -9,8 +9,20 @@
         <li>
             @Html.ActionLink("Olá " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        @*<li>
+            @if (Roles.IsUserInRole(User.Identity.GetUserName(), "Admin"))
+            {
+                @Html.DisplayName("Admin")
+            }
+            else
+            {
+                @Html.DisplayName("Not Adming")
+            }
+        </li>*@
+
+    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+</ul>
     }
 }
 else

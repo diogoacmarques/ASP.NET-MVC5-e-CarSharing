@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace e_CarSharing.Models
 {
-    public class AccountLevels
+    public class AccountStaticRoles
     {
         //professional
         public const string PROFESSIONAL = "Profissional";
@@ -16,7 +16,7 @@ namespace e_CarSharing.Models
         public const int ADMINISTRATOR_ID = 1;
   
 
-        public static SelectList GetLevelsList()
+        public static SelectList GetRolesList()
         {
             var lista = new List<SelectListItem>()
             {
@@ -39,7 +39,7 @@ namespace e_CarSharing.Models
         //    return new SelectList(lista, "Value", "Text");
         //}
 
-        public static SelectList GetLevelsListForRegister()
+        public static SelectList GetRolesListForRegister()
         {
             var lista = new List<SelectListItem>()
             {
@@ -50,7 +50,7 @@ namespace e_CarSharing.Models
         }
 
         //public static SelectList GetRolesListForCarSearch()
-        //{
+        //{C:\Users\Diogo Marques\Desktop\isec\3_ano\PWEB\TP\e-CarSharing\e-CarSharing\Models\AccountStaticRoles.cs
         //    var lista = new List<SelectListItem>()
         //    {
         //       new SelectListItem { Value = STRING_PROFISSIONAL_ID, Text = STRING_PROFISSIONAL },
