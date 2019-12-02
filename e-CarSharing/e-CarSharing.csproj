@@ -203,6 +203,7 @@
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Administration\Controllers\BrandsController.cs" />
+    <Compile Include="Areas\Administration\Controllers\ColoursController.cs" />
     <Compile Include="Areas\Administration\Controllers\ModelsController.cs" />
     <Compile Include="Areas\Administration\Controllers\TypesController.cs" />
     <Compile Include="Areas\Administration\Models\Account.cs" />
@@ -280,6 +281,8 @@
     <Content Include="Areas\Administration\Views\Types\Create.cshtml" />
     <Content Include="Areas\Administration\Views\Types\Delete.cshtml" />
     <Content Include="Areas\Administration\Views\Accounts\ListAll.cshtml" />
+    <Content Include="Areas\Administration\Views\Colours\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Colours\Create.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

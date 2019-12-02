@@ -11,34 +11,31 @@
         <ul class="nav navbar-nav">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span class="fas fa-car"></span>   Contas  <span class="glyphicon glyphicon-collapse-down"></span>
+                    <span class="glyphicon glyphicon-user"></span> Contas <span class="glyphicon glyphicon-collapse-down"></span>
                 </a>
                 <ul class="dropdown-menu" style="background-color:cornflowerblue">
-                    <li class="dropdown-header" style="font-size:15px;">Gestão</li>
-                    <li>@Html.ActionLink("Administradores", "Index", "Accounts", new { Area = "Administration", id = AccountStaticRoles.ADMINISTRATOR_ID},null)</li>
-                    <li>@Html.ActionLink("ListAll", "ListAll", "Accounts", new { Area = "Administration"},null)</li>
-                    <li>@Html.ActionLink("Utilizadores", "Index", "Accounts", new { Area = "Administration", id = AccountStaticRoles.PRIVATE_ID }, null)</li>
+                    <li class="dropdown-header" style="font-size:15px;">Administradores</li>
+                    <li>@Html.ActionLink("Listar", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Criar", "Create", "Accounts", new { @area = "Administration" }, null)</li>
                     <li class="divider"></li>
-                    <li class="dropdown-header" style="font-size:15px;">Caracteristicas</li>
-                    <li>@Html.ActionLink("Marcas", "Index", "Brands", new { area = "Administration" }, null)</li>
-                    <li>@Html.ActionLink("Tipos", "Index", "Types", new { area = "Administration" }, null)</li>
+                    <li class="dropdown-header" style="font-size:15px;">Utilizadores</li>
+                    <li>@Html.ActionLink("Listar", "ListAll", "Accounts", new { @area = "Administration" }, null)</li>
+
                 </ul>
             </li>
             <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span> Veiculos <span class="glyphicon glyphicon-collapse-down"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-road"></span> Veiculos <span class="glyphicon glyphicon-collapse-down"></span></a>
                 <ul class="dropdown-menu" style="background-color:cornflowerblue">
-                    <li>@Html.ActionLink("Gerir Utilizadores", "ListUsers", "Admin", new { area = "Administration" }, null)</li>
-                    <li>@Html.ActionLink("Adicionar Administradores", "Create", "Admin", new { area = "Administration" }, null)</li>
-                    <li>@Html.ActionLink("Listar Administradores", "ListAdministrators", "Admin", new { area = "Administration" }, null)</li>
+                    <li class="dropdown-header" style="font-size:15px;">Gestão</li>
+                    <li>@Html.ActionLink("Gerir Veiculos", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Pesquisar Veiculos", "Index", "Home")</li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header" style="font-size:15px;">Caracteristicas</li>
+                    <li>@Html.ActionLink("Marcas", "Index", "Brands", new { @area = "Administration" }, null)</li>
+                    <li>@Html.ActionLink("Tipos", "Index", "Types", new { @area = "Administration" }, null)</li>
                 </ul>
             </li>
         </ul>
-    //}
-
-   /* if (User.IsInRole(AccountLevels.PRIVATE) || User.IsInRole(AccountLevels.PROFESSIONAL))
-    {
-        <li><a><span class="fas fa-car"></span> You're a user</a> </li>
-    }*/
 }
 else
 {

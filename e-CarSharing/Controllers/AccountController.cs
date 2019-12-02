@@ -288,7 +288,7 @@ namespace e_CarSharing.Controllers
                         };
 
 
-                    var result = _um.CreateAsync(user, model.Password);
+                    var result = await _um.CreateAsync(user, model.Password);
                     await _um.AddToRoleAsync(user.Id, model.Role);
                         //    var SupplierEvaluation = new SupplierEvaluation() { UserId = user.Id };
                         //    db.SupplierEvaluations.Add(SupplierEvaluation);
