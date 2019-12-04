@@ -18,44 +18,47 @@ namespace e_CarSharing.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
+    //public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    //{
+    //    public ApplicationDbContext()
+    //        : base("DefaultConnection", throwIfV1Schema: false)
+    //    {
+    //    }
 
-        public DbSet<Brand> Brands { get; set; }
-        public DbSet<Vehicle> Vehicles { get; set; }
-        //public DbSet<Country> Countries { get; set; }
-        //public DbSet<City> Cities { get; set; }
-        public DbSet<Type> Types { get; set; }
-        public DbSet<Colour> Colours { get; set; }
-        //public DbSet<FuelType> FuelTypes { get; set; }
-        //public DbSet<VehicleDoor> VehicleDoors { get; set; }
-        public DbSet<VehiclePassengers> VehicleSeats { get; set; }
-       // public DbSet<VehicleLocalization> VehicleLocalizations { get; set; }
-        //public DbSet<NumberTransmission> NumberTransmissions { get; set; }
-        //public DbSet<Transmission> Transmissions { get; set; }
-        public DbSet<Model> Models { get; set; }
-        //public DbSet<UsersState> UsersStates { get; set; }
-        //public DbSet<Message> Messages { get; set; }
-        //public DbSet<MessageState> MessageStates { get; set; }
-        //public DbSet<SupplierEvaluation> SupplierEvaluations { get; set; }
-        //public DbSet<DemanderEvaluation> DemanderEvaluations { get; set; }
-        //public DbSet<VehicleEvaluation> VehicleEvaluations { get; set; }
-        public DbSet<VehicleState> VehicleStates { get; set; }
-        public DbSet<Rent> Rents { get; set; }
-        //public DbSet<RentState> RentStates { get; set; }
-        //public DbSet<RentDemanderEvaluation> RentDemanderEvaluations { get; set; }
-        //public DbSet<RentSupplierEvaluation> RentSupplierEvaluations { get; set; }
-        //public DbSet<RentVehicleEvaluation> RentVehicleEvaluations { get; set; }
-        public DbSet<RentCondition> RentConditions { get; set; }
-        //public DbSet<VehiclePhoto> VehiclePhotos { get; set; }
+    //public dbset<brand> brands { get; set; }
+    //public dbset<vehicle> vehicles { get; set; }
+    ////public dbset<country> countries { get; set; }
+    ////public dbset<city> cities { get; set; }
+    //public dbset<type> types { get; set; }
+    //public dbset<colour> colours { get; set; }
+    ////public dbset<fueltype> fueltypes { get; set; }
+    ////public dbset<vehicledoor> vehicledoors { get; set; }
+    //public dbset<vehiclepassengers> vehicleseats { get; set; }
+    //public dbset<location> locations { get; set; }
+    ////public dbset<numbertransmission> numbertransmissions { get; set; }
+    ////public dbset<transmission> transmissions { get; set; }
+    //public dbset<model> models { get; set; }
+    ////public dbset<usersstate> usersstates { get; set; }
+    ////public dbset<message> messages { get; set; }
+    ////public dbset<messagestate> messagestates { get; set; }
+    ////public dbset<supplierevaluation> supplierevaluations { get; set; }
+    ////public dbset<demanderevaluation> demanderevaluations { get; set; }
+    ////public dbset<vehicleevaluation> vehicleevaluations { get; set; }
+    //public dbset<vehiclestate> vehiclestates { get; set; }
+    //public dbset<rent> rents { get; set; }
+    ////public dbset<rentstate> rentstates { get; set; }
+    ////public dbset<rentdemanderevaluation> rentdemanderevaluations { get; set; }
+    ////public dbset<rentsupplierevaluation> rentsupplierevaluations { get; set; }
+    ////public dbset<rentvehicleevaluation> rentvehicleevaluations { get; set; }
+    //public dbset<rentcondition> rentconditions { get; set; }
+    ////public dbset<vehiclephoto> vehiclephotos { get; set; }
 
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
-    }
+
+    //    public static ApplicationDbContext Create()
+    //    {
+    //        return new ApplicationDbContext();
+    //    }
+
+
+    //}
 }

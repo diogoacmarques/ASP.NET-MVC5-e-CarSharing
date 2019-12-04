@@ -36,18 +36,21 @@ namespace e_CarSharing.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.tipo = new List<SelectListItem>{
-                new SelectListItem { Selected = true, Text = "Carro", Value = "Carro"},
-                new SelectListItem { Selected = false, Text = "Trotinete", Value = "Trotinete"},
-                new SelectListItem { Selected = false, Text = "Bicicleta", Value = "Bicicleta"},
-            };
+            VehicleViewModelCreate vehicleCreate = new VehicleViewModelCreate();
+            vehicleCreate.Brands = new SelectList(db.Brands, "BrandId", "BrandName");
+            vehicleCreate.Models = new SelectList(db.Models, "ModelId", "ModelName");
+            vehicleCreate.Locations = new SelectList(db.Locations, "LocationId", "LocationName");
+            vehicleCreate.Types = new SelectList(db.Types, "TypeId", "TypeName");
+            vehicleCreate.Colours = new SelectList(db.Colours, "ColourId", "ColourName");
+            vehicleCreate.VehicleSeats = new SelectList(db.VehicleSeats, "NumberPassengersId", "NumberPassengers");
 
-            return View();
+            return View(vehicleCreate);
         }
 
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+
             try
             {
                 Vehicle novo = new Vehicle();

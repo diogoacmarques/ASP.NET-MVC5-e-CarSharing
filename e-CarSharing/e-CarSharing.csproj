@@ -204,6 +204,7 @@
     <Compile Include="Areas\Administration\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Administration\Controllers\BrandsController.cs" />
     <Compile Include="Areas\Administration\Controllers\ColoursController.cs" />
+    <Compile Include="Areas\Administration\Controllers\LocationsController.cs" />
     <Compile Include="Areas\Administration\Controllers\ModelsController.cs" />
     <Compile Include="Areas\Administration\Controllers\TypesController.cs" />
     <Compile Include="Areas\Administration\Models\Account.cs" />
@@ -218,34 +219,26 @@
     <Compile Include="Migrations\201911271650222_InitialCreate.Designer.cs">
       <DependentUpon>201911271650222_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911271827265_ModeloInicial.cs" />
-    <Compile Include="Migrations\201911271827265_ModeloInicial.Designer.cs">
-      <DependentUpon>201911271827265_ModeloInicial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911271827337_ModeloInicial1.cs" />
-    <Compile Include="Migrations\201911271827337_ModeloInicial1.Designer.cs">
-      <DependentUpon>201911271827337_ModeloInicial1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911271940086_ModeloInicial2.cs" />
-    <Compile Include="Migrations\201911271940086_ModeloInicial2.Designer.cs">
-      <DependentUpon>201911271940086_ModeloInicial2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911280137389_inicial.cs" />
-    <Compile Include="Migrations\201911280137389_inicial.Designer.cs">
-      <DependentUpon>201911280137389_inicial.cs</DependentUpon>
+    <Compile Include="Migrations\201912041845394_TableCreate.cs" />
+    <Compile Include="Migrations\201912041845394_TableCreate.Designer.cs">
+      <DependentUpon>201912041845394_TableCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Brand.cs" />
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Colour.cs" />
+    <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Rent.cs" />
     <Compile Include="Models\RentCondition.cs" />
     <Compile Include="Models\AccountStaticRoles.cs" />
+    <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Type.cs" />
     <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\VehicleLocalization.cs" />
     <Compile Include="Models\VehiclePassengers.cs" />
     <Compile Include="Models\VehicleState.cs" />
     <Compile Include="Models\VehicleViewModel.cs" />
@@ -283,6 +276,8 @@
     <Content Include="Areas\Administration\Views\Accounts\ListAll.cshtml" />
     <Content Include="Areas\Administration\Views\Colours\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Colours\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\Colours\Delete.cshtml" />
+    <Content Include="Areas\Administration\Views\Locations\Edit.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -331,6 +326,9 @@
     <Content Include="Views\Vehicle\Index.cshtml" />
     <Content Include="Views\Vehicle\Create.cshtml" />
     <Content Include="Views\Shared\_NavbarOptions.cshtml" />
+    <Content Include="Areas\Administration\Views\Locations\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Locations\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\Locations\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -353,17 +351,8 @@
     <EmbeddedResource Include="Migrations\201911271650222_InitialCreate.resx">
       <DependentUpon>201911271650222_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911271827265_ModeloInicial.resx">
-      <DependentUpon>201911271827265_ModeloInicial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911271827337_ModeloInicial1.resx">
-      <DependentUpon>201911271827337_ModeloInicial1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911271940086_ModeloInicial2.resx">
-      <DependentUpon>201911271940086_ModeloInicial2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911280137389_inicial.resx">
-      <DependentUpon>201911280137389_inicial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201912041845394_TableCreate.resx">
+      <DependentUpon>201912041845394_TableCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

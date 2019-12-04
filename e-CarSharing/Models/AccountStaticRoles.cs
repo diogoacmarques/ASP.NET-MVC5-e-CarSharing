@@ -50,7 +50,7 @@ namespace e_CarSharing.Models
         }
 
         //public static SelectList GetRolesListForCarSearch()
-        //{C:\Users\Diogo Marques\Desktop\isec\3_ano\PWEB\TP\e-CarSharing\e-CarSharing\Models\AccountStaticRoles.cs
+        //{
         //    var lista = new List<SelectListItem>()
         //    {
         //       new SelectListItem { Value = STRING_PROFISSIONAL_ID, Text = STRING_PROFISSIONAL },

@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
-using e_CarSharing.Models;
 using System.Data.Entity;
 using System.Net;
 
@@ -33,21 +31,21 @@ namespace e_CarSharing.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.Types.Where(t => t.TypeName == type.TypeName && t.Deleted == false).Count() > 0)
-                {
-                    ModelState.AddModelError(string.Empty, " Já existe essa marca!");
-                    return View(type);
-                }
-                else if (db.Brands.Where(m => m.BrandName == type.TypeName && m.Deleted == true).Count() != 0)
-                {
-                    Brand brandExist = db.Brands.Where(c => c.BrandName == type.TypeName).First();
-                    brandExist.Deleted = false;
-                    db.Entry(brandExist).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                db.Types.Add(type);
-                db.SaveChanges();
+                //if (db.Types.Where(t => t.TypeName == type.TypeName && t.Deleted == false).Count() > 0)
+                //{
+                //    ModelState.AddModelError(string.Empty, " Já existe essa marca!");
+                //    return View(type);
+                //}
+                //else if (db.Brands.Where(m => m.BrandName == type.TypeName && m.Deleted == true).Count() != 0)
+                //{
+                //    Brand brandExist = db.Brands.Where(c => c.BrandName == type.TypeName).First();
+                //    brandExist.Deleted = false;
+                //    db.Entry(brandExist).State = EntityState.Modified;
+                //    db.SaveChanges();
+                //    return RedirectToAction("Index");
+                //}
+                //db.Types.Add(type);
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(type);
