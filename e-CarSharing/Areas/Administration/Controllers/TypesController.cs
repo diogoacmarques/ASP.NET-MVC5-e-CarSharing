@@ -31,21 +31,21 @@ namespace e_CarSharing.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                //if (db.Types.Where(t => t.TypeName == type.TypeName && t.Deleted == false).Count() > 0)
-                //{
-                //    ModelState.AddModelError(string.Empty, " Já existe essa marca!");
-                //    return View(type);
-                //}
-                //else if (db.Brands.Where(m => m.BrandName == type.TypeName && m.Deleted == true).Count() != 0)
-                //{
-                //    Brand brandExist = db.Brands.Where(c => c.BrandName == type.TypeName).First();
-                //    brandExist.Deleted = false;
-                //    db.Entry(brandExist).State = EntityState.Modified;
-                //    db.SaveChanges();
-                //    return RedirectToAction("Index");
-                //}
-                //db.Types.Add(type);
-                //db.SaveChanges();
+                if (db.Types.Where(t => t.TypeName == type.TypeName && t.Deleted == false).Count() > 0)
+                {
+                    ModelState.AddModelError(string.Empty, " Já existe essa marca!");
+                    return View(type);
+                }
+                else if (db.Brands.Where(m => m.BrandName == type.TypeName && m.Deleted == true).Count() != 0)
+                {
+                    Brand brandExist = db.Brands.Where(c => c.BrandName == type.TypeName).First();
+                    brandExist.Deleted = false;
+                    db.Entry(brandExist).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                db.Types.Add(type);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(type);
@@ -78,10 +78,10 @@ namespace e_CarSharing.Areas.Administration.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            e_CarSharing.Models.Type type = db.Types.Find(id);
-            if (db.Vehicles.Where(v => v.TypeId == type.TypeId && v.Deleted == false).Count() != 0 || db.Types.Where(t => t.TypeId == type.TypeId && t.Deleted == false).Count() != 0)
+            e_CarSharing.Models.Type type = db.Types.Find(id);  
+            if (db.Vehicles.Where(v => v.TypeId == type.TypeId && v.Deleted == false).Count() != 0 || db.Types.Where(t => t.TypeId == type.TypeId && t.Deleted == false).Count() == 0)
             {
-                ViewBag.AlertText = " A marca não pode ser eliminada por estar em utilização!";
+                ViewBag.AlertText = " O Tipo não pode ser eliminada por estar em utilização!";
                 ViewBag.ShowAlert = true;
                 return View(type);
 

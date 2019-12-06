@@ -207,7 +207,8 @@
     <Compile Include="Areas\Administration\Controllers\LocationsController.cs" />
     <Compile Include="Areas\Administration\Controllers\ModelsController.cs" />
     <Compile Include="Areas\Administration\Controllers\TypesController.cs" />
-    <Compile Include="Areas\Administration\Models\Account.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Account.cs" />
+    <Compile Include="Areas\Administration\ViewModels\ModelViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -278,6 +279,10 @@
     <Content Include="Areas\Administration\Views\Colours\Create.cshtml" />
     <Content Include="Areas\Administration\Views\Colours\Delete.cshtml" />
     <Content Include="Areas\Administration\Views\Locations\Edit.cshtml" />
+    <Content Include="Areas\Administration\Views\Models\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Models\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\Models\Delete.cshtml" />
+    <Content Include="Areas\Administration\Views\Models\Edit.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -332,7 +337,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Administration\Views\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

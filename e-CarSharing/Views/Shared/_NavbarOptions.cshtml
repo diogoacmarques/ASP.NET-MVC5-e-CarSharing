@@ -27,37 +27,39 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-road"></span> Veiculos (admin) <span class="glyphicon glyphicon-collapse-down"></span></a>
         <ul class="dropdown-menu" style="background-color:cornflowerblue">
             <li class="dropdown-header" style="font-size:15px;">Gestão</li>
-            <li>@Html.ActionLink("Gerir Veiculos", "Index", "Home")</li>
-            <li>@Html.ActionLink("Pesquisar Veiculos", "Index", "Home")</li>
+            <li>@Html.ActionLink("Gerir Veiculos", "Index", "Home", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("Pesquisar Veículos", "Index", "Home", new { area = "" }, null)</li>
             <li class="divider"></li>
             <li class="dropdown-header" style="font-size:15px;">Caracteristicas</li>
-            <li>@Html.ActionLink("Marcas", "Index", "Brands", new { @area = "Administration" }, null)</li>
-            <li>@Html.ActionLink("Tipos", "Index", "Types", new { @area = "Administration" }, null)</li>
-            <li>@Html.ActionLink("Cores", "Index", "Colours", new { @area = "Administration" }, null)</li>
-            <li class="divider"></li>
+            <li>@Html.ActionLink("Tipos de Veiculos", "Index", "Types", new { @area = "Administration" }, null)</li>
             <li>@Html.ActionLink("Localizações", "Index", "Locations", new { @area = "Administration" }, null)</li>
+            <li class="divider"></li>
+            <li>@Html.ActionLink("Marcas", "Index", "Brands", new { @area = "Administration" }, null)</li>
+            <li>@Html.ActionLink("Modelos", "Index", "Models", new { @area = "Administration" }, null)</li>
+            <li>@Html.ActionLink("Cores", "Index", "Colours", new { @area = "Administration" }, null)</li>
+            <li>@Html.ActionLink("Numero de Passageiros", "Index", "Home", new { @area = "" }, null)</li>
         </ul>
     </li>
     <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Veiculos (user) <span class="glyphicon glyphicon-collapse-down"></span></a>
         <ul class="dropdown-menu" style="background-color:cornflowerblue">
-            <li>@Html.ActionLink("Pesquisar Veiculos", "Index", "Home")</li>
+            <li>@Html.ActionLink("Pesquisar Veículos", "Index", "Home", new { area = "" }, null)</li>
             <li class="divider"></li>
             <li class="dropdown-header" style="font-size:15px;">Gestão</li>
-            <li>@Html.ActionLink("Criar Veiculo", "Create", "Vehicle")</li>
+            <li>@Html.ActionLink("Criar Veiculo", "Create", "Vehicle", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("Os Meus Veiculos", "Index", "Home", new { area = "" }, null)</li>
             <li>@Html.ActionLink("Os Meus Veiculos", "Index", "Home")</li>
-            <li>@Html.ActionLink("outros...", "Index", "Home")</li>
         </ul>
     </li>
     <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Alugueres (user) <span class="glyphicon glyphicon-collapse-down"></span></a>
         <ul class="dropdown-menu" style="background-color:cornflowerblue">
-            <li>@Html.ActionLink("Os meus Alugueres", "Index", "Home")</li>
-            <li>@Html.ActionLink("Pedidos Enviados", "Index", "Home")</li>
+            <li>@Html.ActionLink("Os meus Alugueres", "Index", "Home", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("Pedidos Enviados", "Index", "Home", new { area = "" }, null)</li>
             <li class="divider"></li>
             <li class="dropdown-header" style="font-size:15px;">Gestão</li>
-            <li>@Html.ActionLink("Pedidos Recebidos", "Index", "Home")</li>
-            <li>@Html.ActionLink("Alugueres atualemente", "Index", "Home")</li>
+            <li>@Html.ActionLink("Pedidos Recebidos", "Index", "Home", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("Alugueres atualemente", "Index", "Home", new { area = "" }, null)</li>
         </ul>
     </li>
 </ul>
