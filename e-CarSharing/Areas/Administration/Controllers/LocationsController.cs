@@ -27,7 +27,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LocalName,GoogleMapsURL")] Location location)
+        public ActionResult Create([Bind(Include = "LocationName,GoogleMapsURL")] Location location)
         {
             if (ModelState.IsValid)
             {

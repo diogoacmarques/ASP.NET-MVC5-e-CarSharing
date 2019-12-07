@@ -21,9 +21,15 @@ namespace e_CarSharing.Models
         [Required]
         public int VehicleId { get; set; }
 
-        //[Required]
-        [Display(Name = "Matrícula")]
-        public string VehiclePlate { get; set; }
+        [Display(Name = "Tipo")]
+        [ForeignKey("Type")]
+        public int TypeId { get; set; } // trotinete/carro/biclicleta
+        public Type Type { get; set; }
+
+        [Display(Name = "Localização")]
+        [ForeignKey("Location")]
+        public int LocationId { get; set; }
+        public Location Location { get; set; }
 
         [Display(Name = "Marca")]
         [ForeignKey("Brand")]
@@ -35,45 +41,36 @@ namespace e_CarSharing.Models
         public Nullable<int> ModelId { get; set; }
         public Model Model { get; set; }
 
+        [Display(Name = "Matrícula")]
+        public string VehiclePlate { get; set; }
+
         //public virtual ICollection<VehicleLocalization> VehicleLocalizations { get; set; }
         public virtual ICollection<RentCondition> RentConditions { get; set; }
         public virtual ICollection<Rent> Rents { get; set; }
         //public virtual ICollection<RentVehicleEvaluation> RentVehicleEvaluations { get; set; }
-
-        [Display(Name = "Type")]
-        [ForeignKey("Type")]
-        public Nullable<int> TypeId { get; set; } // trotinete/carro/biclicleta
-        public Type Type { get; set; }
 
         [Display(Name = "Cor")]
         [ForeignKey("Colour")]
         public Nullable<int> ColourId { get; set; }
         public Colour Colour { get; set; }
 
-        [Display(Name = "Número de Lugares")]
-        [ForeignKey("VehicleSeat")]
-        public Nullable<int> VehicleSeatId { get; set; }
-        public VehiclePassengers VehicleSeat { get; set; }
-
-        [Display(Name = "Área")]
-        public string Area { get; set; }
-
         [ForeignKey("User")]
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
-        [ForeignKey("VehicleState")]
+        [Display(Name = "Número de Lugares")]
+        public int vehiclePassengers { get; set; }
+
         [Display(Name = "Estado")]
-        public int VehicleStateId { get; set; }
-        public VehicleState VehicleState { get; set; }
+        public int VehicleState { get; set; }
+
+        [Display(Name = "Preço Por Hora")]
+        [DataType(DataType.Currency)]
+        public float HourlyPrice { get; set; }
 
         [Display(Name = "Preço Diário")]
         [DataType(DataType.Currency)]
         public float DailyPrice { get; set; }
-
-        [Display(Name = "Preço Mensal")]
-        [DataType(DataType.Currency)]
-        public float MonthlyPrice { get; set; }
 
         public bool Deleted { get; set; }
     }

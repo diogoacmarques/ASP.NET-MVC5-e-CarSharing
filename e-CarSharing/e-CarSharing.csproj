@@ -220,9 +220,9 @@
     <Compile Include="Migrations\201911271650222_InitialCreate.Designer.cs">
       <DependentUpon>201911271650222_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912041845394_TableCreate.cs" />
-    <Compile Include="Migrations\201912041845394_TableCreate.Designer.cs">
-      <DependentUpon>201912041845394_TableCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201912071858521_tables.cs" />
+    <Compile Include="Migrations\201912071858521_tables.Designer.cs">
+      <DependentUpon>201912071858521_tables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -355,8 +355,8 @@
     <EmbeddedResource Include="Migrations\201911271650222_InitialCreate.resx">
       <DependentUpon>201911271650222_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912041845394_TableCreate.resx">
-      <DependentUpon>201912041845394_TableCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201912071858521_tables.resx">
+      <DependentUpon>201912071858521_tables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

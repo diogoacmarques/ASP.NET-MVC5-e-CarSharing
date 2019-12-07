@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
 using e_CarSharing.Models;
+using Microsoft.AspNet.Identity;
+using System.Data;
+using System.Data.Entity;
+using System.Net;
+using PagedList;
 
 namespace e_CarSharing.Controllers
 {
@@ -13,55 +17,155 @@ namespace e_CarSharing.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(int? Page_Num, string BrandId, string RoleId, string ModelId, string ColourId, string NumberOfSeats)
         {
-           // var ViewModel = new SearchVehicleViewModel();//
-            //string UserId = User.Identity.GetUserId();
-         /*   int ActiveStateId = VehicleState.VEHICLESTATE_ACCEPTED_ID;
+            var model = new Vehicle();
+        
+            string UserId = User.Identity.GetUserId();
+
+
             var Vehicles = db.Vehicles
                 .Include(v => v.User)
+                .Include(v => v.Type)
                 .Include(v => v.Brand)
                 .Include(v => v.Model)
                 .Include(v => v.Colour)
-                .Include(v => v.VehicleDoor)
-                .Include(v => v.VehicleSeat)
-                .Include(v => v.Transmissions)
-                .Include(v => v.VehicleState)
-                .Where(v => v.User.UserStateId == UsersStatesConstants.USERSTATE_ACTIVE_ID)
-                .Where(v => v.VehicleStateId == ActiveStateId && v.Deleted == false)
-                .OrderBy(v => v.VehicleId);*/
-            return View(db.Vehicles.ToList());
-        }
+                .Include(v => v.Location)
+                //.Include(v => v.HourlyPrice)
+                //.Include(v => v.DailyPrice)
+                //.Include(v => v.vehiclePassengers)
+                //.Include(v => v.VehicleState)
+                //.Where(v => v.User.UserStateId == UsersStatesConstants.USERSTATE_ACTIVE_ID)
+                //.Where(v => v.VehicleStateId == ActiveStateId && v.Deleted == false)
+                .OrderBy(v => v.VehicleId);
 
+
+            //ViewModel.Roles = RolesConstants.GetRolesListForCarSearch();
+            //ViewModel.Brands = new SelectList(db.Brands, "BrandId", "BrandName");
+            //ViewModel.Models = new SelectList(db.Models, "ModelId", "ModelName");
+            //ViewModel.NumberOfDoors = new SelectList(db.VehicleDoors, "VehicleDoorId", "VehicleNumberOfDoors");
+            //ViewModel.NumberOfSeats = new SelectList(db.VehicleSeats, "VehicleSeatId", "VehicleNumberOfSeats");
+            //ViewModel.Transmissions = new SelectList(db.Transmissions, "TransmissionId", "TransmissionName");
+            //ViewModel.Colours = new SelectList(db.Colours, "ColourId", "ColourName");
+
+            //int Size_Of_Page = 5;
+            //int No_Of_Page = (Page_Num ?? 1);
+            //int result;
+
+
+            //if (BrandId != null && int.TryParse(BrandId, out result))
+            //{
+            //    model.BrandId = BrandId;
+            //    Vehicles = Vehicles.Where(v => v.BrandId == result).OrderBy(v => v.VehicleId);
+            //}
+
+            //if (ModelId != null && int.TryParse(ModelId, out result))
+            //{
+            //    model.ModelId = ModelId;
+            //    Vehicles = Vehicles.Where(v => v.ModelId == result).OrderBy(v => v.VehicleId);
+            //}
+
+            //if (RoleId != null && int.TryParse(RoleId, out result))
+            //{
+            //    model.RoleId = RoleId;
+            //    Vehicles = Vehicles.Where(v => v.User.Roles.Where(r => r.RoleId == RoleId).Any() ? true : false).OrderBy(v => v.VehicleId);
+            //}
+
+            //if (ColourId != null && int.TryParse(ColourId, out result))
+            //{
+            //    model.ColourId = ColourId;
+            //    Vehicles = Vehicles.Where(v => v.ColourId == result).OrderBy(v => v.VehicleId);
+            //}
+
+            //if (TransmissionId != null && int.TryParse(TransmissionId, out result))
+            //{
+            //    model.TransmissionId = TransmissionId;
+            //    Vehicles = Vehicles.Where(v => v.TransmissionId == result).OrderBy(v => v.VehicleId);
+            //}
+
+            //if (NumberOfSeatId != null && int.TryParse(NumberOfSeatId, out result))
+            //{
+            //    model.NumberOfSeatId = NumberOfSeatId;
+            //    Vehicles = Vehicles.Where(v => v.VehicleSeatId == result).OrderBy(v => v.VehicleId);
+            //}
+
+            //if (NumberOfDoorId != null && int.TryParse(NumberOfDoorId, out result))
+            //{
+            //    model.NumberOfDoorId = NumberOfDoorId;
+            //    Vehicles = Vehicles.Where(v => v.VehicleDoorId == result).OrderBy(v => v.VehicleId);
+            //}
+
+
+            //model.Vehicles = Vehicles.ToPagedList(No_Of_Page, Size_Of_Page);
+
+
+            return View(Vehicles);
+            //return View(db.Vehicles.ToList());
+        }
 
         public ActionResult Create()
         {
-            VehicleViewModelCreate vehicleCreate = new VehicleViewModelCreate();
-            vehicleCreate.Brands = new SelectList(db.Brands, "BrandId", "BrandName");
-            vehicleCreate.Models = new SelectList(db.Models, "ModelId", "ModelName");
-            vehicleCreate.Locations = new SelectList(db.Locations, "LocationId", "LocationName");
-            vehicleCreate.Types = new SelectList(db.Types, "TypeId", "TypeName");
-            vehicleCreate.Colours = new SelectList(db.Colours, "ColourId", "ColourName");
-            vehicleCreate.VehicleSeats = new SelectList(db.VehicleSeats, "NumberPassengersId", "NumberPassengers");
 
-            return View(vehicleCreate);
+            VehicleViewModelCreate model = new VehicleViewModelCreate();
+            model.Brands = new SelectList(db.Brands, "BrandId", "BrandName");
+            model.Models = new SelectList(db.Models, "ModelId", "ModelName");
+            model.Locations = new SelectList(db.Locations, "LocationId", "LocationName");
+            model.Types = new SelectList(db.Types, "TypeId", "TypeName");
+            model.Colours = new SelectList(db.Colours, "ColourId", "ColourName");
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(VehicleViewModelCreate vehicle)
         {
-
-            try
+            var IdUser = User.Identity.GetUserId();
+            if (ModelState.IsValid)
             {
-                Vehicle novo = new Vehicle();
-                novo.BrandId = 1;
+                var newVehicle = new Vehicle();
+                //var conditionsDistinct = vehicle.RentConditions.DistinctBy(c => c.RentConditionId).ToList();
+                //var LocationsDistinct = vehicle.VehicleLocalizations.DistinctBy(c => c.VehicleLocalizationId).ToList();
 
-                db.Vehicles.Add(novo);
+                //foreach (var item in conditionsDistinct)
+                //{
+                //    var condition = db.RentConditions.Find(item.RentConditionId);
+                //    if (condition != null && condition.UserId == IdUser)
+                //        NovoVeiculo.RentConditions.Add(condition);
+                //}
+
+                //foreach (var item in LocationsDistinct)
+                //{
+                //    var location = db.VehicleLocalizations.Find(item.VehicleLocalizationId);
+                //    if (location != null && location.UserId == IdUser)
+                //        NovoVeiculo.VehicleLocalizations.Add(location);
+                //}
+
+
+                newVehicle.TypeId = vehicle.TypeId;
+                newVehicle.BrandId = vehicle.BrandId;
+                newVehicle.ModelId = vehicle.ModelId;
+                //newVehicle.VehiclePlate = vehicle.VehiclePlate;
+                newVehicle.ColourId = vehicle.ColourId;
+                newVehicle.vehiclePassengers = vehicle.vehiclePassengers;
+                newVehicle.UserId = IdUser;
+                newVehicle.VehicleState = VehicleState.VEHICLESTATE_PENDING_ID;
+                newVehicle.HourlyPrice = vehicle.HourlyPrice;
+                newVehicle.DailyPrice = vehicle.DailyPrice;
+                newVehicle.Deleted = false;
+                db.Vehicles.Add(newVehicle);
+                //var VehicleEvaluation = new VehicleEvaluation() { VehicleId = NovoVeiculo.VehicleId };
+                //db.VehicleEvaluations.Add(VehicleEvaluation);
+                db.SaveChanges();
                 return RedirectToAction("Index");
+
             }
-            catch
+            else
             {
-                return View();
+                vehicle.Brands = new SelectList(db.Brands, "BrandId", "BrandName");
+                vehicle.Models = new SelectList(db.Models, "ModelId", "ModelName");
+                vehicle.Locations = new SelectList(db.Locations, "LocationId", "LocationName");
+                vehicle.Types = new SelectList(db.Types, "TypeId", "TypeName");
+                vehicle.Colours = new SelectList(db.Colours, "ColourId", "ColourName");
+                return View(vehicle);
             }
         }
 

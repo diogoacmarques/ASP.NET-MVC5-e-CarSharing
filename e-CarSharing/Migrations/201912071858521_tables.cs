@@ -3,7 +3,7 @@ namespace e_CarSharing.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class TableCreate : DbMigration
+    public partial class tables : DbMigration
     {
         public override void Up()
         {
@@ -13,7 +13,6 @@ namespace e_CarSharing.Migrations
                     {
                         BrandId = c.Int(nullable: false, identity: true),
                         BrandName = c.String(nullable: false),
-                        BrandTeste = c.String(),
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.BrandId);
@@ -36,34 +35,38 @@ namespace e_CarSharing.Migrations
                 c => new
                     {
                         VehicleId = c.Int(nullable: false, identity: true),
-                        VehiclePlate = c.String(),
+                        TypeId = c.Int(nullable: false),
+                        LocationId = c.Int(nullable: false),
                         BrandId = c.Int(),
                         ModelId = c.Int(),
-                        TypeId = c.Int(),
+                        VehiclePlate = c.String(),
                         ColourId = c.Int(),
-                        VehicleSeatId = c.Int(),
-                        Area = c.String(),
                         UserId = c.String(maxLength: 128),
-                        VehicleStateId = c.Int(nullable: false),
+                        vehiclePassengers = c.Int(nullable: false),
+                        VehicleState = c.Int(nullable: false),
+                        HourlyPrice = c.Single(nullable: false),
                         DailyPrice = c.Single(nullable: false),
-                        MonthlyPrice = c.Single(nullable: false),
                         Deleted = c.Boolean(nullable: false),
+                        VehiclePassengers_NumberPassengersId = c.Int(),
+                        VehicleState_VehicleStateId = c.Int(),
                     })
                 .PrimaryKey(t => t.VehicleId)
                 .ForeignKey("dbo.Brands", t => t.BrandId)
                 .ForeignKey("dbo.Colours", t => t.ColourId)
+                .ForeignKey("dbo.Locations", t => t.LocationId, cascadeDelete: true)
                 .ForeignKey("dbo.Models", t => t.ModelId)
-                .ForeignKey("dbo.Types", t => t.TypeId)
+                .ForeignKey("dbo.Types", t => t.TypeId, cascadeDelete: true)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId)
-                .ForeignKey("dbo.NumberPassengers", t => t.VehicleSeatId)
-                .ForeignKey("dbo.VehicleStates", t => t.VehicleStateId, cascadeDelete: true)
+                .ForeignKey("dbo.NumberPassengers", t => t.VehiclePassengers_NumberPassengersId)
+                .ForeignKey("dbo.VehicleStates", t => t.VehicleState_VehicleStateId)
+                .Index(t => t.TypeId)
+                .Index(t => t.LocationId)
                 .Index(t => t.BrandId)
                 .Index(t => t.ModelId)
-                .Index(t => t.TypeId)
                 .Index(t => t.ColourId)
-                .Index(t => t.VehicleSeatId)
                 .Index(t => t.UserId)
-                .Index(t => t.VehicleStateId);
+                .Index(t => t.VehiclePassengers_NumberPassengersId)
+                .Index(t => t.VehicleState_VehicleStateId);
             
             CreateTable(
                 "dbo.Colours",
@@ -74,6 +77,20 @@ namespace e_CarSharing.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.ColourId);
+            
+            CreateTable(
+                "dbo.Locations",
+                c => new
+                    {
+                        LocationId = c.Int(nullable: false, identity: true),
+                        LocationName = c.String(nullable: false, maxLength: 15),
+                        GoogleMapsURL = c.String(),
+                        Deleted = c.Boolean(nullable: false),
+                        Location_LocationId = c.Int(),
+                    })
+                .PrimaryKey(t => t.LocationId)
+                .ForeignKey("dbo.Locations", t => t.Location_LocationId)
+                .Index(t => t.Location_LocationId);
             
             CreateTable(
                 "dbo.RentConditions",
@@ -132,20 +149,6 @@ namespace e_CarSharing.Migrations
                 .PrimaryKey(t => t.VehicleStateId);
             
             CreateTable(
-                "dbo.Locations",
-                c => new
-                    {
-                        LocationId = c.Int(nullable: false, identity: true),
-                        LocationName = c.String(nullable: false),
-                        GoogleMapsURL = c.String(),
-                        Deleted = c.Boolean(nullable: false),
-                        Location_LocationId = c.Int(),
-                    })
-                .PrimaryKey(t => t.LocationId)
-                .ForeignKey("dbo.Locations", t => t.Location_LocationId)
-                .Index(t => t.Location_LocationId);
-            
-            CreateTable(
                 "dbo.RentConditionVehicles",
                 c => new
                     {
@@ -162,9 +165,8 @@ namespace e_CarSharing.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Locations", "Location_LocationId", "dbo.Locations");
-            DropForeignKey("dbo.Vehicles", "VehicleStateId", "dbo.VehicleStates");
-            DropForeignKey("dbo.Vehicles", "VehicleSeatId", "dbo.NumberPassengers");
+            DropForeignKey("dbo.Vehicles", "VehicleState_VehicleStateId", "dbo.VehicleStates");
+            DropForeignKey("dbo.Vehicles", "VehiclePassengers_NumberPassengersId", "dbo.NumberPassengers");
             DropForeignKey("dbo.Vehicles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Vehicles", "TypeId", "dbo.Types");
             DropForeignKey("dbo.Rents", "VehicleId", "dbo.Vehicles");
@@ -172,29 +174,32 @@ namespace e_CarSharing.Migrations
             DropForeignKey("dbo.RentConditionVehicles", "RentCondition_RentConditionId", "dbo.RentConditions");
             DropForeignKey("dbo.RentConditions", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Vehicles", "ModelId", "dbo.Models");
+            DropForeignKey("dbo.Vehicles", "LocationId", "dbo.Locations");
+            DropForeignKey("dbo.Locations", "Location_LocationId", "dbo.Locations");
             DropForeignKey("dbo.Vehicles", "ColourId", "dbo.Colours");
             DropForeignKey("dbo.Vehicles", "BrandId", "dbo.Brands");
             DropForeignKey("dbo.Models", "BrandId", "dbo.Brands");
             DropIndex("dbo.RentConditionVehicles", new[] { "Vehicle_VehicleId" });
             DropIndex("dbo.RentConditionVehicles", new[] { "RentCondition_RentConditionId" });
-            DropIndex("dbo.Locations", new[] { "Location_LocationId" });
             DropIndex("dbo.Rents", new[] { "VehicleId" });
             DropIndex("dbo.RentConditions", new[] { "UserId" });
-            DropIndex("dbo.Vehicles", new[] { "VehicleStateId" });
+            DropIndex("dbo.Locations", new[] { "Location_LocationId" });
+            DropIndex("dbo.Vehicles", new[] { "VehicleState_VehicleStateId" });
+            DropIndex("dbo.Vehicles", new[] { "VehiclePassengers_NumberPassengersId" });
             DropIndex("dbo.Vehicles", new[] { "UserId" });
-            DropIndex("dbo.Vehicles", new[] { "VehicleSeatId" });
             DropIndex("dbo.Vehicles", new[] { "ColourId" });
-            DropIndex("dbo.Vehicles", new[] { "TypeId" });
             DropIndex("dbo.Vehicles", new[] { "ModelId" });
             DropIndex("dbo.Vehicles", new[] { "BrandId" });
+            DropIndex("dbo.Vehicles", new[] { "LocationId" });
+            DropIndex("dbo.Vehicles", new[] { "TypeId" });
             DropIndex("dbo.Models", new[] { "BrandId" });
             DropTable("dbo.RentConditionVehicles");
-            DropTable("dbo.Locations");
             DropTable("dbo.VehicleStates");
             DropTable("dbo.NumberPassengers");
             DropTable("dbo.Types");
             DropTable("dbo.Rents");
             DropTable("dbo.RentConditions");
+            DropTable("dbo.Locations");
             DropTable("dbo.Colours");
             DropTable("dbo.Vehicles");
             DropTable("dbo.Models");

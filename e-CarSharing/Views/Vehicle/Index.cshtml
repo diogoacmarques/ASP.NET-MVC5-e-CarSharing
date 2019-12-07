@@ -1,7 +1,4 @@
-﻿@*@model e_CarSharing.Models.SearchVehicleViewModel*@
-@*@using PagedList.Mvc;*@
-
-@model IEnumerable<e_CarSharing.Models.Vehicle>
+﻿@model IEnumerable<e_CarSharing.Models.Vehicle>
 
 @{
     ViewBag.Title = "All Vehicles";
@@ -14,35 +11,65 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Brand)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Model)
-        </th>
+<hr />
+@if (Model.Count() != 0)
+{
 
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = -1 }) |
-                @Html.ActionLink("Details", "Details", new { id = -1 }) |
-                @Html.ActionLink("Remover", "Delete", new { id = -1 })
-            </td>
+    <table class="table table-bordered table-responsive table-condensed table-striped">
+        <tr>th>
+            <th>
+                @Html.DisplayName("Marca")
+            </th>
+            <th>
+                @Html.DisplayName("Modelo")
+            </th>
+            <th>
+                @Html.DisplayName("Preço Diário")
+            </th>
+            <th>
+                @Html.DisplayName("Preço por Hora")
+            </th>
+            <th>
+                @Html.DisplayName("Proprietário")
+            </th>
+            <th>
+                @Html.DisplayName("Ações")
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand.BrandName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model.ModelName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DailyPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HourlyPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+                <td>
+                    @Html.ActionLink("Detalhes", "VehiclesDetails", new { id = item.VehicleId })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+}
+else
+{
+    <h4>A pesquisa não obteve resultados ...</h4>
+}
+
 
 <div>
     @Html.ActionLink("Home", "Index", "Home", new { htmlAttributes = new { @class = "btn btn-primary" } })

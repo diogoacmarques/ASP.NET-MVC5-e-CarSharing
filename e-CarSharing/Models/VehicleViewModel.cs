@@ -16,38 +16,55 @@ namespace e_CarSharing.Models
 
     public class VehicleViewModelCreate
     {
+
         public SelectList Brands { get; set; }
         [Display(Name = "Marca")]
-        public string BrandId { get; set; }
-
-
+        [Required(ErrorMessage = "Escolha uma marca")]
+        public int BrandId { get; set; }
+    
+        
         public SelectList Models { get; set; }
         [Display(Name = "Modelo")]
-        public string ModelId { get; set; }
+        [Required(ErrorMessage = "Especifique um modelo")]
+        public int ModelId { get; set; }
+
 
         public SelectList Locations { get; set; }
         [Display(Name = "Localização")]
-        public string LocationId { get; set; }
+        [Required(ErrorMessage = "Especifique uma localização")]
+        public int LocationId { get; set; }
 
-
+        
         public SelectList Types { get; set; }
         [Display(Name = "Tipo")]
-        public string TypeId { get; set; }
+        [Required(ErrorMessage = "Escolha um tipo de veículo")]
+        public int TypeId { get; set; }
 
-
+      
         public SelectList Colours { get; set; }
         [Display(Name = "Cor")]
-        public string ColourId { get; set; }
+        [Required(ErrorMessage = "Escolha uma cor")]
+        public int ColourId { get; set; }
 
 
-        public SelectList VehicleSeats { get; set; }
-        [Display(Name = "Numero de Lugares")]
-        public string VehicleSeatId { get; set; }
+        [Display(Name = "Número de passageiros")]
+        [Required(ErrorMessage = "Especifique o número de passageiros")]     
+        [Range(1, 7, ErrorMessage = "Insira um número entre 1 e 7")]
+        public int vehiclePassengers { get; set; }
+
 
         [Display(Name = "Preço por hora")]
-        public float price { get; set; }
+        [Required(ErrorMessage = "Especifique o preço por hora")] 
+        [Range(1, 1000, ErrorMessage = "Insira um preço entre 1 e 1000")]
+        [DataType(DataType.Currency)]
+        public float HourlyPrice { get; set; }
 
 
+        [Display(Name = "Preço por dia")]
+        [Required(ErrorMessage = "Especifique o preço por dia")]
+        [Range(1, 10000, ErrorMessage = "Insira um preço entre 1 e 10000")]      
+        [DataType(DataType.Currency)]
+        public float DailyPrice { get; set; }
 
     }
 
@@ -55,6 +72,8 @@ namespace e_CarSharing.Models
     public class SearchVehicleViewModel
     {
         public IPagedList<Vehicle> Vehicles { get; set; }
+
+
     //    public SelectList States { get; set; }
 
     //    [Display(Name = "Estado")]

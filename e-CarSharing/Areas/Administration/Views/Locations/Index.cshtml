@@ -6,7 +6,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.LocalName)
+            @Html.DisplayNameFor(location => location.LocationName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.GoogleMapsURL)
@@ -17,15 +17,15 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.LocalName)
+            @Html.DisplayFor(modelItem => item.LocationName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.GoogleMapsURL)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LocalId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LocalId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LocalId })
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.LocationId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LocalId }) |*@
+            @Html.ActionLink("Delete", "Delete", new { id=item.LocationId })
         </td>
     </tr>
 }

@@ -23,9 +23,6 @@ namespace e_CarSharing.Models
         [Display(Name = "Marca")]
         public string BrandName { get; set; }
 
-        [Display(Name = "teste")]
-        public string BrandTeste { get; set; }
-
         public virtual ICollection<Model> Models { get; set; }
         public bool Deleted { get; set; }
     }

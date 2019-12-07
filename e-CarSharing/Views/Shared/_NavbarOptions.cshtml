@@ -28,7 +28,7 @@
         <ul class="dropdown-menu" style="background-color:cornflowerblue">
             <li class="dropdown-header" style="font-size:15px;">Gestão</li>
             <li>@Html.ActionLink("Gerir Veiculos", "Index", "Home", new { area = "" }, null)</li>
-            <li>@Html.ActionLink("Pesquisar Veículos", "Index", "Home", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("Pesquisar Veículos", "Index", "Vehicle", new { area = "" }, null)</li>
             <li class="divider"></li>
             <li class="dropdown-header" style="font-size:15px;">Caracteristicas</li>
             <li>@Html.ActionLink("Tipos de Veiculos", "Index", "Types", new { @area = "Administration" }, null)</li>
@@ -43,7 +43,7 @@
     <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Veiculos (user) <span class="glyphicon glyphicon-collapse-down"></span></a>
         <ul class="dropdown-menu" style="background-color:cornflowerblue">
-            <li>@Html.ActionLink("Pesquisar Veículos", "Index", "Home", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("Pesquisar Veículos", "Index", "Vehicle", new { area = "" }, null)</li>
             <li class="divider"></li>
             <li class="dropdown-header" style="font-size:15px;">Gestão</li>
             <li>@Html.ActionLink("Criar Veiculo", "Create", "Vehicle", new { area = "" }, null)</li>

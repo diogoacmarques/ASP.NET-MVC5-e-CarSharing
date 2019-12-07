@@ -17,13 +17,13 @@ namespace e_CarSharing.Models
         }
 
         [Key]
-        [Display(Name = "Locations")]
+        [Display(Name = "Localização")]
         public int LocationId { get; set; }
 
-        [Required]
-        [Display(Name = "Locations")]
+        [Required(ErrorMessage = "Especifique uma localização")]
+        [StringLength(15, MinimumLength = 3,ErrorMessage = "A localização deve ter no mínimo 3 e maximo de 15 carateres.")]
+        [Display(Name = "Localização")]
         public string LocationName { get; set; }
-
 
         [DataType(dataType: DataType.Url)]
         [Display(Name = "Link do GoogleMaps")]
