@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -63,6 +64,52 @@ namespace e_CarSharing.Models
         [Display(Name = "Preço por dia")]
         [Required(ErrorMessage = "Especifique o preço por dia")]
         [Range(1, 10000, ErrorMessage = "Insira um preço entre 1 e 10000")]      
+        [DataType(DataType.Currency)]
+        public float DailyPrice { get; set; }
+
+    }
+
+    public class VehicleViewModelDetails
+    {       
+        [Display(Name = "Marca")]
+        [ReadOnly(true)]
+        public Brand Brand { get; set; }
+
+
+        [Display(Name = "Modelo")]
+
+        public Model Model { get; set; }
+
+
+        [Display(Name = "Localização")]
+
+        public Location Location { get; set; }
+
+
+        [Display(Name = "Tipo")]
+
+        public Type Type { get; set; }
+
+
+
+        [Display(Name = "Cor")]
+
+        public Colour Colour { get; set; }
+
+
+        [Display(Name = "Número de passageiros")]
+
+        public int vehiclePassengers { get; set; }
+
+
+        [Display(Name = "Preço por hora")]
+        [ReadOnly(true)]
+        [DataType(DataType.Currency)]
+        public float HourlyPrice { get; set; }
+
+
+        [Display(Name = "Preço por dia")]
+
         [DataType(DataType.Currency)]
         public float DailyPrice { get; set; }
 

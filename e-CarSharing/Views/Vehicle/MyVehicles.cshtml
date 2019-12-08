@@ -42,29 +42,29 @@
 
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type.TypeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand.BrandName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model.ModelName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HourlyPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DailyPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.UserName)
-            </td>
-            <td>
-                @Html.ActionLink("Detalhes", "Details", new { id = item.VehicleId })
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type.TypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand.BrandName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model.ModelName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HourlyPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DailyPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+                <td>
+                    @Html.ActionLink("Detalhes", "VehiclesDetails", new { id = item.VehicleId })
+                </td>
+            </tr>
         }
 
     </table>

@@ -334,6 +334,8 @@
     <Content Include="Areas\Administration\Views\Locations\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Locations\Create.cshtml" />
     <Content Include="Areas\Administration\Views\Locations\Delete.cshtml" />
+    <Content Include="Views\Vehicle\MyVehicles.cshtml" />
+    <Content Include="Views\Vehicle\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

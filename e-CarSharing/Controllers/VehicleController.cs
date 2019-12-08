@@ -118,7 +118,6 @@ namespace e_CarSharing.Controllers
         [HttpPost]
         public ActionResult Create(VehicleViewModelCreate vehicle)
         {
-            var IdUser = User.Identity.GetUserId();
             if (ModelState.IsValid)
             {
                 var newVehicle = new Vehicle();
@@ -146,10 +145,11 @@ namespace e_CarSharing.Controllers
                 //newVehicle.VehiclePlate = vehicle.VehiclePlate;
                 newVehicle.ColourId = vehicle.ColourId;
                 newVehicle.vehiclePassengers = vehicle.vehiclePassengers;
-                newVehicle.UserId = IdUser;
+                newVehicle.UserId = User.Identity.GetUserId();
+                newVehicle.LocationId = vehicle.LocationId;
                 newVehicle.VehicleState = VehicleState.VEHICLESTATE_PENDING_ID;
                 newVehicle.HourlyPrice = vehicle.HourlyPrice;
-                newVehicle.DailyPrice = vehicle.DailyPrice;
+                newVehicle.DailyPrice = vehicle.DailyPrice;           
                 newVehicle.Deleted = false;
                 db.Vehicles.Add(newVehicle);
                 //var VehicleEvaluation = new VehicleEvaluation() { VehicleId = NovoVeiculo.VehicleId };
@@ -201,13 +201,29 @@ namespace e_CarSharing.Controllers
 
 
 
-        //public ActionResult Details(int id)
-        //{
-        //    Veiculo v = VeiculoMockTmpData.ListaVeiculos.FirstOrDefault(s => s.Id == id);
-        //    if (v == null) return RedirectToAction("Index");
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            VehicleViewModelDetails VehicleDetails = new VehicleViewModelDetails();
+            Vehicle vehicle = db.Vehicles.Find(id);
+            if (vehicle == null)
+            {
+                return HttpNotFound();
+            }
 
-        //    return View(v);
-        //}
+            VehicleDetails.Type = db.Types.Find(vehicle.TypeId);
+            VehicleDetails.Brand = db.Brands.Find(vehicle.BrandId);
+            VehicleDetails.Model = db.Models.Find(vehicle.ModelId);
+            VehicleDetails.Location = db.Locations.Find(vehicle.LocationId);
+            VehicleDetails.Colour = db.Colours.Find(vehicle.ColourId);
+            VehicleDetails.vehiclePassengers = vehicle.vehiclePassengers;
+            VehicleDetails.HourlyPrice = vehicle.HourlyPrice;
+            VehicleDetails.DailyPrice = vehicle.DailyPrice;
+            return View(VehicleDetails);
+        }
 
         //public ActionResult Edit(int id)
         //{
@@ -250,6 +266,24 @@ namespace e_CarSharing.Controllers
         //        return View();
         //    }
         //}
+
+
+        public ActionResult MyVehicles()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var MyVehicles = db.Vehicles
+              .Include(v => v.User)
+              .Include(v => v.Type)
+              .Include(v => v.Brand)
+              .Include(v => v.Model)
+              .Include(v => v.Colour)
+              .Include(v => v.Location)
+              .Where(v => v.User.Id == userId)
+              .OrderBy(v => v.VehicleId);
+
+            return View(MyVehicles);
+        }
 
 
 
