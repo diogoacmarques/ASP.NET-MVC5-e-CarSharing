@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "All Vehicles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Rents</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(Model => Model.VehicleId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Vehicle.VehiclePlate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Vehicle.VehiclePlate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", disable = "disable" } })
+                @Html.ValidationMessageFor(model => model.Vehicle.VehiclePlate, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-pull-1 col-md-5">
+                @Html.ActionLink("Ver Disponibilidades", "VerifyAvailablility", "Rents", new { area = "", id = Model.VehicleId }, new { @class = "btn btn-primary btn-large ", target = "_blank" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BeginDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BeginDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.BeginDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PickUpLocationId, "Local de Levantamento ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.PickUpLocationId, Model.PickUpLocations, "Onde Levanto?", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PickUpLocationId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DeliveryLocationId, "Local de Devolução", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DeliveryLocationId, Model.DeliveryLocations, "Onde Devolvo?", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DeliveryLocationId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Criar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

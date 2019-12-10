@@ -17,12 +17,11 @@ namespace e_CarSharing.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         [AllowAnonymous]
-        public ActionResult Index(int? Page_Num, string BrandId, string RoleId, string ModelId, string ColourId, string NumberOfSeats)
+        public ActionResult Index(int? LocationId, DateTime? BeginDate, DateTime? EndDate)
         {
             var model = new Vehicle();
         
             string UserId = User.Identity.GetUserId();
-
 
             var Vehicles = db.Vehicles
                 .Include(v => v.User)

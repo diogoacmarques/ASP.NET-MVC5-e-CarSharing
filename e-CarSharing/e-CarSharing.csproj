@@ -212,6 +212,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RentController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -237,6 +238,7 @@
     <Compile Include="Models\RentCondition.cs" />
     <Compile Include="Models\AccountStaticRoles.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\RentViewModel.cs" />
     <Compile Include="Models\Type.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Models\VehicleLocalization.cs" />
@@ -336,6 +338,8 @@
     <Content Include="Areas\Administration\Views\Locations\Delete.cshtml" />
     <Content Include="Views\Vehicle\MyVehicles.cshtml" />
     <Content Include="Views\Vehicle\Details.cshtml" />
+    <Content Include="Views\Rent\Index.cshtml" />
+    <Content Include="Views\Rent\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
