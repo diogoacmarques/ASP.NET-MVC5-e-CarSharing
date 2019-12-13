@@ -170,7 +170,7 @@ namespace e_CarSharing.Controllers
                 return RedirectToAction("Index", "Home");
 
             var model = new RegisterViewModel();
-            model.Roles = AccountStaticRoles.GetRolesListForRegister();
+            model.Roles = AccountStaticRoles.GetRolesListForUser();
             return View(model);
         }
 
@@ -186,7 +186,7 @@ namespace e_CarSharing.Controllers
                
                 if (db.Users.Where(u => u.UserName == model.Username).Any() == true)
                 {
-                    model.Roles = AccountStaticRoles.GetRolesListForRegister();
+                    model.Roles = AccountStaticRoles.GetRolesListForUser();
                     ModelState.AddModelError("", "Já existe um utilizador com o Username introduzido");
                     return View(model);
                 }
@@ -240,7 +240,7 @@ namespace e_CarSharing.Controllers
 
                     if (check == true)
                     {
-                        model.Roles = AccountStaticRoles.GetRolesListForRegister();
+                        model.Roles = AccountStaticRoles.GetRolesListForUser();
                         return View(model);
                     }
 
@@ -251,6 +251,7 @@ namespace e_CarSharing.Controllers
                 //        Id = model.BI,
                 //        UserStateId = UsersStatesConstants.USERSTATE_PENDING_ID,
                 //        BirthDate = model.BirthDate,
+                       // PhoneNumber
                 //        DriverLicenseEmissionDate = model.DriverLicenseEmissionDate,
                 //        DriverLicenseNumber = model.DriverLicenseNumber,
                 //        MobilePhoneNumber = model.MobilePhoneNumber,

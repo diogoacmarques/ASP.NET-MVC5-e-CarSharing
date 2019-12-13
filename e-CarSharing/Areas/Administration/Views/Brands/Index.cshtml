@@ -23,7 +23,7 @@
                 @Html.DisplayNameFor(model => model.BrandName)
             </th>
             <th>
-                ID
+                @Html.DisplayNameFor(model => model.Type.TypeName)
             </th>
             <th>
                 @Html.DisplayName("Ações")
@@ -37,11 +37,10 @@
                     @Html.DisplayFor(modelItem => item.BrandName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BrandId)
+                    @Html.DisplayFor(modelItem => item.Type.TypeName)
                 </td>
                 <td>
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.BrandId }) |
-                    @Html.ActionLink("Editar", "Edit", new { id = item.BrandId })
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.BrandId })
                 </td>
             </tr>
         }

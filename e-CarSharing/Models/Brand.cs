@@ -23,6 +23,13 @@ namespace e_CarSharing.Models
         [Display(Name = "Marca")]
         public string BrandName { get; set; }
 
+        [ForeignKey("Type")]
+        [Required]
+        [Display(Name = "Tipo")]
+        public int TypeId { get; set; }
+        [Display(Name = "Tipo")]
+        public Type Type { get; set; }
+
         public virtual ICollection<Model> Models { get; set; }
         public bool Deleted { get; set; }
     }

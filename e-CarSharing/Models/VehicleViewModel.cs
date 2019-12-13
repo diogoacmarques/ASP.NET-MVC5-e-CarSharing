@@ -47,7 +47,6 @@ namespace e_CarSharing.Models
         [Required(ErrorMessage = "Escolha uma cor")]
         public int ColourId { get; set; }
 
-
         [Display(Name = "Número de passageiros")]
         [Required(ErrorMessage = "Especifique o número de passageiros")]     
         [Range(1, 7, ErrorMessage = "Insira um número entre 1 e 7")]
@@ -67,38 +66,35 @@ namespace e_CarSharing.Models
         [DataType(DataType.Currency)]
         public float DailyPrice { get; set; }
 
+
     }
 
     public class VehicleViewModelDetails
-    {       
+    {
+        public int VehicleId { get; set; }
+
         [Display(Name = "Marca")]
         [ReadOnly(true)]
         public Brand Brand { get; set; }
 
 
         [Display(Name = "Modelo")]
-
         public Model Model { get; set; }
 
 
         [Display(Name = "Localização")]
-
         public Location Location { get; set; }
 
 
         [Display(Name = "Tipo")]
-
         public Type Type { get; set; }
 
 
-
         [Display(Name = "Cor")]
-
         public Colour Colour { get; set; }
 
 
         [Display(Name = "Número de passageiros")]
-
         public int vehiclePassengers { get; set; }
 
 
@@ -109,7 +105,6 @@ namespace e_CarSharing.Models
 
 
         [Display(Name = "Preço por dia")]
-
         [DataType(DataType.Currency)]
         public float DailyPrice { get; set; }
 
@@ -118,28 +113,40 @@ namespace e_CarSharing.Models
 
     public class SearchVehicleViewModel
     {
-        public IPagedList<Vehicle> Vehicles { get; set; }
+        public IEnumerable<Vehicle> Vehicles { get; set; }
+
+        public SelectList Types { get; set; }
+        [Display(Name = "Tipo de Veículo")]
+        public int? TypeId { get; set; }
+
+        public SelectList Roles { get; set; }
+        [Display(Name = "Tipo de Anunciante")]
+        public string RoleId { get; set; }
+
+        public SelectList Colours { get; set; }
+        [Display(Name = "Cor")]
+        public int? ColourId { get; set; }
+
+        public SelectList Brands { get; set; }
+        [Display(Name = "Marcas")]
+        public int? BrandId { get; set; }
+
+        public SelectList Models { get; set; }
+        [Display(Name = "Modelos")]
+        public int? ModelId { get; set; }
+
+        [Display(Name = "Número de Passageiros")]
+        public int? VehiclePassengers { get; set; }
+
+        public SelectList Locations { get; set; }
+        [Display(Name = "Localização")]
+        public int? LocationId { get; set; }
 
 
-    //    public SelectList States { get; set; }
+        [Display(Name = "Data de Inicio")]
+        public DateTime BeginDate { get; set; }
 
-    //    [Display(Name = "Estado")]
-    //    public string StateId { get; set; }
-
-    //    //public SelectList Roles { get; set; }
-    //    //[Display(Name = "Tipo de Anunciante")]
-    //    //public string RoleId { get; set; }
-
-    //    public SelectList Colours { get; set; }
-    //    [Display(Name = "Cor")]
-    //    public string ColourId { get; set; }
-
-    //    public SelectList Brands { get; set; }
-    //    [Display(Name = "Marcas")]
-    //    public string BrandId { get; set; }
-
-    //    public SelectList Models { get; set; }
-    //    [Display(Name = "Modelos")]
-    //    public string ModelId { get; set; }
+        [Display(Name = "Data de Término")]
+        public DateTime EndDate { get; set; }
     }
 }

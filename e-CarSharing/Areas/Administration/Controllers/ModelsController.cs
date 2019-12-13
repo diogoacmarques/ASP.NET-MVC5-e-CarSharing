@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using e_CarSharing.Models;
 using e_CarSharing.Areas.Administration.ViewModels;
+using Newtonsoft.Json;
 
 namespace e_CarSharing.Areas.Administration.Controllers
 {
@@ -25,22 +26,30 @@ namespace e_CarSharing.Areas.Administration.Controllers
         public ActionResult Create()
         {
             ModelViewModelCreate createModel = new ModelViewModelCreate();
-            createModel.Brands = new SelectList(db.Brands, "BrandId", "BrandName");
+            createModel.Brands = new SelectList(db.Brands.Where(t => t.Deleted == false), "BrandId", "BrandName");
             return View(createModel);
         }
 
         // POST: Administration/Brands/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ModelName,BrandId")] Model model)
+        public ActionResult Create(ModelViewModelCreate ViewModel)
         {
+
+            Model model = new Model
+            {
+                ModelName = ViewModel.ModelName,
+                BrandId = ViewModel.BrandId
+            };
+
             if (ModelState.IsValid)
             {
                 var list = db.Models.Where(m => m.ModelName == model.ModelName && m.Deleted == false).Count();
                 if (list != 0)
                 {
                     ModelState.AddModelError(string.Empty, " Já existe esse modelo!");
-                    return View(model);
+                    ViewModel.Brands = new SelectList(db.Brands.Where(t => t.Deleted == false), "BrandId", "BrandName");
+                    return View(ViewModel);
                 }
                 else if (db.Models.Where(m => m.ModelName == model.ModelName && m.Deleted == true).Count() != 0)
                 {
@@ -56,7 +65,8 @@ namespace e_CarSharing.Areas.Administration.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(model);
+            ViewModel.Brands = new SelectList(db.Brands.Where(t => t.Deleted == false), "BrandId", "BrandName");
+            return View(ViewModel);
 
         }
 
@@ -131,5 +141,6 @@ namespace e_CarSharing.Areas.Administration.Controllers
             }
             return View(model);
         }
+
     }
 }

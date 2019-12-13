@@ -20,7 +20,7 @@ namespace e_CarSharing.Models
         [Display(Name = "Cor")]
         public int ColourId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Especifique uma cor")]
         [Display(Name = "Cor")]
         public string ColourName { get; set; }
 

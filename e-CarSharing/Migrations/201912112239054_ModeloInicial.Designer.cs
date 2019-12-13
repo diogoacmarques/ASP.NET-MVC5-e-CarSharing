@@ -7,13 +7,13 @@ namespace e_CarSharing.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class tables : IMigrationMetadata
+    public sealed partial class ModeloInicial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(tables));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ModeloInicial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201912071858521_tables"; }
+            get { return "201912112239054_ModeloInicial"; }
         }
         
         string IMigrationMetadata.Source

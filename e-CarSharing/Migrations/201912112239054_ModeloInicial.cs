@@ -3,7 +3,7 @@ namespace e_CarSharing.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class tables : DbMigration
+    public partial class ModeloInicial : DbMigration
     {
         public override void Up()
         {
@@ -13,9 +13,12 @@ namespace e_CarSharing.Migrations
                     {
                         BrandId = c.Int(nullable: false, identity: true),
                         BrandName = c.String(nullable: false),
+                        TypeId = c.Int(nullable: false),
                         Deleted = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.BrandId);
+                .PrimaryKey(t => t.BrandId)
+                .ForeignKey("dbo.Brands", t => t.TypeId)
+                .Index(t => t.TypeId);
             
             CreateTable(
                 "dbo.Models",
@@ -125,9 +128,12 @@ namespace e_CarSharing.Migrations
                     {
                         TypeId = c.Int(nullable: false, identity: true),
                         TypeName = c.String(nullable: false),
+                        BrandId = c.Int(nullable: false),
                         Deleted = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.TypeId);
+                .PrimaryKey(t => t.TypeId)
+                .ForeignKey("dbo.Brands", t => t.BrandId, cascadeDelete: true)
+                .Index(t => t.BrandId);
             
             CreateTable(
                 "dbo.NumberPassengers",
@@ -161,14 +167,20 @@ namespace e_CarSharing.Migrations
                 .Index(t => t.RentCondition_RentConditionId)
                 .Index(t => t.Vehicle_VehicleId);
             
+            AddColumn("dbo.AspNetUsers", "BirthDate", c => c.DateTime());
+            AddColumn("dbo.AspNetUsers", "DriverLicenseNumber", c => c.String(maxLength: 20));
+            AddColumn("dbo.AspNetUsers", "DriverLicenseEmissionDate", c => c.DateTime());
+            AddColumn("dbo.AspNetUsers", "DriverLicenseEndDate", c => c.DateTime());
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.Vehicles", "VehicleState_VehicleStateId", "dbo.VehicleStates");
             DropForeignKey("dbo.Vehicles", "VehiclePassengers_NumberPassengersId", "dbo.NumberPassengers");
+            DropForeignKey("dbo.Brands", "TypeId", "dbo.Brands");
             DropForeignKey("dbo.Vehicles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Vehicles", "TypeId", "dbo.Types");
+            DropForeignKey("dbo.Types", "BrandId", "dbo.Brands");
             DropForeignKey("dbo.Rents", "VehicleId", "dbo.Vehicles");
             DropForeignKey("dbo.RentConditionVehicles", "Vehicle_VehicleId", "dbo.Vehicles");
             DropForeignKey("dbo.RentConditionVehicles", "RentCondition_RentConditionId", "dbo.RentConditions");
@@ -181,6 +193,7 @@ namespace e_CarSharing.Migrations
             DropForeignKey("dbo.Models", "BrandId", "dbo.Brands");
             DropIndex("dbo.RentConditionVehicles", new[] { "Vehicle_VehicleId" });
             DropIndex("dbo.RentConditionVehicles", new[] { "RentCondition_RentConditionId" });
+            DropIndex("dbo.Types", new[] { "BrandId" });
             DropIndex("dbo.Rents", new[] { "VehicleId" });
             DropIndex("dbo.RentConditions", new[] { "UserId" });
             DropIndex("dbo.Locations", new[] { "Location_LocationId" });
@@ -193,6 +206,11 @@ namespace e_CarSharing.Migrations
             DropIndex("dbo.Vehicles", new[] { "LocationId" });
             DropIndex("dbo.Vehicles", new[] { "TypeId" });
             DropIndex("dbo.Models", new[] { "BrandId" });
+            DropIndex("dbo.Brands", new[] { "TypeId" });
+            DropColumn("dbo.AspNetUsers", "DriverLicenseEndDate");
+            DropColumn("dbo.AspNetUsers", "DriverLicenseEmissionDate");
+            DropColumn("dbo.AspNetUsers", "DriverLicenseNumber");
+            DropColumn("dbo.AspNetUsers", "BirthDate");
             DropTable("dbo.RentConditionVehicles");
             DropTable("dbo.VehicleStates");
             DropTable("dbo.NumberPassengers");

@@ -39,7 +39,7 @@ namespace e_CarSharing.Models
         //    return new SelectList(lista, "Value", "Text");
         //}
 
-        public static SelectList GetRolesListForRegister()
+        public static SelectList GetRolesListForUser()
         {
             var lista = new List<SelectListItem>()
             {
@@ -48,16 +48,6 @@ namespace e_CarSharing.Models
             };
             return new SelectList(lista, "Value", "Text");
         }
-
-        //public static SelectList GetRolesListForCarSearch()
-        //{
-        //    var lista = new List<SelectListItem>()
-        //    {
-        //       new SelectListItem { Value = STRING_PROFISSIONAL_ID, Text = STRING_PROFISSIONAL },
-        //       new SelectListItem { Value = STRING_PARTICULAR_ID, Text = STRING_PARTICULAR }
-        //    };
-        //    return new SelectList(lista, "Value", "Text");
-        //}
     }
 }
 

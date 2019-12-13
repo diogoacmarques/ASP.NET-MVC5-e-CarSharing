@@ -13,17 +13,9 @@ namespace e_CarSharing.Models
         [Required(ErrorMessage = "Especifique uma data")]    
         public DateTime BeginDate { get; set; }
 
-        [Display(Name = "Data de Término")]
-        [Required(ErrorMessage = "Especifique uma data")]
-        public DateTime EndDate { get; set; }
-
         [Display(Name = "Onde Iniciar")]
         [Required(ErrorMessage = "Especifique uma localização")]
         public int? PickUpLocationId { get; set; }
-
-        [Display(Name = "Onde Terminar")]
-        [Required(ErrorMessage = "Especifique uma localização")]     
-        public int? DeliveryLocationId { get; set; }
 
         public SelectList Locations { get; set; }
     }

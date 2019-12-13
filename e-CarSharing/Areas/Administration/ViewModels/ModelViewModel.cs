@@ -13,14 +13,14 @@ namespace e_CarSharing.Areas.Administration.ViewModels
 
     public class ModelViewModelCreate
     {
-        [Required]
+        [Required(ErrorMessage = "Insira o modelo")]
         [Display(Name = "Modelo")]
         public string ModelName { get; set; }
 
         public SelectList Brands { get; set; }
         [Display(Name = "Marca")]
-
-        public string BrandId { get; set; }
+        [Required(ErrorMessage = "Especifique a marca")]
+        public int BrandId { get; set; }
 
     }
 }

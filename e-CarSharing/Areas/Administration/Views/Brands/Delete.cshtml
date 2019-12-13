@@ -10,10 +10,7 @@
 <h3>Deseja eliminar este item?</h3>
 <div>
     <hr />
-    @if (ViewBag.ShowAlert != null && ViewBag.ShowAlert == true)
-    {
-        @Html.Partial("_ShowAlert");
-    }
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.BrandName)

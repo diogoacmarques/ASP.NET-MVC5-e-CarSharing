@@ -1,4 +1,4 @@
-﻿@model IEnumerable<e_CarSharing.Models.Vehicle>
+﻿@model e_CarSharing.Models.SearchVehicleViewModel
 
 @{
     ViewBag.Title = "All Vehicles";
@@ -7,74 +7,192 @@
 
 <h2>Todos os Veiculos</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-<hr />
-@if (Model.Count() != 0)
+@using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
 
-    <table class="table table-bordered table-responsive table-condensed table-striped">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Type.TypeName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Brand.BrandName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Model.ModelName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HourlyPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DailyPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User.UserName)
-            </th>
-            <th>
-                @Html.DisplayName("Ações")
-            </th>
-        </tr>
+    <div class="form-horizontal">
 
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type.TypeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand.BrandName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model.ModelName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HourlyPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DailyPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.UserName)
-            </td>
-            <td>
-                @Html.ActionLink("Detalhes", "Details", new { id = item.VehicleId })
-            </td>
-        </tr>
-        }
+        <div class="tab-content">
 
-    </table>
+            <div class="form-group">
+                @Html.LabelFor(model => model.TypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(m => m.TypeId, Model.Types, "Escolha um tipo", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
+                </div>
+
+                @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(m => m.RoleId, Model.Roles, "Escolha um tipo", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <hr />
+
+            @if (Model.TypeId != null)
+            {
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BrandId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.BrandId, Model.Brands, "Escolha uma marca", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BrandId, "", new { @class = "text-danger" })
+                    </div>
+
+                    @Html.LabelFor(model => model.ModelId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.ModelId, Model.Models, "Escolha um modelo", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ModelId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ColourId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(m => m.ColourId, Model.Colours, "Escolha uma cor", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ColourId, "", new { @class = "text-danger" })
+                </div>
+
+
+                @Html.LabelFor(model => model.VehiclePassengers, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.VehiclePassengers, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VehiclePassengers, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LocationId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(m => m.LocationId, Model.Locations, "Escolha uma localização", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*
+        <div class="form-group">
+            @Html.LabelFor(model => model.BeginDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.BeginDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.BeginDate, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        </div>
+
+    </div>
+
+
+    <div>
+        <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Index")'">
+            Reset
+        </button>
+        <button type="submit" class="btn btn-success">
+            <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp; Pesquisar
+        </button>
+
+
+
+    </div>
+
 }
-else
-{
-    <h4>Ainda não existem veiculos</h4>
-}
+    <hr />
+
+    @if (Model.Vehicles.Count() != 0)
+    {
+
+        <table class="table table-bordered table-responsive table-condensed table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayName("Tipo")
+                </th>
+                <th>
+                    @Html.DisplayName("Marca")
+                </th>
+                <th>
+                    @Html.DisplayName("Modelo")
+                </th>
+                <th>
+                    @Html.DisplayName("Cor")
+                </th>
+                <th>
+                    @Html.DisplayName("Número de Passageiros")
+                </th>
+                <th>
+                    @Html.DisplayName("Preço por Hora")
+                </th>
+                <th>
+                    @Html.DisplayName("Preço por Dia")
+                </th>
+                <th>
+                    @Html.DisplayName("Proprietário")
+                </th>
+                <th>
+                    @Html.DisplayName("Localização")
+                </th>
+                <th>
+                    @Html.DisplayName("Ações")
+                </th>
+            </tr>
+
+            @foreach (var item in Model.Vehicles)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type.TypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand.BrandName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model.ModelName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Colour.ColourName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.vehiclePassengers)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HourlyPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DailyPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location.LocationName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detalhes", "Details", new { id = item.VehicleId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <h4>Ainda não existem veiculos</h4>
+    }
 
 
-<div>
-    @Html.ActionLink("Home", "Index", "Home", new { htmlAttributes = new { @class = "btn btn-primary" } })
-</div>
+    <div>
+        @Html.ActionLink("Home", "Index", "Home", new { htmlAttributes = new { @class = "btn btn-primary" } })
+    </div>
+
+
+

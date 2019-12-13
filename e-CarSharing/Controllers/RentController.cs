@@ -31,11 +31,8 @@ namespace e_CarSharing.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Vehicle", new {
-                    viewModel.PickUpLocationId,
-                    viewModel.BeginDate,
-                    viewModel.EndDate
-                });
+
+                return RedirectToAction("Index", "Vehicle", new { LocationId = viewModel.PickUpLocationId });
             }
             else
             {

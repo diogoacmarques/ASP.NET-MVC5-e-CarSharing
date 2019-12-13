@@ -1,9 +1,14 @@
 ﻿@model e_CarSharing.Models.Location
 
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Location</h4>
         <hr />
@@ -13,7 +18,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LocalName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.LocalName, new { htmlAttributes = new { @class = "form-control",@readonly = "readonly", disable = "disable" } })
+                @Html.EditorFor(model => model.LocalName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", disable = "disable" } })
                 @Html.ValidationMessageFor(model => model.LocalName, "", new { @class = "text-danger" })
             </div>
         </div>

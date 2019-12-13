@@ -7,10 +7,6 @@
 
 <h2>Rents</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
 <hr />
 
 @using (Html.BeginForm())
@@ -23,22 +19,11 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.PickUpLocationId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.PickUpLocationId, Model.Locations, "Marca", new { @class = "form-control" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(m => m.PickUpLocationId, Model.Locations, "Escolha uma localização", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.PickUpLocationId, "", new { @class = "text-danger" })
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DeliveryLocationId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.DeliveryLocationId, Model.Locations, "Marca", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DeliveryLocationId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-    <div class="form-group">
         @Html.LabelFor(model => model.BeginDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-4">
             @Html.EditorFor(model => model.BeginDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
@@ -46,17 +31,11 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Pesquisar" class="btn btn-default" />
+            <input type="submit" value="Pesquisar Veículos" class="btn btn-default" />
         </div>
     </div>
 </div>

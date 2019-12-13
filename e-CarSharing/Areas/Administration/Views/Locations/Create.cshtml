@@ -1,9 +1,14 @@
 ﻿@model e_CarSharing.Models.Location
 
-@using (Html.BeginForm()) 
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Locations</h4>
         <hr />

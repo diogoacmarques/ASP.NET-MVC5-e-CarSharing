@@ -208,6 +208,7 @@
     <Compile Include="Areas\Administration\Controllers\ModelsController.cs" />
     <Compile Include="Areas\Administration\Controllers\TypesController.cs" />
     <Compile Include="Areas\Administration\ViewModels\Account.cs" />
+    <Compile Include="Areas\Administration\ViewModels\BrandViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\ModelViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -221,9 +222,13 @@
     <Compile Include="Migrations\201911271650222_InitialCreate.Designer.cs">
       <DependentUpon>201911271650222_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912071858521_tables.cs" />
-    <Compile Include="Migrations\201912071858521_tables.Designer.cs">
-      <DependentUpon>201912071858521_tables.cs</DependentUpon>
+    <Compile Include="Migrations\201912112239054_ModeloInicial.cs" />
+    <Compile Include="Migrations\201912112239054_ModeloInicial.Designer.cs">
+      <DependentUpon>201912112239054_ModeloInicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912112257053_brandupdate.cs" />
+    <Compile Include="Migrations\201912112257053_brandupdate.Designer.cs">
+      <DependentUpon>201912112257053_brandupdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -265,11 +270,9 @@
     </Content>
     <Content Include="Areas\Administration\Views\web.config" />
     <Content Include="Areas\Administration\Views\Brands\Index.cshtml" />
-    <Content Include="Areas\Administration\Views\Brands\Create.cshtml" />
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Administration\Views\Brands\Delete.cshtml" />
-    <Content Include="Areas\Administration\Views\Brands\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\Accounts\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Accounts\Create.cshtml" />
     <Content Include="Areas\Administration\Views\Accounts\Delete.cshtml" />
@@ -284,7 +287,7 @@
     <Content Include="Areas\Administration\Views\Models\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Models\Create.cshtml" />
     <Content Include="Areas\Administration\Views\Models\Delete.cshtml" />
-    <Content Include="Areas\Administration\Views\Models\Edit.cshtml" />
+    <Content Include="Areas\Administration\Views\Brands\Create.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -361,8 +364,11 @@
     <EmbeddedResource Include="Migrations\201911271650222_InitialCreate.resx">
       <DependentUpon>201911271650222_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912071858521_tables.resx">
-      <DependentUpon>201912071858521_tables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201912112239054_ModeloInicial.resx">
+      <DependentUpon>201912112239054_ModeloInicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912112257053_brandupdate.resx">
+      <DependentUpon>201912112257053_brandupdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
