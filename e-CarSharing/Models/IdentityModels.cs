@@ -23,6 +23,8 @@ namespace e_CarSharing.Models
         //[Display(Name = "Telemóvel")]
         //public int PhoneNumber { get; set; }
 
+        public string UserRole { get; set; }
+
         [Display(Name = "Data de Nascimento")]
         public DateTime? BirthDate { get; set; }
 

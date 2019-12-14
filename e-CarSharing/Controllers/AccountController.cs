@@ -84,9 +84,6 @@ namespace e_CarSharing.Controllers
                 return View(model);
             }
 
-
-
-
             ApplicationUser user = null;
             try
             {
@@ -174,7 +171,7 @@ namespace e_CarSharing.Controllers
             return View(model);
         }
 
-        //
+        
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
@@ -248,6 +245,7 @@ namespace e_CarSharing.Controllers
                     {
                         UserName = model.Username,
                         Email = model.Email,
+                        UserRole = AccountStaticRoles.PRIVATE,
                 //        Id = model.BI,
                 //        UserStateId = UsersStatesConstants.USERSTATE_PENDING_ID,
                 //        BirthDate = model.BirthDate,
@@ -278,14 +276,15 @@ namespace e_CarSharing.Controllers
                         {
                             UserName = model.Username,
                             Email = model.Email,
-                    //        Id = model.BI,
-                    //        UserStateId = UsersStatesConstants.USERSTATE_PENDING_ID,
-                    //        BirthDate = model.BirthDate,
-                    //        DriverLicenseEmissionDate = model.DriverLicenseEmissionDate,
-                    //        DriverLicenseNumber = model.DriverLicenseNumber,
-                    //        MobilePhoneNumber = model.MobilePhoneNumber,
-                    //        DriverLicenseEndDate = model.DriverLicenseEndDate,
-                    //        TelephoneNumber = model.TelephoneNumber,
+                            UserRole = AccountStaticRoles.PROFESSIONAL,
+                            //        Id = model.BI,
+                            //        UserStateId = UsersStatesConstants.USERSTATE_PENDING_ID,
+                            //        BirthDate = model.BirthDate,
+                            //        DriverLicenseEmissionDate = model.DriverLicenseEmissionDate,
+                            //        DriverLicenseNumber = model.DriverLicenseNumber,
+                            //        MobilePhoneNumber = model.MobilePhoneNumber,
+                            //        DriverLicenseEndDate = model.DriverLicenseEndDate,
+                            //        TelephoneNumber = model.TelephoneNumber,
                         };
 
 
@@ -301,38 +300,33 @@ namespace e_CarSharing.Controllers
                     //return HttpNotFound();
                 }
 
+                if (model.Role == AccountStaticRoles.MOBILITY)
+                {
+                    var user = new ApplicationUser
+                    {
+                        UserName = model.Username,
+                        Email = model.Email,
+                        UserRole = AccountStaticRoles.MOBILITY
+                        //        Id = model.BI,
+                        //        UserStateId = UsersStatesConstants.USERSTATE_PENDING_ID,
+                        //        BirthDate = model.BirthDate,
+                        //        DriverLicenseEmissionDate = model.DriverLicenseEmissionDate,
+                        //        DriverLicenseNumber = model.DriverLicenseNumber,
+                        //        MobilePhoneNumber = model.MobilePhoneNumber,
+                        //        DriverLicenseEndDate = model.DriverLicenseEndDate,
+                        //        TelephoneNumber = model.TelephoneNumber,
+                    };
 
 
+                    var result = await _um.CreateAsync(user, model.Password);
+                    await _um.AddToRoleAsync(user.Id, model.Role);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                }
 
-
-                    
-
-
-
-
-
-
-
-
-                ////default
-                //var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                //var result = await UserManager.CreateAsync(user, model.Password);
-                //if (result.Succeeded)
-                //{
-                //    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                //    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                //    // Send an email with this link
-                //    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                //    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                //    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                //    return RedirectToAction("Index", "Home");
-                //}
-                //AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
+            model.Roles = AccountStaticRoles.GetRolesListForUser();
             return View(model);
         }
 

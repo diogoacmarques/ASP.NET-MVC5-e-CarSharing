@@ -38,41 +38,10 @@ namespace e_CarSharing.Areas.Administration.Controllers
 
         public ActionResult Create() //####################################################################
         {
-            //IdentityResult ir;
-
-            //var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
-            //ir = rm.Create(new IdentityRole(AccountLevels.ADMINISTRATOR));
-            //ir = rm.Create(new IdentityRole(AccountLevels.PRIVATE));
-            //ir = rm.Create(new IdentityRole(AccountLevels.PROFESSIONAL));
-
-            //var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-
-            //var user = new ApplicationUser()
-            //{
-            //    UserName = "eusoujadmi",
-            //    Email = "here@there.org"
-            //};
-
-
-            //if (db.Users.Where(u => u.UserName == user.UserName).Count() != 0)
-            //{
-            //    ModelState.AddModelError("1", "Já existe um Administrador com esse Username");
-            //    user.UserName = user.UserName + "x";
-            //    return View(user);
-            //}
-            //ir = um.Create(user, "ChangeMe");
-            //ir = um.AddToRole(user.Id, AccountLevels.PRIVATE); //Default Administrator, edit to change
-            //db.SaveChanges();
-
-
-            //if (!um.IsInRole(user.Id, AccountLevels.ADMINISTRATOR))
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}else
-            //    return HttpNotFound();
-
+          
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Email,UserName,Password,ConfirmPassword")] Account model)
@@ -82,21 +51,24 @@ namespace e_CarSharing.Areas.Administration.Controllers
               
                 if (db.Users.Where(u => u.UserName == model.UserName).Count() != 0)
                 {
-                    ModelState.AddModelError("1", "Já existe um Administrador com esse Username");
+                    ModelState.AddModelError("1", "Já existe um utilizador com esse Username");
                     return View(model);
                 }
 
                 UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var user = new ApplicationUser {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    UserRole = AccountStaticRoles.ADMINISTRATOR,
+                };
                 //user.UserStateId = UsersStatesConstants.USERSTATE_ACTIVE_ID;
                 userManager.Create(user, model.Password);
-                db.SaveChanges();
                 userManager.AddToRole(user.Id, AccountStaticRoles.ADMINISTRATOR);
                 db.SaveChanges();
                 return RedirectToAction("Index", "Accounts", new { @area = "Administration" });
             }
 
-            return NewMethod(model);
+            return View(model);
         }
 
         private ActionResult NewMethod(Account model)

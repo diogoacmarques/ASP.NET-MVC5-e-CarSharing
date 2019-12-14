@@ -12,6 +12,7 @@ namespace e_CarSharing
 {
     public partial class Startup
     {
+        private ApplicationDbContext DbContext = new ApplicationDbContext();
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
@@ -19,8 +20,8 @@ namespace e_CarSharing
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
-            CreateLevels();
-           // CreateLocalAdmins();
+            CreateRoles();
+            CreateLocalAdmins();
 
 
             // Enable the application to use a cookie to store information for the signed in user
@@ -69,9 +70,8 @@ namespace e_CarSharing
             //});
         }
 
-        private void CreateLevels()
+        private void CreateRoles()
         {
-            ApplicationDbContext DbContext = new ApplicationDbContext();
             RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(DbContext));
 
             if (roleManager.RoleExists(AccountStaticRoles.ADMINISTRATOR) == false)
@@ -107,13 +107,21 @@ namespace e_CarSharing
 
         private void CreateLocalAdmins()
         {
-            ApplicationDbContext DbContext = new ApplicationDbContext();
-            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(DbContext));
+            //if (DbContext.Users.Where(u => u.UserName == model.UserName).Count() == 0)
+            //{
+                //UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>());
+                //var user = new ApplicationUser
+                //{
+                //    UserName = "admin",
+                //    Email = "admin@echarsharing.pt",
+                //    UserRole = AccountStaticRoles.ADMINISTRATOR,
+                //};
+                //userManager.Create(user, "admin");
+                //userManager.AddToRole(user.Id, AccountStaticRoles.ADMINISTRATOR);
+                //DbContext.SaveChanges();
+            //}
 
-            var user = new ApplicationUser { Id = "admin", UserName = "admin", Email = "admin@ecarsharing.pt" };
-            userManager.Create(user, "Vx_1234");
-
-            userManager.AddToRole(user.Id, AccountStaticRoles.ADMINISTRATOR);
+            return;
         }
     }
 }
