@@ -23,6 +23,7 @@ namespace e_CarSharing.Models
         //[Display(Name = "Telemóvel")]
         //public int PhoneNumber { get; set; }
 
+        [Display(Name = "Função")]
         public string UserRole { get; set; }
 
         [Display(Name = "Data de Nascimento")]
@@ -40,7 +41,6 @@ namespace e_CarSharing.Models
 
         public ApplicationUser() : base()
         {
-            //VehicleLocalizations = new HashSet<VehicleLocalization>();
             //Vehicles = new HashSet<Vehicle>();
         }
     }

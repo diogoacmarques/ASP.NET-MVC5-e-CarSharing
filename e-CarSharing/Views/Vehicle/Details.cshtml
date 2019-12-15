@@ -8,8 +8,6 @@
 <h2>Detalhes</h2>
 
 
-@Html.AntiForgeryToken()
-
 <div class="form-horizontal">
     <h4>Veiculo</h4>
     <hr />
@@ -103,7 +101,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @Html.ActionLink("Alugar Veiculo", "Create", "Rent", new { @area = "" }, new { id = Model.VehicleId })
+                @Html.ActionLink("Alugar Veiculo", "Create", "Rent", new { @area = "", id = Model.VehicleId }, null)
             </div>
         </div>
 

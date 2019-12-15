@@ -80,7 +80,7 @@ namespace e_CarSharing.Controllers
 
                 if (ViewModel.VehiclePassengers != null)
                 {
-                    ViewModel.Vehicles = ViewModel.Vehicles.Where(v => v.vehiclePassengers == ViewModel.VehiclePassengers).OrderBy(v => v.VehicleId);
+                    ViewModel.Vehicles = ViewModel.Vehicles.Where(v => v.VehiclePassengers == ViewModel.VehiclePassengers).OrderBy(v => v.VehicleId);
                 }
 
 
@@ -88,10 +88,6 @@ namespace e_CarSharing.Controllers
                 {
                     ViewModel.Vehicles = ViewModel.Vehicles.Where(v => v.LocationId == ViewModel.LocationId).OrderBy(v => v.VehicleId);
                 }
-
-
-
-        
 
             }
 
@@ -133,12 +129,14 @@ namespace e_CarSharing.Controllers
         public ActionResult Create()
         {
 
-            VehicleViewModelCreate model = new VehicleViewModelCreate();
-            model.Brands = new SelectList(db.Brands.Where(b => b.Deleted == false), "BrandId", "BrandName");
-            model.Models = new SelectList(db.Models.Where(m => m.Deleted == false), "ModelId", "ModelName");
-            model.Locations = new SelectList(db.Locations.Where(l => l.Deleted == false), "LocationId", "LocationName");
-            model.Types = new SelectList(db.Types.Where(t => t.Deleted == false), "TypeId", "TypeName");
-            model.Colours = new SelectList(db.Colours.Where(c => c.Deleted == false), "ColourId", "ColourName");
+            VehicleViewModelCreate model = new VehicleViewModelCreate
+            {
+                Brands = new SelectList(db.Brands.Where(b => b.Deleted == false), "BrandId", "BrandName"),
+                Models = new SelectList(db.Models.Where(m => m.Deleted == false), "ModelId", "ModelName"),
+                Locations = new SelectList(db.Locations.Where(l => l.Deleted == false), "LocationId", "LocationName"),
+                Types = new SelectList(db.Types.Where(t => t.Deleted == false), "TypeId", "TypeName"),
+                Colours = new SelectList(db.Colours.Where(c => c.Deleted == false), "ColourId", "ColourName")
+            };
             return View(model);
         }
 
@@ -147,36 +145,38 @@ namespace e_CarSharing.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newVehicle = new Vehicle();
-                //var conditionsDistinct = vehicle.RentConditions.DistinctBy(c => c.RentConditionId).ToList();
-                //var LocationsDistinct = vehicle.VehicleLocalizations.DistinctBy(c => c.VehicleLocalizationId).ToList();
+                var newVehicle = new Vehicle
+                {
+                    //var conditionsDistinct = vehicle.RentConditions.DistinctBy(c => c.RentConditionId).ToList();
+                    //var LocationsDistinct = vehicle.VehicleLocalizations.DistinctBy(c => c.VehicleLocalizationId).ToList();
 
-                //foreach (var item in conditionsDistinct)
-                //{
-                //    var condition = db.RentConditions.Find(item.RentConditionId);
-                //    if (condition != null && condition.UserId == IdUser)
-                //        NovoVeiculo.RentConditions.Add(condition);
-                //}
+                    //foreach (var item in conditionsDistinct)
+                    //{
+                    //    var condition = db.RentConditions.Find(item.RentConditionId);
+                    //    if (condition != null && condition.UserId == IdUser)
+                    //        NovoVeiculo.RentConditions.Add(condition);
+                    //}
 
-                //foreach (var item in LocationsDistinct)
-                //{
-                //    var location = db.VehicleLocalizations.Find(item.VehicleLocalizationId);
-                //    if (location != null && location.UserId == IdUser)
-                //        NovoVeiculo.VehicleLocalizations.Add(location);
-                //}
+                    //foreach (var item in LocationsDistinct)
+                    //{
+                    //    var location = db.VehicleLocalizations.Find(item.VehicleLocalizationId);
+                    //    if (location != null && location.UserId == IdUser)
+                    //        NovoVeiculo.VehicleLocalizations.Add(location);
+                    //}
 
 
-                newVehicle.TypeId = vehicle.TypeId;
-                newVehicle.BrandId = vehicle.BrandId;
-                newVehicle.ModelId = vehicle.ModelId;
-                newVehicle.ColourId = vehicle.ColourId;
-                newVehicle.vehiclePassengers = vehicle.vehiclePassengers;
-                newVehicle.UserId = User.Identity.GetUserId();
-                newVehicle.LocationId = vehicle.LocationId;
-                newVehicle.VehicleState = VehicleState.VEHICLESTATE_PENDING_ID;
-                newVehicle.HourlyPrice = vehicle.HourlyPrice;
-                newVehicle.DailyPrice = vehicle.DailyPrice;           
-                newVehicle.Deleted = false;
+                    TypeId = vehicle.TypeId,
+                    BrandId = vehicle.BrandId,
+                    ModelId = vehicle.ModelId,
+                    ColourId = vehicle.ColourId,
+                    VehiclePassengers = vehicle.vehiclePassengers,
+                    UserId = User.Identity.GetUserId(),
+                    LocationId = vehicle.LocationId,
+                    VehicleState = VehicleState.VEHICLESTATE_PENDING_ID,
+                    HourlyPrice = vehicle.HourlyPrice,
+                    DailyPrice = vehicle.DailyPrice,
+                    Deleted = false
+                };
                 db.Vehicles.Add(newVehicle);
                 //var VehicleEvaluation = new VehicleEvaluation() { VehicleId = NovoVeiculo.VehicleId };
                 //db.VehicleEvaluations.Add(VehicleEvaluation);
@@ -196,17 +196,38 @@ namespace e_CarSharing.Controllers
         }
 
 
-        //public ActionResult Delete(int id)
-        //{
-        //    Veiculo v = VeiculoMockTmpData.ListaVeiculos.FirstOrDefault(s => s.Id == id);
-        //    if (v == null) return RedirectToAction("Index");
+        public ActionResult Delete(int? id)
+        {
+            if(id== null)
+                return RedirectToAction("Index");
+           
 
-        //    return View(v);
-        //}
 
-        //[HttpPost]
-        //public ActionResult Delete(int id, FormCollection collection)
-        //{
+            Vehicle vehicle = new Vehicle();
+            vehicle = db.Vehicles.Find(id);
+
+            if (vehicle == null)
+            {
+                return HttpNotFound();
+            }
+
+
+            vehicle.Type = db.Types.Find(vehicle.TypeId);
+            vehicle.Brand = db.Brands.Find(vehicle.BrandId);
+            vehicle.Model = db.Models.Find(vehicle.ModelId);
+            vehicle.Colour = db.Colours.Find(vehicle.ColourId);
+
+            vehicle.Location = db.Locations.Find(vehicle.LocationId);
+
+            vehicle.User = db.Users.Find(vehicle.UserId);
+          
+
+            return View(vehicle);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
         //    Veiculo v = VeiculoMockTmpData.ListaVeiculos.FirstOrDefault(s => s.Id == id);
         //    if (v == null) return RedirectToAction("Index");
 
@@ -217,9 +238,9 @@ namespace e_CarSharing.Controllers
         //    }
         //    catch
         //    {
-        //        return View();
+                return View();
         //    }
-        //}
+        }
 
 
 
@@ -244,7 +265,7 @@ namespace e_CarSharing.Controllers
             VehicleDetails.Model = db.Models.Find(vehicle.ModelId);
             VehicleDetails.Location = db.Locations.Find(vehicle.LocationId);
             VehicleDetails.Colour = db.Colours.Find(vehicle.ColourId);
-            VehicleDetails.vehiclePassengers = vehicle.vehiclePassengers;
+            VehicleDetails.vehiclePassengers = vehicle.VehiclePassengers;
             VehicleDetails.HourlyPrice = vehicle.HourlyPrice;
             VehicleDetails.DailyPrice = vehicle.DailyPrice;
             return View(VehicleDetails);
@@ -297,15 +318,29 @@ namespace e_CarSharing.Controllers
         {
             var userId = User.Identity.GetUserId();
 
+            if (User.IsInRole(AccountStaticRoles.ADMINISTRATOR))
+            {
+                var AllVehicles = db.Vehicles
+                   .Include(v => v.User)
+                   .Include(v => v.Type)
+                   .Include(v => v.Brand)
+                   .Include(v => v.Model)
+                   .Include(v => v.Colour)
+                   .Include(v => v.Location)
+                   .OrderBy(v => v.VehicleId);
+
+                return View(AllVehicles);
+            }
+
             var MyVehicles = db.Vehicles
-              .Include(v => v.User)
-              .Include(v => v.Type)
-              .Include(v => v.Brand)
-              .Include(v => v.Model)
-              .Include(v => v.Colour)
-              .Include(v => v.Location)
-              .Where(v => v.User.Id == userId)
-              .OrderBy(v => v.VehicleId);
+           .Include(v => v.User)
+           .Include(v => v.Type)
+           .Include(v => v.Brand)
+           .Include(v => v.Model)
+           .Include(v => v.Colour)
+           .Include(v => v.Location)
+           .Where(v => v.User.Id == userId)
+           .OrderBy(v => v.VehicleId);
 
             return View(MyVehicles);
         }

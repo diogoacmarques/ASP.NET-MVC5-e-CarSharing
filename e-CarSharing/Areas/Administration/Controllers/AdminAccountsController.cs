@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using e_CarSharing.Areas.Administration.Models;
+using e_CarSharing.Areas.Administration.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Net;
@@ -13,7 +13,7 @@ using System.Data.Entity;
 namespace e_CarSharing.Areas.Administration.Controllers
 {
     //[Authorize(Roles = AccountLevels.ADMINISTRATOR)]
-    public class AccountsController : Controller
+    public class AdminAccountsController : Controller
     {
 
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -21,18 +21,40 @@ namespace e_CarSharing.Areas.Administration.Controllers
         // GET: Administration/Accounts
         public ActionResult Index()
         {
-            var all = db.Users;
+            SearchAccoutViewModel ViewModel = new SearchAccoutViewModel();
 
-            var listToReturn = from u in all
-                               select new Account()
-                               {
-                                   Id = u.Id,
-                                   UserName = u.UserName,
-                                   Email = u.Email,
-                               };
+            ViewModel.Users = db.Users.ToList();
+            ViewModel.Roles = AccountStaticRoles.GetRolesList();
 
+            return View(ViewModel);
+        }
 
-            return View(listToReturn);
+        // GET: Administration/Accounts
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(SearchAccoutViewModel ViewModel)
+        {
+            ViewModel.Users = db.Users.ToList();
+            ViewModel.Roles = AccountStaticRoles.GetRolesList();
+
+            if (ModelState.IsValid)
+            {
+
+                if (ViewModel.Role == AccountStaticRoles.ADMINISTRATOR)
+                    ViewModel.Users = ViewModel.Users.Where(u => u.UserRole == AccountStaticRoles.ADMINISTRATOR);
+
+                if (ViewModel.Role == AccountStaticRoles.PRIVATE)
+                    ViewModel.Users = ViewModel.Users.Where(u => u.UserRole == AccountStaticRoles.PRIVATE);
+
+                if (ViewModel.Role == AccountStaticRoles.PROFESSIONAL)
+                    ViewModel.Users = ViewModel.Users.Where(u => u.UserRole == AccountStaticRoles.PROFESSIONAL);
+
+                if (ViewModel.Role == AccountStaticRoles.MOBILITY)
+                    ViewModel.Users = ViewModel.Users.Where(u => u.UserRole == AccountStaticRoles.MOBILITY);
+
+            }
+
+            return View(ViewModel);
         }
 
 
@@ -65,7 +87,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
                 userManager.Create(user, model.Password);
                 userManager.AddToRole(user.Id, AccountStaticRoles.ADMINISTRATOR);
                 db.SaveChanges();
-                return RedirectToAction("Index", "Accounts", new { @area = "Administration" });
+                return RedirectToAction("Index", "AdminAccounts", new { @area = "Administration" });
             }
 
             return View(model);
@@ -90,7 +112,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
             }
             if (id == User.Identity.GetUserId())
             {
-                return RedirectToAction("Index", "Accounts", new { @area = "Administration" });
+                return RedirectToAction("Index", "AdminAccounts", new { @area = "Administration" });
             }
             var usertoview = new Account() { Email = user.Email, Id = user.Id, UserName = user.UserName };
             return View(usertoview);
@@ -100,6 +122,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
+            var userView = new Account();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -108,13 +131,21 @@ namespace e_CarSharing.Areas.Administration.Controllers
             if (id == User.Identity.GetUserId() || user == null)
             {
                 View("Error");
-            }            
+            }
+
+            if(db.Vehicles.Where(v => v.UserId == user.Id).Count() != 0)
+            {
+                ModelState.AddModelError(string.Empty, "Este utilizador ainda possui veículos!");
+                userView.UserName = user.UserName;
+                userView.Email = user.Email;
+                return View(userView);
+            }
 
             user.Roles.Clear();
             db.SaveChanges();
             db.Users.Remove(user);
             db.SaveChanges();
-            return RedirectToAction("Index", "Accounts", new { @area = "Administration" });
+            return RedirectToAction("Index", "AdminAccounts", new { @area = "Administration" });
         }
 
 
@@ -128,7 +159,6 @@ namespace e_CarSharing.Areas.Administration.Controllers
         public ActionResult ListAll(string id)
         {
 
-            var tmp = id;
             ViewBag.typeOfAccount = AccountStaticRoles.GetRolesList();
             ViewBag.typeOfAccountSelected = id;
 
@@ -182,7 +212,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
                 return View(listToReturn);
             }
             else
-                return RedirectToAction("Index", "Accounts", new { @area = "Administration" });
+                return RedirectToAction("Index", "AdminAccounts", new { @area = "Administration" });
 
 
         }

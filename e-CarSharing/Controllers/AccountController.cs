@@ -79,7 +79,8 @@ namespace e_CarSharing.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
+
+                if (!ModelState.IsValid)
             {
                 return View(model);
             }

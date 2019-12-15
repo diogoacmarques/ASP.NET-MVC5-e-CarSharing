@@ -201,13 +201,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
-    <Compile Include="Areas\Administration\Controllers\AccountsController.cs" />
+    <Compile Include="Areas\Administration\Controllers\AdminAccountsController.cs" />
     <Compile Include="Areas\Administration\Controllers\BrandsController.cs" />
     <Compile Include="Areas\Administration\Controllers\ColoursController.cs" />
     <Compile Include="Areas\Administration\Controllers\LocationsController.cs" />
     <Compile Include="Areas\Administration\Controllers\ModelsController.cs" />
+    <Compile Include="Areas\Administration\Controllers\RentStateController.cs" />
     <Compile Include="Areas\Administration\Controllers\TypesController.cs" />
-    <Compile Include="Areas\Administration\ViewModels\Account.cs" />
+    <Compile Include="Areas\Administration\ViewModels\AccountViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\BrandViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\ModelViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -230,24 +231,37 @@
     <Compile Include="Migrations\201912112257053_brandupdate.Designer.cs">
       <DependentUpon>201912112257053_brandupdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912141723525_databaseupdate.cs" />
+    <Compile Include="Migrations\201912141723525_databaseupdate.Designer.cs">
+      <DependentUpon>201912141723525_databaseupdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912150044573_RentUpdate.cs" />
+    <Compile Include="Migrations\201912150044573_RentUpdate.Designer.cs">
+      <DependentUpon>201912150044573_RentUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912150251005_VehicleUpdate.cs" />
+    <Compile Include="Migrations\201912150251005_VehicleUpdate.Designer.cs">
+      <DependentUpon>201912150251005_VehicleUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912151723146_rentUpdateAgain.cs" />
+    <Compile Include="Migrations\201912151723146_rentUpdateAgain.Designer.cs">
+      <DependentUpon>201912151723146_rentUpdateAgain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Brand.cs" />
-    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Colour.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Rent.cs" />
-    <Compile Include="Models\RentCondition.cs" />
     <Compile Include="Models\AccountStaticRoles.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\RentState.cs" />
     <Compile Include="Models\RentViewModel.cs" />
     <Compile Include="Models\Type.cs" />
     <Compile Include="Models\Vehicle.cs" />
-    <Compile Include="Models\VehicleLocalization.cs" />
-    <Compile Include="Models\VehiclePassengers.cs" />
     <Compile Include="Models\VehicleState.cs" />
     <Compile Include="Models\VehicleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -273,13 +287,13 @@
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Administration\Views\Brands\Delete.cshtml" />
-    <Content Include="Areas\Administration\Views\Accounts\Index.cshtml" />
-    <Content Include="Areas\Administration\Views\Accounts\Create.cshtml" />
-    <Content Include="Areas\Administration\Views\Accounts\Delete.cshtml" />
+    <Content Include="Areas\Administration\Views\AdminAccounts\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\AdminAccounts\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\AdminAccounts\Delete.cshtml" />
     <Content Include="Areas\Administration\Views\Types\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Types\Create.cshtml" />
     <Content Include="Areas\Administration\Views\Types\Delete.cshtml" />
-    <Content Include="Areas\Administration\Views\Accounts\ListAll.cshtml" />
+    <Content Include="Areas\Administration\Views\AdminAccounts\ListAll.cshtml" />
     <Content Include="Areas\Administration\Views\Colours\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Colours\Create.cshtml" />
     <Content Include="Areas\Administration\Views\Colours\Delete.cshtml" />
@@ -343,9 +357,11 @@
     <Content Include="Views\Vehicle\Details.cshtml" />
     <Content Include="Views\Rent\Index.cshtml" />
     <Content Include="Views\Rent\Create.cshtml" />
+    <Content Include="Views\Vehicle\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Administration\Views\RentState\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -369,6 +385,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912112257053_brandupdate.resx">
       <DependentUpon>201912112257053_brandupdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912141723525_databaseupdate.resx">
+      <DependentUpon>201912141723525_databaseupdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912150044573_RentUpdate.resx">
+      <DependentUpon>201912150044573_RentUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912150251005_VehicleUpdate.resx">
+      <DependentUpon>201912150251005_VehicleUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912151723146_rentUpdateAgain.resx">
+      <DependentUpon>201912151723146_rentUpdateAgain.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -24,36 +24,34 @@ namespace e_CarSharing.Models
         [Required]
         public DateTime EndDate { get; set; }
 
-        /*[Required]
+        [Required]
         [ForeignKey("RentState")]
         public int RentStateId { get; set; }
-        public RentState RentState { get; set; }*/
+        public RentState RentState { get; set; }
 
         [Required]
         [ForeignKey("Vehicle")]
         public int VehicleId { get; set; }
         public Vehicle Vehicle { get; set; }
 
-       /* [Required]
-        [ForeignKey("Supplier")]
-        public string SupplierId { get; set; }
-        public ApplicationUser Supplier { get; set; }
-
         [Required]
-        [ForeignKey("Demander")]
-        public string DemanderId { get; set; }
-        public ApplicationUser Demander { get; set; }*/
-
-       /* [Required]
-        [Display(Name = "Localização de Entrega")]
-        [ForeignKey("DeliveryLocation")]
-        public int DeliveryLocationId { get; set; }
-        public VehicleLocalization DeliveryLocation { get; set; }
+        [ForeignKey("Client")]
+        public string ClientId { get; set; }
+        public ApplicationUser Client { get; set; }
 
         [Required]
         [ForeignKey("PickUpLocation")]
         [Display(Name = "Localização de Devolução")]
         public int PickUpLocationId { get; set; }
-        public VehicleLocalization PickUpLocation { get; set; }*/
+        public Location PickUpLocation { get; set; }
+
+        [Required]
+        [Display(Name = "Localização de Entrega")]
+        [ForeignKey("DeliveryLocation")]
+        public int DeliveryLocationId { get; set; }
+        public Location DeliveryLocation { get; set; }
+
+        public bool Deleted { get; set; }
+
     }
 }

@@ -22,26 +22,34 @@ namespace e_CarSharing.Models
 
     public class RentViewModelCreate
     {
-       
+
+        [Required]
+        public int VehicleId { get; set; }
+        public Vehicle Vehicle { get; set; }
+
+        [Required]
+        public string ClientId { get; set; }
+        public ApplicationUser Client { get; set; }
+
         [Required]
         [Display(Name = "Data de Inicio")]
         public DateTime BeginDate { get; set; }
 
-        [Display(Name = "Data de Término")]
         [Required]
+        [Display(Name = "Data de Término")]   
         public DateTime EndDate { get; set; }
 
-        public int VehicleId { get; set; }
-        public Vehicle Vehicle { get; set; }
-
+        [Display(Name = "Localizações")]
         public SelectList Locations { get; set; }
 
         [Required]
         [Display(Name = "Onde começar")]
-        public int? PickUpLocationId { get; set; }
+        public int PickUpLocationId { get; set; }
 
         [Required]
         [Display(Name = "Onde Terminar")]
-        public int? DeliveryLocationId { get; set; }
+        public int DeliveryLocationId { get; set; }
+
+
     }
 }

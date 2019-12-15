@@ -19,49 +19,92 @@ namespace e_CarSharing.Controllers
         // GET: Rent
         public ActionResult Index()
         {
-            RentViewModel viewModel = new RentViewModel
+            var list = db.Rents
+                .Include(r => r.RentState)
+                .Include(v => v.Vehicle)
+                .Include(c => c.Client)
+                .Include(p => p.PickUpLocation)
+                .Include(d => d.DeliveryLocation)
+                .ToList();
+
+            return View(list);
+        }
+
+
+        public ActionResult Create(int? id)
+        {
+            if (id == null)
             {
-                Locations = new SelectList(db.Locations, "LocationId", "LocationName")
-            };
-            return View(viewModel);
+                return RedirectToAction("Index");
+            }
+
+
+            RentViewModelCreate ViewModel = new RentViewModelCreate();
+            var UserId = User.Identity.GetUserId();
+            if(UserId==null)
+                ModelState.AddModelError(string.Empty, "Utilizador inválido");
+            ViewModel.ClientId = UserId;
+            ViewModel.Client = db.Users.Find(UserId);
+            ViewModel.VehicleId = (int)id;
+            ViewModel.Vehicle = db.Vehicles.Find(ViewModel.VehicleId);
+            ViewModel.Vehicle.Brand = db.Brands.Find(ViewModel.Vehicle.BrandId);
+            
+            ViewModel.Locations = new SelectList(db.Locations.Where(m => m.Deleted == false), "LocationId", "LocationName");
+
+            return View(ViewModel);
         }
 
         [HttpPost]
-        public ActionResult Index(RentViewModel viewModel)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(RentViewModelCreate ViewModel)
         {
+            ViewModel.Locations = new SelectList(db.Locations.Where(m => m.Deleted == false), "LocationId", "LocationName");
+
             if (ModelState.IsValid)
             {
+                //check dates
+                if (ViewModel.BeginDate >= ViewModel.EndDate || DateTime.Now >= ViewModel.BeginDate)
+                {
+                    ModelState.AddModelError(string.Empty, "Por favor verifique as datas");
+                    return View(ViewModel);              
+                }
 
-                return RedirectToAction("Index", "Vehicle", new { LocationId = viewModel.PickUpLocationId });
+                //check availabilty
+                if (CheckAvailability(ViewModel.VehicleId, ViewModel.BeginDate, ViewModel.EndDate)){
+                    //create rent
+                    Rent newRent = new Rent();
+                    newRent.VehicleId = ViewModel.VehicleId;
+                    newRent.ClientId = ViewModel.ClientId;
+                    newRent.BeginDate = ViewModel.BeginDate;
+                    newRent.EndDate = ViewModel.EndDate;
+                    newRent.DeliveryLocationId = ViewModel.DeliveryLocationId;
+                    newRent.PickUpLocationId = ViewModel.PickUpLocationId;
+                    newRent.RentStateId = RentState.RENTSTATE_PENDING_ID;
+                    newRent.Deleted = false;
+                    db.Rents.Add(newRent);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+
+                }
+
             }
-            else
-            {
-                viewModel.Locations = new SelectList(db.Locations, "LocationId", "LocationName");
-                return View(viewModel);
-            }
+
+
+            return View(ViewModel);
         }
 
-
-        public ActionResult Create(int? idVehicle)
+        [NonAction]
+        public bool CheckAvailability(int VehicleId,DateTime BeginDate, DateTime EndDate)
         {
-            var userId = User.Identity.GetUserId();
-
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(RentViewModel viewModel)
-        {
-            if (ModelState.IsValid)
+            var vehicle = db.Vehicles.Find(VehicleId);
+            if(vehicle != null)
             {
 
-                return HttpNotFound();
             }
-            else
-            {
 
-                return View(viewModel);
-            }
+
+
+            return true;
         }
 
 

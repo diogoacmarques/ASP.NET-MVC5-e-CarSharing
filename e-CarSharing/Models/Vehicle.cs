@@ -11,9 +11,6 @@ namespace e_CarSharing.Models
     {
         public Vehicle()
         {
-            //VehicleLocalizations = new HashSet<VehicleLocalization>();
-            RentConditions = new HashSet<RentCondition>();
-            //RentVehicleEvaluations = new HashSet<RentVehicleEvaluation>();
             Rents = new HashSet<Rent>();
         }
 
@@ -41,13 +38,7 @@ namespace e_CarSharing.Models
         public Nullable<int> ModelId { get; set; }
         public Model Model { get; set; }
 
-        [Display(Name = "Matrícula")]
-        public string VehiclePlate { get; set; }
-
-        //public virtual ICollection<VehicleLocalization> VehicleLocalizations { get; set; }
-        public virtual ICollection<RentCondition> RentConditions { get; set; }
         public virtual ICollection<Rent> Rents { get; set; }
-        //public virtual ICollection<RentVehicleEvaluation> RentVehicleEvaluations { get; set; }
 
         [Display(Name = "Cor")]
         [ForeignKey("Colour")]
@@ -59,7 +50,7 @@ namespace e_CarSharing.Models
         public ApplicationUser User { get; set; }
 
         [Display(Name = "Número de Lugares")]
-        public int vehiclePassengers { get; set; }
+        public int VehiclePassengers { get; set; }
 
         [Display(Name = "Estado")]
         public int VehicleState { get; set; }

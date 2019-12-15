@@ -21,8 +21,6 @@ namespace e_CarSharing
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
             CreateRoles();
-            CreateLocalAdmins();
-
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -105,23 +103,5 @@ namespace e_CarSharing
             }
         }
 
-        private void CreateLocalAdmins()
-        {
-            //if (DbContext.Users.Where(u => u.UserName == model.UserName).Count() == 0)
-            //{
-                //UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>());
-                //var user = new ApplicationUser
-                //{
-                //    UserName = "admin",
-                //    Email = "admin@echarsharing.pt",
-                //    UserRole = AccountStaticRoles.ADMINISTRATOR,
-                //};
-                //userManager.Create(user, "admin");
-                //userManager.AddToRole(user.Id, AccountStaticRoles.ADMINISTRATOR);
-                //DbContext.SaveChanges();
-            //}
-
-            return;
-        }
     }
 }

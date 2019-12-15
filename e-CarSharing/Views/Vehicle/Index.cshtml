@@ -162,7 +162,7 @@
                         @Html.DisplayFor(modelItem => item.Colour.ColourName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.vehiclePassengers)
+                        @Html.DisplayFor(modelItem => item.VehiclePassengers)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.HourlyPrice)
@@ -178,6 +178,7 @@
                     </td>
                     <td>
                         @Html.ActionLink("Detalhes", "Details", new { id = item.VehicleId })
+
                     </td>
                 </tr>
             }
@@ -186,7 +187,7 @@
     }
     else
     {
-        <h4>Ainda não existem veiculos</h4>
+        <h4>A pesquisa não obteve resultados</h4>
     }
 
 

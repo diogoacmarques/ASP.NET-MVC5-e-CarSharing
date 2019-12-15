@@ -1,42 +1,83 @@
-﻿@model e_CarSharing.Models.RentViewModel
+﻿@model IEnumerable<e_CarSharing.Models.Rent>
 
 @{
     ViewBag.Title = "All Vehicles";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Rents</h2>
+<h2>Alugueres</h2>
 
-<hr />
 
-@using (Html.BeginForm())
+@if (Model.Count() != 0)
 {
-    @Html.AntiForgeryToken()
+    <div>
+        <table class="table table-bordered table-responsive table-condensed table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayName("Veículo")
+                </th>
+                <th>
+                    @Html.DisplayName("Propriatário")
+                </th>
+                <th>
+                    @Html.DisplayName("Cliente")
+                </th>
+                <th>
+                    @Html.DisplayName("Inicio")
+                </th>
+                <th>
+                    @Html.DisplayName("Fim")
+                </th>
+                <th>
+                    @Html.DisplayName("Estado")
+                </th>
+                <th>
+                    @Html.DisplayName("Local de Levantamento")
+                </th>
+                <th>
+                    @Html.DisplayName("Local de Entrega")
+                </th>
+                <th>
+                    @Html.DisplayName("Ações")
+                </th>
+            </tr>
 
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vehicle.Brand.BrandName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vehicle.User.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Client.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BeginDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RentState.RentStateName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PickUpLocation.LocationName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryLocation.LocationName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detalhes", "Details", new { id = item.VehicleId })
+                    </td>
+                </tr>
+            }
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.PickUpLocationId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-4">
-            @Html.DropDownListFor(m => m.PickUpLocationId, Model.Locations, "Escolha uma localização", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.PickUpLocationId, "", new { @class = "text-danger" })
-        </div>
-
-        @Html.LabelFor(model => model.BeginDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-4">
-            @Html.EditorFor(model => model.BeginDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-            @Html.ValidationMessageFor(model => model.BeginDate, "", new { @class = "text-danger" })
-        </div>
+        </table>
     </div>
-
-    
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Pesquisar Veículos" class="btn btn-default" />
-        </div>
-    </div>
-</div>
+}else
+{
+    <h4>Ainda não existem alugueres.</h4>
 }

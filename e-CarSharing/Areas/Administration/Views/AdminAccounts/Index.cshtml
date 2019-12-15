@@ -1,0 +1,88 @@
+﻿@model e_CarSharing.Areas.Administration.ViewModels.SearchAccoutViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2>Utilizadores</h2>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @*<div class="form-group">*@
+        @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.DropDownListFor(m => m.Role, Model.Roles, "Todas as funções", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+        </div>
+    @*</div>*@
+
+    @*<div class="form-horizontal">
+
+        <div class="tab-content">
+
+
+        </div>
+
+    </div>*@
+
+
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp; Pesquisar
+        </button>
+
+
+}
+
+
+    @*<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Create","Accounts", new { @area = "Administration" })'">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;Criar&nbsp;Novo
+        </button>*@
+
+<hr />
+
+
+@if (Model.Users.Count() != 0)
+{
+    <table class="table table-bordered table-responsive table-condensed table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.Display("Função")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEmail)
+            </th>
+            <th>Ações</th>
+        </tr>
+
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserRole)
+                </td>
+                <td>
+                    @Html.ActionLink("Eliminar", "Delete", new { Area = "Administration", id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <h4>Sem resultados</h4>
+}

@@ -16,10 +16,10 @@
         <ul class="dropdown-menu" style="background-color:cornflowerblue">
             <li class="dropdown-header" style="font-size:15px;">Administradores</li>
             <li>@Html.ActionLink("Listar", "Index", "Home")</li>
-            <li>@Html.ActionLink("Criar", "Create", "Accounts", new { @area = "Administration" }, null)</li>
+            <li>@Html.ActionLink("Criar", "Create", "AdminAccounts", new { @area = "Administration" }, null)</li>
             <li class="divider"></li>
             <li class="dropdown-header" style="font-size:15px;">Utilizadores</li>
-            <li>@Html.ActionLink("Listar", "ListAll", "Accounts", new { @area = "Administration" }, null)</li>
+            <li>@Html.ActionLink("Listar", "ListAll", "AdminAccounts", new { @area = "Administration" }, null)</li>
 
         </ul>
     </li>
@@ -27,7 +27,7 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-road"></span> Veiculos (admin) <span class="glyphicon glyphicon-collapse-down"></span></a>
         <ul class="dropdown-menu" style="background-color:cornflowerblue">
             <li class="dropdown-header" style="font-size:15px;">Gestão</li>
-            <li>@Html.ActionLink("Gerir Veiculos", "Index", "Vehicle", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("Gerir Veiculos", "MyVehicles", "Vehicle", new { area = "" }, null)</li>
             <li>@Html.ActionLink("Pesquisar Veículos", "Index", "Vehicle", new { area = "" }, null)</li>
             <li class="divider"></li>
             <li class="dropdown-header" style="font-size:15px;">Caracteristicas</li>
