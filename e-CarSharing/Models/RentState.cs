@@ -16,16 +16,12 @@ namespace e_CarSharing.Models
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int RentStateId { get; set; }
 
         [Required]
         public string RentStateName { get; set; }
 
         public virtual ICollection<Rent> Rents { get; set; }
-
-        public const string RENTSTATE_ALL = "Todos";
-        public const int RENTSTATE_ALL_ID = 0;
 
         public const string RENTSTATE_PENDING = "Pendente";
         public const int RENTSTATE_PENDING_ID = 1;
@@ -40,7 +36,6 @@ namespace e_CarSharing.Models
         public const int RENTSTATE_COMPLETED_ID = 3;
 
 
-
         public static SelectList GetStatesList()
         {
             var lista = new List<SelectListItem>()
@@ -49,7 +44,6 @@ namespace e_CarSharing.Models
                new SelectListItem { Value = RENTSTATE_NOTACCEPTED_ID.ToString(), Text = RENTSTATE_NOTACCEPTED},
                new SelectListItem { Value = RENTSTATE_ACCEPTED_ID.ToString(), Text = RENTSTATE_ACCEPTED},
                new SelectListItem { Value = RENTSTATE_COMPLETED_ID.ToString(), Text = RENTSTATE_COMPLETED}
-
             };
      
             return new SelectList(lista, "Value", "Text");

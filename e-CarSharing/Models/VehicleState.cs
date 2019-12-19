@@ -38,9 +38,6 @@ namespace e_CarSharing.Models
         public const string VEHICLESTATE_ACCEPTED = "Aceite";
         public const int VEHICLESTATE_ACCEPTED_ID = 3;
 
-        public const string VEHICLESTATE_RENTED = "Alugado";
-        public const int VEHICLESTATE_RENTED_ID = 4;
-
         public static SelectList GetStatesList()
         {
             var lista = new List<SelectListItem>()
@@ -48,7 +45,6 @@ namespace e_CarSharing.Models
                new SelectListItem { Value = VEHICLESTATE_PENDING_ID.ToString(), Text = VEHICLESTATE_PENDING},
                new SelectListItem { Value = VEHICLESTATE_DELETED_ID.ToString(), Text = VEHICLESTATE_DELETED},
                new SelectListItem { Value = VEHICLESTATE_ACCEPTED_ID.ToString(), Text = VEHICLESTATE_ACCEPTED},
-               new SelectListItem { Value = VEHICLESTATE_RENTED_ID.ToString(), Text = VEHICLESTATE_RENTED},
             }; 
 
             return new SelectList(lista, "Value", "Text");

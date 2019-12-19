@@ -259,6 +259,10 @@
     <Compile Include="Migrations\201912190146270_userUpdateMaxLength.Designer.cs">
       <DependentUpon>201912190146270_userUpdateMaxLength.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912191945114_RentStateUpdate.cs" />
+    <Compile Include="Migrations\201912191945114_RentStateUpdate.Designer.cs">
+      <DependentUpon>201912191945114_RentStateUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Brand.cs" />
@@ -418,6 +422,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912190146270_userUpdateMaxLength.resx">
       <DependentUpon>201912190146270_userUpdateMaxLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912191945114_RentStateUpdate.resx">
+      <DependentUpon>201912191945114_RentStateUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

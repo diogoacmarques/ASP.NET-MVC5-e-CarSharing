@@ -12,7 +12,7 @@ using PagedList;
 
 namespace e_CarSharing.Controllers
 {
-    [Authorize(Roles = AccountStaticRoles.PRIVATE + "," + AccountStaticRoles.PROFESSIONAL + "," + AccountStaticRoles.MOBILITY)]
+    //[Authorize(Roles = AccountStaticRoles.PRIVATE + "," + AccountStaticRoles.PROFESSIONAL + "," + AccountStaticRoles.MOBILITY)]
     public class RentController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -85,11 +85,9 @@ namespace e_CarSharing.Controllers
                     db.Rents.Add(newRent);
                     db.SaveChanges();
                     return RedirectToAction("Index");
-
                 }
 
             }
-
 
             return View(ViewModel);
         }
@@ -100,12 +98,18 @@ namespace e_CarSharing.Controllers
             var vehicle = db.Vehicles.Find(VehicleId);
             if(vehicle != null)
             {
+                var list = db.Rents
+                    .Where(v => v.VehicleId == VehicleId)
+                    .Where(b => (b.BeginDate > BeginDate) && (b.EndDate <EndDate))
+                    .ToList();
 
+                if (list.Count() == 0)
+                    return true;
+                else
+                    return false;
             }
 
-
-
-            return true;
+            return false;
         }
 
 
