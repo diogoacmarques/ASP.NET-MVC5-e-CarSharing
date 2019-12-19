@@ -22,7 +22,8 @@ namespace e_CarSharing.Controllers
         {
             var list = db.Rents
                 .Include(r => r.RentState)
-                .Include(v => v.Vehicle)
+                .Include(v => v.Vehicle.Brand)
+                .Include(p => p.Vehicle.User)
                 .Include(c => c.Client)
                 .Include(p => p.PickUpLocation)
                 .Include(d => d.DeliveryLocation)
@@ -31,6 +32,46 @@ namespace e_CarSharing.Controllers
             return View(list);
         }
 
+        public ActionResult CheckVehicleRents(int Id)
+        {
+            var list = db.Rents
+                .Include(v => v.Vehicle.Brand)
+                .Include(p => p.Vehicle.User)
+                .Where(r => r.RentId == Id)
+                .Where(r => r.RentStateId == RentState.RENTSTATE_ACCEPTED_ID)
+                .ToList();
+
+            return View(list);
+        }
+
+
+        public ActionResult AproveRent(int RentId)
+        {
+           Rent model = db.Rents.Find(RentId);
+           return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AproveRent(Rent model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (CheckAvailability(model.VehicleId, model.BeginDate, model.EndDate))
+                {
+                    model = db.Rents.Find(model.RentId);
+                    model.RentStateId = RentState.RENTSTATE_ACCEPTED_ID;
+                    db.Entry(model).State = EntityState.Modified;
+                    db.SaveChanges();
+                    RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "A data inserida não se encontra disponível");
+                }
+            }
+           
+            return View(model);
+        }
 
         public ActionResult Create(int? id)
         {
@@ -39,11 +80,12 @@ namespace e_CarSharing.Controllers
                 return RedirectToAction("Index");
             }
 
-
+  
             RentViewModelCreate ViewModel = new RentViewModelCreate();
             var UserId = User.Identity.GetUserId();
-            if(UserId==null)
+            if (UserId == null)
                 ModelState.AddModelError(string.Empty, "Utilizador inválido");
+    
             ViewModel.ClientId = UserId;
             ViewModel.Client = db.Users.Find(UserId);
             ViewModel.VehicleId = (int)id;
@@ -70,23 +112,19 @@ namespace e_CarSharing.Controllers
                     return View(ViewModel);              
                 }
 
-                //check availabilty
-                if (CheckAvailability(ViewModel.VehicleId, ViewModel.BeginDate, ViewModel.EndDate)){
-                    //create rent
-                    Rent newRent = new Rent();
-                    newRent.VehicleId = ViewModel.VehicleId;
-                    newRent.ClientId = ViewModel.ClientId;
-                    newRent.BeginDate = ViewModel.BeginDate;
-                    newRent.EndDate = ViewModel.EndDate;
-                    newRent.DeliveryLocationId = ViewModel.DeliveryLocationId;
-                    newRent.PickUpLocationId = ViewModel.PickUpLocationId;
-                    newRent.RentStateId = RentState.RENTSTATE_PENDING_ID;
-                    newRent.Deleted = false;
-                    db.Rents.Add(newRent);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-
+                //create rent(pendente)
+                Rent newRent = new Rent();
+                newRent.VehicleId = ViewModel.VehicleId;
+                newRent.ClientId = ViewModel.ClientId;
+                newRent.BeginDate = ViewModel.BeginDate;
+                newRent.EndDate = ViewModel.EndDate;
+                newRent.DeliveryLocationId = ViewModel.DeliveryLocationId;
+                newRent.PickUpLocationId = ViewModel.PickUpLocationId;
+                newRent.RentStateId = RentState.RENTSTATE_PENDING_ID;
+                newRent.Deleted = false;
+                db.Rents.Add(newRent);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
 
             return View(ViewModel);
@@ -100,7 +138,10 @@ namespace e_CarSharing.Controllers
             {
                 var list = db.Rents
                     .Where(v => v.VehicleId == VehicleId)
-                    .Where(b => (b.BeginDate > BeginDate) && (b.EndDate <EndDate))
+                    .Where(r => r.RentStateId == RentState.RENTSTATE_ACCEPTED_ID)
+                    .Where(b => (EndDate >= b.BeginDate && BeginDate <= b.BeginDate) || 
+                    (BeginDate <= b.EndDate && EndDate >= b.EndDate) || 
+                    (BeginDate >= b.BeginDate && EndDate <= b.EndDate))
                     .ToList();
 
                 if (list.Count() == 0)

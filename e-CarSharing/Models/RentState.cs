@@ -33,7 +33,7 @@ namespace e_CarSharing.Models
         public const int RENTSTATE_ACCEPTED_ID = 3;
 
         public const string RENTSTATE_COMPLETED = "Concluído";
-        public const int RENTSTATE_COMPLETED_ID = 3;
+        public const int RENTSTATE_COMPLETED_ID = 4;
 
 
         public static SelectList GetStatesList()

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<e_CarSharing.Models.Rent>
+
+@{
+    ViewBag.Title = "Disponiblidade";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2>Disponiblidade do veículo @Model.Vehicle.Brand.BrandName .</h2>*@
+<br />
+<h2>Disponiblidade</h2>
+<hr />
+
+@if (Model.Count() != 0)
+{
+    <div>
+        <table class="table table-bordered table-responsive table-condensed table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayName("Data de Início")
+                </th>
+                <th>
+                    @Html.DisplayName("Data de Fim")
+                </th>
+                <th>
+                    @Html.DisplayName("Ações")
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BeginDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Detalhes", "Details", new { id = item.VehicleId })*@
+                        ---
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+}
+else
+{
+    <h4>Ainda não existem alugueres confirmados para este veículo.</h4>
+}

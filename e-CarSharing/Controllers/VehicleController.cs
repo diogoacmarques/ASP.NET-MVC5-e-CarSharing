@@ -139,24 +139,6 @@ namespace e_CarSharing.Controllers
             {
                 var newVehicle = new Vehicle
                 {
-                    //var conditionsDistinct = vehicle.RentConditions.DistinctBy(c => c.RentConditionId).ToList();
-                    //var LocationsDistinct = vehicle.VehicleLocalizations.DistinctBy(c => c.VehicleLocalizationId).ToList();
-
-                    //foreach (var item in conditionsDistinct)
-                    //{
-                    //    var condition = db.RentConditions.Find(item.RentConditionId);
-                    //    if (condition != null && condition.UserId == IdUser)
-                    //        NovoVeiculo.RentConditions.Add(condition);
-                    //}
-
-                    //foreach (var item in LocationsDistinct)
-                    //{
-                    //    var location = db.VehicleLocalizations.Find(item.VehicleLocalizationId);
-                    //    if (location != null && location.UserId == IdUser)
-                    //        NovoVeiculo.VehicleLocalizations.Add(location);
-                    //}
-
-
                     TypeId = vehicle.TypeId,
                     BrandId = vehicle.BrandId,
                     ModelId = vehicle.ModelId,

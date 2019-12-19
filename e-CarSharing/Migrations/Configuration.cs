@@ -60,9 +60,6 @@ namespace e_CarSharing.Migrations
                     //new RentState { RentStateId = IdState, RentStateName = r.Text });
                 }
             }
-
-            //context.RentStates.Add(new RentState { RentStateName = "teste" });
-            context.RentStates.Add(new RentState { RentStateId = 14 });
         }
     }
 }

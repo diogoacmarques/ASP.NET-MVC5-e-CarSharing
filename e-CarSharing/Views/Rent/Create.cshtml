@@ -30,7 +30,7 @@
             @Html.ValidationMessageFor(model => model.Vehicle, "", new { @class = "text-danger" })
         </div>
         <div class="col-md-pull-1 col-md-5">
-            @Html.ActionLink("Ver Disponibilidades", "VerifyAvailablility", "Rents", new { area = "", id = Model.VehicleId }, new { @class = "btn btn-primary btn-large ", target = "_blank" })
+            @Html.ActionLink("Ver Disponibilidades", "CheckVehicleRents", "Rent", new { area = "", id = Model.VehicleId }, new { @class = "btn btn-primary btn-large " })
         </div>
     </div>
 
@@ -75,48 +75,3 @@
     </div>
 </div>
 }
-
-
-@*safe
-@model e_CarSharing.Models.RentViewModel
-
-@{
-    ViewBag.Title = "All Vehicles";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h2>Rents</h2>
-
-<hr />
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PickUpLocationId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-4">
-                @Html.DropDownListFor(m => m.PickUpLocationId, Model.Locations, "Escolha uma localização", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PickUpLocationId, "", new { @class = "text-danger" })
-            </div>
-
-            @Html.LabelFor(model => model.BeginDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-4">
-                @Html.EditorFor(model => model.BeginDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                @Html.ValidationMessageFor(model => model.BeginDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Pesquisar Veículos" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}*@
