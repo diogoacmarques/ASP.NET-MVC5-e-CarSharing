@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace e_CarSharing.Models
@@ -69,30 +70,55 @@ namespace e_CarSharing.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        //geral
+        public System.Web.Mvc.SelectList Roles { get; set; }
+
+        [Display(Name = "Tipo de Conta")]
+        [Required(ErrorMessage = "Escolha um tipo de conta")]
+        public string UserRole { get; set; }
+
         [Display(Name = "Userame")]
+        [Required(ErrorMessage = "Insira o UserName")]
         public string Username { get; set; }
 
-        [Required]
-        [EmailAddress]
         [Display(Name = "Email")]
+        [Required(ErrorMessage = "Insira o Email")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Insira a password")]
+        [StringLength(100, ErrorMessage = "A {0} tem de ser no mínimo de {2} caracteres", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirmar password")]
+        [Compare("Password", ErrorMessage = "As passwords são diferentes")]
         public string ConfirmPassword { get; set; }
 
-        public System.Web.Mvc.SelectList Roles { get; set; }
+        [Display(Name = "Número de Telefone")]
+        [Required(ErrorMessage = "Insira o número de telefone")]
+        public string PhoneNumber { get; set; }
 
-        [Required]
-        public string Role { get; set; }
+        //profissional
+        [Display(Name = "Nome da Empresa")]
+        public string CompanyName { get; set; }
+
+        [Display(Name = "Morada")]
+        public string Address { get; set; }
+
+        //privado//mobildiade
+        [Display(Name = "Número do Cartão de Cidadão")]
+        public int CC { get; set; }
+
+        [Display(Name = "Data de Nascimento")]
+        public DateTime? BirthDate { get; set; }
+
+        //mobilidade apenas
+        [MaxLength(10)]
+        [Display(Name = "Número da Carta de Condução")]
+        public string DriverLicenseNumber { get; set; }
     }
 
     public class ResetPasswordViewModel

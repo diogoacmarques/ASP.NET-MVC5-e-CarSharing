@@ -14,13 +14,10 @@
             <span class="glyphicon glyphicon-user"></span> Contas (admin) <span class="glyphicon glyphicon-collapse-down"></span>
         </a>
         <ul class="dropdown-menu" style="background-color:cornflowerblue">
-            <li class="dropdown-header" style="font-size:15px;">Administradores</li>
-            <li>@Html.ActionLink("Listar", "Index", "Home")</li>
-            <li>@Html.ActionLink("Criar", "Create", "AdminAccounts", new { @area = "Administration" }, null)</li>
-            <li class="divider"></li>
-            <li class="dropdown-header" style="font-size:15px;">Utilizadores</li>
-            <li>@Html.ActionLink("Listar", "ListAll", "AdminAccounts", new { @area = "Administration" }, null)</li>
-
+            <li><p></p></li>
+            <li>@Html.ActionLink("Criar Administrador", "Create", "AdminAccounts", new { @area = "Administration" }, null)</li>
+            <li>@Html.ActionLink("Todas as Contas", "Index", "AdminAccounts", new { @area = "Administration" }, null)</li>
+            <li><p></p></li>
         </ul>
     </li>
     <li class="dropdown">
@@ -37,7 +34,6 @@
             <li>@Html.ActionLink("Marcas", "Index", "Brands", new { @area = "Administration" }, null)</li>
             <li>@Html.ActionLink("Modelos", "Index", "Models", new { @area = "Administration" }, null)</li>
             <li>@Html.ActionLink("Cores", "Index", "Colours", new { @area = "Administration" }, null)</li>
-            <li>@Html.ActionLink("Numero de Passageiros", "Index", "Home", new { @area = "" }, null)</li>
         </ul>
     </li>
     <li class="dropdown">

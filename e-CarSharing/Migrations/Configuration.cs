@@ -1,3 +1,4 @@
+using e_CarSharing.Models;
 namespace e_CarSharing.Migrations
 {
     using System;
@@ -19,6 +20,19 @@ namespace e_CarSharing.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+
+            var vehicleSateList = VehicleState.GetStatesList();
+            foreach (var s in vehicleSateList)
+            {
+                bool Result = int.TryParse(s.Value, out int Id);
+                if (Result)
+                {
+                    context.VehicleStates.AddOrUpdate(x => x.VehicleStateId,
+               new VehicleState { VehicleStateId = Id, VehicleStateName = s.Text }
+               );
+                }
+
+            }
         }
     }
 }

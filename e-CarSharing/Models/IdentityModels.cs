@@ -18,26 +18,27 @@ namespace e_CarSharing.Models
             // Add custom user claims here
             return userIdentity;
         }
-
-        //[MaxLength(20)]
-        //[Display(Name = "Telemóvel")]
-        //public int PhoneNumber { get; set; }
-
+      
         [Display(Name = "Função")]
         public string UserRole { get; set; }
+
+        [Display(Name = "Nome da Empresa")]
+        public string CompanyName { get; set; }
+
+        [Display(Name = "Morada")]
+        public string Address { get; set; }
 
         [Display(Name = "Data de Nascimento")]
         public DateTime? BirthDate { get; set; }
 
-        [MaxLength(20)]
+       // [MaxLength(10)]
         [Display(Name = "Número da Carta de Condução")]
         public string DriverLicenseNumber { get; set; }
 
-        [Display(Name = "Emissão da Carta de Condução")]
-        public DateTime? DriverLicenseEmissionDate { get; set; }
+        [Display(Name = "Número do Cartão de Cidadão")]
+       // [Range(8, 8, ErrorMessage = "Insira um número de 8 digitos")]
+        public int CC { get; set; }
 
-        [Display(Name = "Validade da Carta de Condução")]
-        public DateTime? DriverLicenseEndDate { get; set; }
 
         public ApplicationUser() : base()
         {

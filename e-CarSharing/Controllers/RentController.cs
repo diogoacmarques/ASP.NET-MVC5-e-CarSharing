@@ -12,6 +12,7 @@ using PagedList;
 
 namespace e_CarSharing.Controllers
 {
+    [Authorize(Roles = AccountStaticRoles.PRIVATE + "," + AccountStaticRoles.PROFESSIONAL + "," + AccountStaticRoles.MOBILITY)]
     public class RentController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

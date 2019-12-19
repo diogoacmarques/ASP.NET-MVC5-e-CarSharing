@@ -1,4 +1,9 @@
-﻿@model e_CarSharing.Areas.Administration.Models.Account
+﻿@model e_CarSharing.Areas.Administration.ViewModels.Account
+
+@{
+    ViewBag.Title = "Delete Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <br />
 <h3>Deseja eliminar este item?</h3>
@@ -11,9 +16,8 @@
             <div class="col-md-4">
                 @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", disable = "disable" } })
             </div>
-            <div class="col-md-pull-1 col-md-5">
-                @*@Html.ActionLink("Link P/ Pagina do User", "VerifyAvailablility", "Rents", new { area = "", id = Model.Id }, new { @class = "btn btn-primary btn-large ", target = "_blank" })*@
-                <button disabled type="button" class="btn btn-primary " onclick="location.href='@Url.Action("UserProfile","Users", new { id = Model.Id })'">
+            <div class="col-md-pull-1 col-md-5">       
+                <button type="button" class="btn btn-primary " onclick="location.href='@Url.Action("UserProfile","Account", new {  @area = "",id = Model.Id })'">
                     <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp; Perfil do Proprietário
                 </button>
             </div>
@@ -32,13 +36,13 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Index","Accounts", new { @area = "Administration"})'">
-                <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
-            </button>
-            <button type="submit" value="Eliminar" class="btn btn-secondary btn-sm">
-                Eliminar
-            </button>
-        </div>
+    <div class="form-actions no-color">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+        </button>
+        <button type="submit" value="Eliminar" class="btn btn-secondary btn-sm">
+            Eliminar
+        </button>
+    </div>
     }
 </div>

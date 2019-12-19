@@ -14,6 +14,7 @@ namespace e_CarSharing.Models
         public bool BrowserRemembered { get; set; }
         //added
         public string Role { get; set; }
+        public string UserId { get; set; }
     }
 
     public class ManageLoginsViewModel

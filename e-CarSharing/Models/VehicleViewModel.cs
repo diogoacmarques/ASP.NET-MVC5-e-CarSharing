@@ -108,6 +108,14 @@ namespace e_CarSharing.Models
         [DataType(DataType.Currency)]
         public float DailyPrice { get; set; }
 
+        public bool IsAdmin { get; set; }
+
+        [Display(Name = "Estado do Veículo")]
+        public int VehicleStateId { get; set; }
+        public VehicleState VehicleState { get; set; }
+
+        public SelectList States { get; set; }
+
     }
 
 
@@ -136,6 +144,7 @@ namespace e_CarSharing.Models
         public int? ModelId { get; set; }
 
         [Display(Name = "Número de Passageiros")]
+        [Range(1, 7, ErrorMessage = "Insira um número entre 1 e 7")]
         public int? VehiclePassengers { get; set; }
 
         public SelectList Locations { get; set; }

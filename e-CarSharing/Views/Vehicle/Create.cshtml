@@ -20,7 +20,6 @@
 
         <ul class="nav nav-tabs nav-justified">
             <li class="active"><a data-toggle="tab" href="#GeneralDetailsTab">Detalhes Gerais</a></li>
-            <li><a data-toggle="tab" href="#RentConditionsTab">Condições de Aluguer</a></li>
             <li><a data-toggle="tab" href="#LocalizationsTab">Localizações</a></li>
             <li><a data-toggle="tab" href="#PriceTab">Preços</a></li>
         </ul>
@@ -70,11 +69,6 @@
                 </div>
             </div> @*end of generalDetailsTab*@
 
-            <div id="RentConditionsTab" class="tab-pane ">
-                <br />
-                <p>RentConditionsTab To do...</p>
-            </div> @*end of RentConditionsTab*@
-
             <div id="LocalizationsTab" class="tab-pane ">
                 <br />
                 <div class="form-group">
@@ -106,8 +100,11 @@
                 </div>
 
 
-
-
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Criar Veículo " class="btn btn-success" />
+                    </div>
+                </div>
 
             </div> @*end of PriceTab*@
 
@@ -115,21 +112,14 @@
 
     </div>
 
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Continuar " class="btn btn-success" />
-        </div>
-    </div>
-
 }
 
 
 
-<div>
-    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Index","Home")'">
-        <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
-    </button>
-</div>
+    <div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+        </button>
+    </div>
 
 

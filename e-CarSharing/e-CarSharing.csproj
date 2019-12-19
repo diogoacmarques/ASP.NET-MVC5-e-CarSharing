@@ -247,6 +247,18 @@
     <Compile Include="Migrations\201912151723146_rentUpdateAgain.Designer.cs">
       <DependentUpon>201912151723146_rentUpdateAgain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912181452186_VehicleStateChange.cs" />
+    <Compile Include="Migrations\201912181452186_VehicleStateChange.Designer.cs">
+      <DependentUpon>201912181452186_VehicleStateChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912181702269_userProperties.cs" />
+    <Compile Include="Migrations\201912181702269_userProperties.Designer.cs">
+      <DependentUpon>201912181702269_userProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912190146270_userUpdateMaxLength.cs" />
+    <Compile Include="Migrations\201912190146270_userUpdateMaxLength.Designer.cs">
+      <DependentUpon>201912190146270_userUpdateMaxLength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Brand.cs" />
@@ -293,7 +305,6 @@
     <Content Include="Areas\Administration\Views\Types\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Types\Create.cshtml" />
     <Content Include="Areas\Administration\Views\Types\Delete.cshtml" />
-    <Content Include="Areas\Administration\Views\AdminAccounts\ListAll.cshtml" />
     <Content Include="Areas\Administration\Views\Colours\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Colours\Create.cshtml" />
     <Content Include="Areas\Administration\Views\Colours\Delete.cshtml" />
@@ -358,6 +369,7 @@
     <Content Include="Views\Rent\Index.cshtml" />
     <Content Include="Views\Rent\Create.cshtml" />
     <Content Include="Views\Vehicle\Delete.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -397,6 +409,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912151723146_rentUpdateAgain.resx">
       <DependentUpon>201912151723146_rentUpdateAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912181452186_VehicleStateChange.resx">
+      <DependentUpon>201912181452186_VehicleStateChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912181702269_userProperties.resx">
+      <DependentUpon>201912181702269_userProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912190146270_userUpdateMaxLength.resx">
+      <DependentUpon>201912190146270_userUpdateMaxLength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

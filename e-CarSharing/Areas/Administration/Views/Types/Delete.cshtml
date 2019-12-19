@@ -29,13 +29,13 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Index","Types")'">
-                <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
-            </button>
-            <button type="submit" value="Eliminar" class="btn btn-secondary btn-sm">
-                Eliminar
-            </button>
-        </div>
+    <div class="form-actions no-color">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+        </button>
+        <button type="submit" value="Eliminar" class="btn btn-danger btn-sm">
+            Eliminar
+        </button>
+    </div>
     }
 </div>

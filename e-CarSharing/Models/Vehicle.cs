@@ -53,7 +53,8 @@ namespace e_CarSharing.Models
         public int VehiclePassengers { get; set; }
 
         [Display(Name = "Estado")]
-        public int VehicleState { get; set; }
+        public Nullable<int> VehicleStateId { get; set; }
+        public VehicleState VehicleState { get; set; }
 
         [Display(Name = "Preço Por Hora")]
         [DataType(DataType.Currency)]

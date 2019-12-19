@@ -1,7 +1,8 @@
-﻿@model e_CarSharing.Areas.Administration.Models.Account
+﻿@model e_CarSharing.Areas.Administration.ViewModels.Account
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <br />
 <h2>Criar</h2>
@@ -67,18 +68,18 @@
     </div>
 }
 
-<div>
-    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Index","Accounts", new { @area ="Administration"})'">
-        <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
-    </button>
-</div>
+    <div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+        </button>
+    </div>
 
 @section scripts
 {
     <script type="text/javascript">
 
         function ShowPasswordsOnAdminCreate() {
-            if (document.getElementById("ConfirmPassword").type === "password" && document.getElementById("Password").type === "password"){
+            if (document.getElementById("ConfirmPassword").type === "password" && document.getElementById("Password").type === "password") {
                 document.getElementById("ConfirmPassword").type = "text";
                 document.getElementById("Password").type = "text";
             }

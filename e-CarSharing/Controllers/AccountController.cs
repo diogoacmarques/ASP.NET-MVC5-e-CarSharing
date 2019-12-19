@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using e_CarSharing.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity.Validation;
 
 namespace e_CarSharing.Controllers
 {
@@ -181,7 +182,7 @@ namespace e_CarSharing.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+              
                 if (db.Users.Where(u => u.UserName == model.Username).Any() == true)
                 {
                     model.Roles = AccountStaticRoles.GetRolesListForUser();
@@ -189,56 +190,26 @@ namespace e_CarSharing.Controllers
                     return View(model);
                 }
 
-                if (model.Role == AccountStaticRoles.PRIVATE)
+                if (model.UserRole == AccountStaticRoles.PRIVATE)
                 {
-                    bool check = false;
+                    bool checkIfReturn = false;
 
-                    #region ParticularTesting
-                //    if (model.BirthDate.HasValue == false)
-                //    {
-                //        ModelState.AddModelError("1", "Énecessário introduzir a Data de Nascimento");
-                //        flag = true;
-                //    }
+                    if (model.BirthDate.HasValue == false)
+                    {
+                        ModelState.AddModelError("", "É necessário introduzir a Data de Nascimento");
+                        checkIfReturn = true;
+                    }
+                    
+                    if (model.CC < 10000000 || model.CC > 99999999)
+                    {
+                        ModelState.AddModelError("", "É necessário introduzir um número de 8 dígitos");
+                        checkIfReturn = true;
+                    }
 
-                //    if (model.DriverLicenseEmissionDate.HasValue == false)
-                //    {
-                //        ModelState.AddModelError("2", "É necessário introduzir a Data de Emissão da Carta de Condução");
-                //        flag = true;
-                //    }
-
-                //    if (model.DriverLicenseEndDate.HasValue == false)
-                //    {
-                //        ModelState.AddModelError("3", "É necessário introduzir a Data de Caducação da Carta de Condução");
-                //        flag = true;
-                //    }
-
-                //    if (model.DriverLicenseNumber == null)
-                //    {
-                //        ModelState.AddModelError("4", "É necessário introduzir o Número da Carta de Condução");
-                //        flag = true;
-                //    }
-
-                //    if (((DateTime)model.BirthDate).AddYears(18) < DateTime.Now.Date)
-                //    {
-                //        ModelState.AddModelError("5", "É necessário ter no minimo 18 anos de idade");
-                //        flag = true;
-                //    }
-
-                //    if (((DateTime)model.DriverLicenseEmissionDate) < ((DateTime)model.DriverLicenseEndDate))
-                //    {
-                //        ModelState.AddModelError("6", "É a Data de Emissão da Carta de Condução deve ser inferior à Data de Caducação");
-                //        flag = true;
-                //    }
-                //    if (((DateTime)model.DriverLicenseEndDate) < DateTime.Now.Date)
-                //    {
-                //        ModelState.AddModelError("7", "Carta de Condução Caducada");
-                //        flag = true;
-                //    }
-                    #endregion //comented
-
-                    if (check == true)
+                    if (checkIfReturn)
                     {
                         model.Roles = AccountStaticRoles.GetRolesListForUser();
+                        model.UserRole = AccountStaticRoles.PRIVATE;
                         return View(model);
                     }
 
@@ -247,82 +218,107 @@ namespace e_CarSharing.Controllers
                         UserName = model.Username,
                         Email = model.Email,
                         UserRole = AccountStaticRoles.PRIVATE,
-                //        Id = model.BI,
-                //        UserStateId = UsersStatesConstants.USERSTATE_PENDING_ID,
-                //        BirthDate = model.BirthDate,
-                       // PhoneNumber
-                //        DriverLicenseEmissionDate = model.DriverLicenseEmissionDate,
-                //        DriverLicenseNumber = model.DriverLicenseNumber,
-                //        MobilePhoneNumber = model.MobilePhoneNumber,
-                //        DriverLicenseEndDate = model.DriverLicenseEndDate,
-                //        TelephoneNumber = model.TelephoneNumber,
+                        PhoneNumber = model.PhoneNumber,
+                        CC = model.CC,
+                        BirthDate = model.BirthDate
                     };
+           
                     var result = await _um.CreateAsync(user, model.Password);
-                    await _um.AddToRoleAsync(user.Id, model.Role);
-
-                    //var DemanderEvaluation = new DemanderEvaluation() { UserId = user.Id };
-                    //db.DemanderEvaluations.Add(DemanderEvaluation);
-                    //var SupplierEvaluation = new SupplierEvaluation() { UserId = user.Id };
-                //    db.SupplierEvaluations.Add(SupplierEvaluation);
+                    await _um.AddToRoleAsync(user.Id, model.UserRole);
                     db.SaveChanges();
-
-                    //    ViewBag.State = UsersStatesConstants.USERSTATE_PENDING_STRING;
-                    //    return View("RedirectLoginFailAndRegister");
-                    return RedirectToAction("Index", "Home");
+                   
+                    return RedirectToAction("Login", "Account");
                 }
 
-                if(model.Role == AccountStaticRoles.PROFESSIONAL)
-                    {
-                        var user = new ApplicationUser
-                        {
-                            UserName = model.Username,
-                            Email = model.Email,
-                            UserRole = AccountStaticRoles.PROFESSIONAL,
-                            //        Id = model.BI,
-                            //        UserStateId = UsersStatesConstants.USERSTATE_PENDING_ID,
-                            //        BirthDate = model.BirthDate,
-                            //        DriverLicenseEmissionDate = model.DriverLicenseEmissionDate,
-                            //        DriverLicenseNumber = model.DriverLicenseNumber,
-                            //        MobilePhoneNumber = model.MobilePhoneNumber,
-                            //        DriverLicenseEndDate = model.DriverLicenseEndDate,
-                            //        TelephoneNumber = model.TelephoneNumber,
-                        };
-
-
-                    var result = await _um.CreateAsync(user, model.Password);
-                    await _um.AddToRoleAsync(user.Id, model.Role);
-                        //    var SupplierEvaluation = new SupplierEvaluation() { UserId = user.Id };
-                        //    db.SupplierEvaluations.Add(SupplierEvaluation);
-                    db.SaveChanges();
-                    return RedirectToAction("Index", "Home");
-                    
-
-                    //AddErrors(result);
-                    //return HttpNotFound();
-                }
-
-                if (model.Role == AccountStaticRoles.MOBILITY)
+                if(model.UserRole == AccountStaticRoles.PROFESSIONAL)
                 {
+
+                    bool checkIfReturn = false;
+
+                    if (model.CompanyName == null)
+                    {
+                        ModelState.AddModelError("", "É necessário introduzir da empresa");
+                        checkIfReturn = true;
+                    }
+
+                    if (model.Address == null)
+                    {
+                        ModelState.AddModelError("", "É necessário introduzir a morada da empresa");
+                        checkIfReturn = true;
+                    }
+
+                    if (checkIfReturn == true)
+                    {
+                        model.Roles = AccountStaticRoles.GetRolesListForUser();
+                        model.UserRole = AccountStaticRoles.PROFESSIONAL;
+                        return View(model);
+                    }
+
+
+                    var user = new ApplicationUser
+                    {
+                         UserName = model.Username,
+                         Email = model.Email,
+                         UserRole = AccountStaticRoles.PROFESSIONAL,
+                         PhoneNumber = model.PhoneNumber,
+                         CompanyName = model.CompanyName,
+                         Address = model.Address
+                    };
+
+
+                    var result = await _um.CreateAsync(user, model.Password);
+                    await _um.AddToRoleAsync(user.Id, model.UserRole);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Login", "Account");
+                }
+
+                if (model.UserRole == AccountStaticRoles.MOBILITY)
+                {
+
+                    bool checkIfReturn = false;
+
+                    if (model.BirthDate.HasValue == false)
+                    {
+                        ModelState.AddModelError("", "É necessário introduzir a Data de Nascimento");
+                        checkIfReturn = true;
+                    }
+
+                    if (model.CC < 10000000 || model.CC > 99999999)
+                    {
+                        ModelState.AddModelError("", "É necessário introduzir um número de 8 dígitos");
+                        checkIfReturn = true;
+                    }
+
+                    if (model.DriverLicenseNumber == null)
+                    {
+                        ModelState.AddModelError("", "É necessário introduzir a carta de condução");
+                        checkIfReturn = true;
+                    }
+
+
+                    if (checkIfReturn == true)
+                    {
+                        model.Roles = AccountStaticRoles.GetRolesListForUser();
+                        model.UserRole = AccountStaticRoles.PRIVATE;
+                        return View(model);
+                    }
+
                     var user = new ApplicationUser
                     {
                         UserName = model.Username,
                         Email = model.Email,
-                        UserRole = AccountStaticRoles.MOBILITY
-                        //        Id = model.BI,
-                        //        UserStateId = UsersStatesConstants.USERSTATE_PENDING_ID,
-                        //        BirthDate = model.BirthDate,
-                        //        DriverLicenseEmissionDate = model.DriverLicenseEmissionDate,
-                        //        DriverLicenseNumber = model.DriverLicenseNumber,
-                        //        MobilePhoneNumber = model.MobilePhoneNumber,
-                        //        DriverLicenseEndDate = model.DriverLicenseEndDate,
-                        //        TelephoneNumber = model.TelephoneNumber,
+                        UserRole = AccountStaticRoles.MOBILITY,
+                        PhoneNumber = model.PhoneNumber,
+                        CC = model.CC,
+                        BirthDate = model.BirthDate                      
                     };
 
 
                     var result = await _um.CreateAsync(user, model.Password);
-                    await _um.AddToRoleAsync(user.Id, model.Role);
+                    await _um.AddToRoleAsync(user.Id, model.UserRole);
                     db.SaveChanges();
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
 
             }
@@ -640,5 +636,14 @@ namespace e_CarSharing.Controllers
             }
         }
         #endregion
+
+        // GET: /Accout/UserProfile
+        public ActionResult UserProfile(string id)
+        {
+            ApplicationUser user = new ApplicationUser();
+
+            user = db.Users.Find(id);
+            return View(user);
+        }
     }
 }

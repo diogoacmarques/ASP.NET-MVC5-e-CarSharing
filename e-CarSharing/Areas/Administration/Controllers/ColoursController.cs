@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace e_CarSharing.Areas.Administration.Controllers
 {
+    [Authorize(Roles = AccountStaticRoles.ADMINISTRATOR)]
     public class ColoursController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

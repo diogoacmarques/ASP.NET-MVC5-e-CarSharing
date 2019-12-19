@@ -3,40 +3,60 @@
     ViewBag.Title = "Manage";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Gerir Conta</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Change your @Model.Role account settings</h4>
+    <h4>Modificar a tua conta (@Model.Role)</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change your password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
-        <dt>External Logins:</dt>
-        <dd>
-            @Model.Logins.Count [
-            @Html.ActionLink("Manage", "ManageLogins") ]
-        </dd>
-        @*
-            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-             
-             See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-             
-             Uncomment the following block after you have set up two-factor authentication
-        *@
-        @*  
+
+    <div class="form-group Padding5">
+        <button type="button" class="btn btn-primary " onclick="location.href='@Url.Action("UserProfile","Account", new { id = Model.UserId})'">
+            <span class="glyphicon glyphicon-user"></span>
+            &nbsp; Perfil &nbsp;
+        </button>
+    </div>
+
+
+    <div class="form-group Padding5">
+        <button type="button" class="btn btn-primary " onclick="location.href='@Url.Action("ChangePassword")'">
+            <span class="glyphicon glyphicon-pencil"></span>
+            &nbsp; Alterar Password &nbsp;
+        </button>
+    </div>
+
+
+
+
+    @*
+        <dl class="dl-horizontal">
+            <dt>Password:</dt>
+            <dd>
+                [
+                @if (Model.HasPassword)
+                {
+                    @Html.ActionLink("Change your password", "ChangePassword")
+                }
+                else
+                {
+                    @Html.ActionLink("Create", "SetPassword")
+                }
+                ]
+            </dd>
+            <dt>External Logins:</dt>
+            <dd>
+                @Model.Logins.Count [
+                @Html.ActionLink("Manage", "ManageLogins") ]
+            </dd>
+
+                Phone Numbers can used as a second factor of verification in a two-factor authentication system.
+
+                 See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                    for details on setting up this ASP.NET application to support two-factor authentication using SMS.
+
+                 Uncomment the following block after you have set up two-factor authentication
+    *@
+    @*
             <dt>Phone Number:</dt>
             <dd>
                 @(Model.PhoneNumber ?? "None")
@@ -55,14 +75,14 @@
                     <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
                 }
             </dd>
-        *@
+
         <dt>Two-Factor Authentication:</dt>
         <dd>
             <p>
                 There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
                 for details on setting up this ASP.NET application to support two-factor authentication.
             </p>
-            @*@if (Model.TwoFactor)
+            @if (Model.TwoFactor)
                 {
                     using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
@@ -82,6 +102,6 @@
                         </text>
                     }
                 }*@
-        </dd>
+    </dd>
     </dl>
 </div>

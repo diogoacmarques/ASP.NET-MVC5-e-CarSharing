@@ -65,8 +65,41 @@
         </div> @*end of generalDetailsTab*@
 
         <div id="RentConditionsTab" class="tab-pane ">
-            <br />
-            <p>RentConditionsTab To do...</p>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <br />
+                if (Model.IsAdmin)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.VehicleStateId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(m => m.VehicleStateId, Model.States, "Tipo", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.VehicleStateId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Guardar " class="btn btn-success" />
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.VehicleStateId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.VehicleStateId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", disable = "disable" } })
+
+                        </div>
+                    </div>
+                }
+
+
+            }
         </div> @*end of RentConditionsTab*@
 
         <div id="LocalizationsTab" class="tab-pane ">
@@ -111,7 +144,7 @@
 
 <hr />
 <div>
-    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Index","Home")'">
+    <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
         <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
     </button>
 </div>

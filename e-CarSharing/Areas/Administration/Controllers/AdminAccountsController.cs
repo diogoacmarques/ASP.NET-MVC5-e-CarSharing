@@ -12,7 +12,7 @@ using System.Data.Entity;
 
 namespace e_CarSharing.Areas.Administration.Controllers
 {
-    //[Authorize(Roles = AccountLevels.ADMINISTRATOR)]
+    [Authorize(Roles = AccountStaticRoles.ADMINISTRATOR)]
     public class AdminAccountsController : Controller
     {
 
@@ -147,76 +147,6 @@ namespace e_CarSharing.Areas.Administration.Controllers
             db.SaveChanges();
             return RedirectToAction("Index", "AdminAccounts", new { @area = "Administration" });
         }
-
-
-        public ActionResult Edit()//#################################################################################
-        {
-            return View();
-        }
-
-
-
-        public ActionResult ListAll(string id)
-        {
-
-            ViewBag.typeOfAccount = AccountStaticRoles.GetRolesList();
-            ViewBag.typeOfAccountSelected = id;
-
-            if (id == AccountStaticRoles.ADMINISTRATOR)
-            {
-               
-                var AccountList = db.Users
-                 .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountStaticRoles.ADMINISTRATOR_ID.ToString()) == 0 ? true : false)).Any());
-
-                var listToReturn = from u in AccountList
-                                   select new Account()
-                                {
-                                    Id = u.Id,
-                                    UserName = u.UserName,
-                                    Email = u.Email,
-                                    Type = AccountStaticRoles.ADMINISTRATOR
-                                };
-
-                return View(listToReturn);
-            }
-            else if (id == AccountStaticRoles.PROFESSIONAL)
-            {
-                var AccountList = db.Users
-                 .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountStaticRoles.PROFESSIONAL_ID.ToString()) == 0 ? true : false)).Any());
-
-                var listToReturn = from u in AccountList
-                                   select new Account()
-                                   {
-                                       Id = u.Id,
-                                       UserName = u.UserName,
-                                       Email = u.Email,
-                                       Type = AccountStaticRoles.PROFESSIONAL
-                                   };
-
-                return View(listToReturn);
-            }
-            else if (id == AccountStaticRoles.PRIVATE)
-            {
-                var AccountList = db.Users
-               .Where(u => u.Roles.Where(r => (String.Compare(r.RoleId, AccountStaticRoles.PRIVATE_ID.ToString()) == 0 ? true : false)).Any());
-
-                var listToReturn = from u in AccountList
-                                   select new Account()
-                                   {
-                                       Id = u.Id,
-                                       UserName = u.UserName,
-                                       Email = u.Email,
-                                       Type = AccountStaticRoles.PRIVATE
-                                   };
-
-                return View(listToReturn);
-            }
-            else
-                return RedirectToAction("Index", "AdminAccounts", new { @area = "Administration" });
-
-
-        }
-
 
     }
 }

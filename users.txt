@@ -1,0 +1,15 @@
+Tipo de Conta:Administrador
+UserName:Admin
+Password:Admin123_
+
+Tipo de Conta:Particular
+UserName:Daniela
+Password:Daniela123_
+
+Tipo de Conta:Profissional
+UserName:Diogo
+Password:Diogo123_
+
+Tipo de Conta:Mobilidade
+UserName:Andre
+Password:Andre123_

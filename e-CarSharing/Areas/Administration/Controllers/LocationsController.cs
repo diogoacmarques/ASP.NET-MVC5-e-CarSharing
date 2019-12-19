@@ -9,6 +9,7 @@ using e_CarSharing.Models;
 
 namespace e_CarSharing.Areas.Administration.Controllers
 {
+    [Authorize(Roles = AccountStaticRoles.ADMINISTRATOR)]
     public class LocationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

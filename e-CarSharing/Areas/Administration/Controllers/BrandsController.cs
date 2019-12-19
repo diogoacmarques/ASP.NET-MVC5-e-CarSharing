@@ -11,7 +11,7 @@ using e_CarSharing.Areas.Administration.ViewModels;
 
 namespace e_CarSharing.Areas.Administration.Controllers
 {
-    //[Authorize(Roles = AccountLevels.ADMINISTRATOR)]
+    [Authorize(Roles = AccountStaticRoles.ADMINISTRATOR)]
     public class BrandsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

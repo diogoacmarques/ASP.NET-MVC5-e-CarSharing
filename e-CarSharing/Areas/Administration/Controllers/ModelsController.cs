@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 
 namespace e_CarSharing.Areas.Administration.Controllers
 {
+    [Authorize(Roles = AccountStaticRoles.ADMINISTRATOR)]
     public class ModelsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

@@ -5,35 +5,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+<br />
+<h2>Modelos</h2>
+<br />
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Create","Models")'">
+        <span class="glyphicon glyphicon-plus"></span>&nbsp;Criar&nbsp;Novo
+    </button>
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Brand.BrandName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModelName)
-        </th>
-        <th></th>
-    </tr>
+<hr />
 
-    @foreach (var item in Model)
-    {
+@if (Model.Count() != 0)
+{
+    <table class="table table-bordered table-responsive table-striped">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand.BrandName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModelName)
-            </td>
-            <td>
-                @*@Html.ActionLink("Edit", "Edit", new { id=item.ModelId }) |*@
-                @Html.ActionLink("Delete", "Delete", new { id = item.ModelId })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand.BrandName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelName)
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand.BrandName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModelName)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ModelId })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <h5>Ainda não existem modelos criados.</h5>
+}

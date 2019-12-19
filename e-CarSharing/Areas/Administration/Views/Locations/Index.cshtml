@@ -5,35 +5,55 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<br />
+<h2>Localizações</h2>
+<br />
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Create","Locations")'">
+        <span class="glyphicon glyphicon-plus"></span>&nbsp;Criar&nbsp;Nova
+    </button>
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(location => location.LocationName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GoogleMapsURL)
-        </th>
-        <th></th>
-    </tr>
+<hr />
 
-    @foreach (var item in Model)
-    {
+
+@if (Model.Count() != 0)
+{
+    <table class="table table-bordered table-responsive table-striped">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocationName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GoogleMapsURL)
-            </td>
-            <td>
-                @*@Html.ActionLink("Edit", "Edit", new { id=item.LocationId }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.LocalId }) |*@
-                @Html.ActionLink("Delete", "Delete", new { id = item.LocationId })
-            </td>
+            <th>
+                @Html.DisplayNameFor(location => location.LocationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GoogleMapsURL)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocationName)
+                </td>
+                <td>
+                    @if (item.GoogleMapsURL == null)
+                    {
+                      @Html.DisplayName("Sem link")
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.GoogleMapsURL)
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.LocationId })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <h5>Ainda não existem localizações criadas.</h5>
+}

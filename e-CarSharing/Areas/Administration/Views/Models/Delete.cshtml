@@ -32,9 +32,12 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+    <div class="form-actions no-color">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+        </button>
+        <input type="submit" value="Delete" class="btn btn-sm btn-danger" /> |
+
+    </div>
     }
 </div>

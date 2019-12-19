@@ -13,23 +13,11 @@
 {
     @Html.AntiForgeryToken()
 
-    @*<div class="form-group">*@
         @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-2">
             @Html.DropDownListFor(m => m.Role, Model.Roles, "Todas as funções", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
         </div>
-    @*</div>*@
-
-    @*<div class="form-horizontal">
-
-        <div class="tab-content">
-
-
-        </div>
-
-    </div>*@
-
 
         <button type="submit" class="btn btn-primary">
             <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp; Pesquisar
@@ -54,10 +42,10 @@
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th>
-                @Html.Display("Função")
+                @Html.DisplayNameFor(model => model.UserEmail)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserEmail)
+                @Html.DisplayNameFor(model => model.Role)
             </th>
             <th>Ações</th>
         </tr>

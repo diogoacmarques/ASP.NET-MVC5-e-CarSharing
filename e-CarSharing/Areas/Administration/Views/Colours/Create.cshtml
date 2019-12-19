@@ -34,8 +34,8 @@
     </div>
 }
 
-<div>
-    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Index","Colours")'">
-        <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
-    </button>
-</div>
+    <div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+        </button>
+    </div>

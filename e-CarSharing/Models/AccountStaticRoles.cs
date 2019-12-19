@@ -40,5 +40,17 @@ namespace e_CarSharing.Models
             };
             return new SelectList(lista, "Value", "Text");
         }
+
+        public static SelectList GetRolesListForVehicleSearch()
+        {
+            var lista = new List<SelectListItem>()
+            {
+               new SelectListItem { Value = PRIVATE, Text = PRIVATE },
+               new SelectListItem { Value = PROFESSIONAL, Text = PROFESSIONAL },
+            };
+            return new SelectList(lista, "Value", "Text");
+        }
+
+
     }
 }

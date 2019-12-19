@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace e_CarSharing.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -17,17 +18,17 @@ namespace e_CarSharing.Controllers
         {
             if (db.Users.Where(u => u.UserName == "Admin").Count() == 0)//make sure that exists a admin
             {
-            //    UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-            //    var user = new ApplicationUser
-            //    {
-            //        UserName = "Admin",
-            //        Email = "admin@echarsharing.pt",
-            //        UserRole = AccountStaticRoles.ADMINISTRATOR,
-            //    };
-            //    userManager.Create(user, "Admin123_");
-            //    userManager.AddToRole(user.Id, AccountStaticRoles.ADMINISTRATOR);
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index", "AdminAccounts", new { @area = "Administration" });
+                UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                var user = new ApplicationUser
+                {
+                    UserName = "Admin",
+                    Email = "admin@echarsharing.pt",
+                    UserRole = AccountStaticRoles.ADMINISTRATOR,
+                };
+                userManager.Create(user, "Admin123_");
+                userManager.AddToRole(user.Id, AccountStaticRoles.ADMINISTRATOR);
+                db.SaveChanges();
+                return RedirectToAction("Index", "AdminAccounts", new { @area = "Administration" });
             }
             return View();
         }

@@ -29,9 +29,6 @@ namespace e_CarSharing.Models
         public virtual ICollection<Vehicle> Vehicles { get; set; }
 
 
-        public const string VEHICLESTATE_ALL = "Todos";
-        public const int VEHICLESTATE_ALL_ID = 0;
-
         public const string VEHICLESTATE_PENDING = "Pendente";
         public const int VEHICLESTATE_PENDING_ID = 1;
 
@@ -41,31 +38,19 @@ namespace e_CarSharing.Models
         public const string VEHICLESTATE_ACCEPTED = "Aceite";
         public const int VEHICLESTATE_ACCEPTED_ID = 3;
 
-        public const string VEHICLESTATE_RENTED = "Aceite";
+        public const string VEHICLESTATE_RENTED = "Alugado";
         public const int VEHICLESTATE_RENTED_ID = 4;
 
-        public static SelectList GetStatesList(int? choice = null)
+        public static SelectList GetStatesList()
         {
             var lista = new List<SelectListItem>()
             {
                new SelectListItem { Value = VEHICLESTATE_PENDING_ID.ToString(), Text = VEHICLESTATE_PENDING},
-               new SelectListItem { Value = VEHICLESTATE_ACCEPTED_ID.ToString(), Text = VEHICLESTATE_ACCEPTED}
-            };
+               new SelectListItem { Value = VEHICLESTATE_DELETED_ID.ToString(), Text = VEHICLESTATE_DELETED},
+               new SelectListItem { Value = VEHICLESTATE_ACCEPTED_ID.ToString(), Text = VEHICLESTATE_ACCEPTED},
+               new SelectListItem { Value = VEHICLESTATE_RENTED_ID.ToString(), Text = VEHICLESTATE_RENTED},
+            }; 
 
-            if (choice != null && (choice == VEHICLESTATE_PENDING_ID || choice == VEHICLESTATE_ACCEPTED_ID))
-                return new SelectList(lista, "Value", "Text", choice.ToString());
-            else
-                return new SelectList(lista, "Value", "Text");
-        }
-
-        public static SelectList GetStatesListForAdminDropdown()
-        {
-            var lista = new List<SelectListItem>()
-            {
-               new SelectListItem { Value = VEHICLESTATE_ALL_ID.ToString(), Text = VEHICLESTATE_ALL},
-               new SelectListItem { Value = VEHICLESTATE_PENDING_ID.ToString(), Text = VEHICLESTATE_PENDING},
-               new SelectListItem { Value = VEHICLESTATE_ACCEPTED_ID.ToString(), Text = VEHICLESTATE_ACCEPTED}
-            };
             return new SelectList(lista, "Value", "Text");
         }
 

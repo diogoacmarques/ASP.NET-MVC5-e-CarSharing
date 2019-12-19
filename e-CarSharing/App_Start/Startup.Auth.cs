@@ -101,6 +101,16 @@ namespace e_CarSharing
                 };
                 roleManager.Create(role);
             }
+
+            if (roleManager.RoleExists(AccountStaticRoles.MOBILITY) == false)
+            {
+                var role = new IdentityRole
+                {
+                    Id = AccountStaticRoles.MOBILITY_ID.ToString(),
+                    Name = AccountStaticRoles.MOBILITY
+                };
+                roleManager.Create(role);
+            }
         }
 
     }

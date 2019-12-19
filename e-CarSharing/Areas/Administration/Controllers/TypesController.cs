@@ -9,6 +9,7 @@ using System.Net;
 
 namespace e_CarSharing.Areas.Administration.Controllers
 {
+    [Authorize(Roles = AccountStaticRoles.ADMINISTRATOR)]
     public class TypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

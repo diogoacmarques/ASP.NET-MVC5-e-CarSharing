@@ -7,6 +7,7 @@ using e_CarSharing.Models;
 
 namespace e_CarSharing.Areas.Administration.Controllers
 {
+    [Authorize(Roles = AccountStaticRoles.ADMINISTRATOR)]
     public class RentStateController : Controller
     {
         // GET: Administration/RentState

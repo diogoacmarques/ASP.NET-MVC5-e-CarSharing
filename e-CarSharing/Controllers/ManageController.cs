@@ -87,6 +87,7 @@ namespace e_CarSharing.Controllers
                   
             }
 
+            var UserId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -95,6 +96,8 @@ namespace e_CarSharing.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
                 Role = userRole,
+                UserId = UserId,
+
             };
             return View(model);
         }
