@@ -32,7 +32,23 @@ namespace e_CarSharing.Controllers
             return View(list);
         }
 
-        public ActionResult CheckVehicleRents(int Id)
+        public ActionResult MyRents()
+        {
+            var UserId = User.Identity.GetUserId();
+            var Rents = db.Rents
+               .Include(r => r.RentState)
+               .Include(v => v.Vehicle.Brand)
+               .Include(p => p.Vehicle.User)
+               .Include(c => c.Client)
+               .Include(p => p.PickUpLocation)
+               .Include(d => d.DeliveryLocation)
+               .Where(i => i.Vehicle.UserId == UserId)
+               .ToList();
+
+            return View(Rents);
+        }
+
+        public ActionResult CheckVehicleAvailability(int Id)
         {
             var list = db.Rents
                 .Include(v => v.Vehicle.Brand)
@@ -45,32 +61,54 @@ namespace e_CarSharing.Controllers
         }
 
 
-        public ActionResult AproveRent(int RentId)
+        public ActionResult ChangeRentState(int RentId)
         {
-           Rent model = db.Rents.Find(RentId);
-           return View(model);
+            var rent = db.Rents
+                .Include(r => r.RentState)
+               .Include(v => v.Vehicle.Brand)
+               .Include(p => p.Vehicle.User)
+               .Include(c => c.Client)
+               .Include(p => p.PickUpLocation)
+               .Include(d => d.DeliveryLocation)
+               .Where(i => i.RentId == RentId)
+               .FirstOrDefault();
+
+            RentViewModelChangeState ViewModel = new RentViewModelChangeState
+            {
+                Rent = rent,
+                RentStateList = RentState.GetStatesList()
+            };
+            return View(ViewModel);
         }
 
         [HttpPost]
-        public ActionResult AproveRent(Rent model)
+        public ActionResult ChangeRentState(RentViewModelChangeState ViewModel)
         {
-            if (ModelState.IsValid)
+            var rentToChange = db.Rents.Find(ViewModel.Rent.RentId);
+            var tmp = rentToChange;
+            if (ViewModel.Rent.RentStateId == RentState.RENTSTATE_ACCEPTED_ID)
             {
-                if (CheckAvailability(model.VehicleId, model.BeginDate, model.EndDate))
-                {
-                    model = db.Rents.Find(model.RentId);
-                    model.RentStateId = RentState.RENTSTATE_ACCEPTED_ID;
-                    db.Entry(model).State = EntityState.Modified;
+                if (CheckAvailability(rentToChange.VehicleId, rentToChange.BeginDate, rentToChange.EndDate))
+                {  
+                    rentToChange.RentStateId = RentState.RENTSTATE_ACCEPTED_ID;
+                    db.Entry(rentToChange).State = EntityState.Modified;
                     db.SaveChanges();
-                    RedirectToAction("Index");
+                    return RedirectToAction("MyRents");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "A data inserida não se encontra disponível");
+                    ModelState.AddModelError("", "Esta data não se encontra disponível");
                 }
             }
-           
-            return View(model);
+            else
+            {
+                rentToChange.RentStateId = ViewModel.Rent.RentStateId;
+                db.Entry(rentToChange).State = EntityState.Modified;
+                return RedirectToAction("MyRents");
+            }
+
+            ViewModel.RentStateList = RentState.GetStatesList();
+            return View(ViewModel);
         }
 
         public ActionResult Create(int? id)

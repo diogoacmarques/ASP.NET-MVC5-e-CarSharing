@@ -1,0 +1,27 @@
+﻿
+<div class="modal fade" id="ModalCreateMessage" tabindex="1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title">Criar Mensagem</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("CreateUsingModal", "Messages", new { area = "", returnUrl = Request.Url.AbsolutePath }, FormMethod.Post, new { id = "ModalForm" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                  <h4>
+                      Deseja Elminiar este Item?
+                  </h4>
+                }
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-unique" type="submit" onclick="document.getElementById('ModalForm').submit();">Enviar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

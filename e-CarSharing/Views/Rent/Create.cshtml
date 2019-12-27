@@ -7,10 +7,6 @@
 
 <h2>Rents</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
 <hr />
 
 @using (Html.BeginForm())
@@ -30,7 +26,7 @@
             @Html.ValidationMessageFor(model => model.Vehicle, "", new { @class = "text-danger" })
         </div>
         <div class="col-md-pull-1 col-md-5">
-            @Html.ActionLink("Ver Disponibilidades", "CheckVehicleRents", "Rent", new { area = "", id = Model.VehicleId }, new { @class = "btn btn-primary btn-large " })
+            @Html.ActionLink("Ver Disponibilidades", "CheckVehicleAvailability", "Rent", new { area = "", id = Model.VehicleId }, new { @class = "btn btn-primary btn-large " })
         </div>
     </div>
 

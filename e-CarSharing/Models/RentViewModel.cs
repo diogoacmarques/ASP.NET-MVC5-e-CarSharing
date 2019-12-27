@@ -49,7 +49,13 @@ namespace e_CarSharing.Models
         [Required]
         [Display(Name = "Onde Terminar")]
         public int DeliveryLocationId { get; set; }
+    }
 
 
+    public class RentViewModelChangeState
+    {
+        public Rent Rent { get; set; }
+
+        public SelectList RentStateList { get; set; }
     }
 }

@@ -206,7 +206,6 @@
     <Compile Include="Areas\Administration\Controllers\ColoursController.cs" />
     <Compile Include="Areas\Administration\Controllers\LocationsController.cs" />
     <Compile Include="Areas\Administration\Controllers\ModelsController.cs" />
-    <Compile Include="Areas\Administration\Controllers\RentStateController.cs" />
     <Compile Include="Areas\Administration\Controllers\TypesController.cs" />
     <Compile Include="Areas\Administration\ViewModels\AccountViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\BrandViewModel.cs" />
@@ -374,11 +373,13 @@
     <Content Include="Views\Rent\Create.cshtml" />
     <Content Include="Views\Vehicle\Delete.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
-    <Content Include="Views\Rent\CheckVehicleRents.cshtml" />
+    <Content Include="Views\Rent\CheckVehicleAvailability.cshtml" />
+    <Content Include="Views\Rent\ChangeRentState.cshtml" />
+    <Content Include="Views\Rent\MyRents.cshtml" />
+    <Content Include="Views\Shared\ConfirmDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Administration\Views\RentState\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

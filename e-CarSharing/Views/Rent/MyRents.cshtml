@@ -1,13 +1,12 @@
 ﻿@model IEnumerable<e_CarSharing.Models.Rent>
 
 @{
-    ViewBag.Title = "All Rents";
+    ViewBag.Title = "My Rents";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <br />
 <h2>Alugueres</h2>
 <hr />
-
 
 @if (Model.Count() != 0)
 {
@@ -47,7 +46,7 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(item.Vehicle.Brand.BrandName, "Details","Vehicle" ,new { id = item.VehicleId },null)
+                        @Html.ActionLink(item.Vehicle.Brand.BrandName, "Details", "Vehicle", new { id = item.VehicleId }, null)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Vehicle.User.UserName)
@@ -71,7 +70,8 @@
                         @Html.DisplayFor(modelItem => item.DeliveryLocation.LocationName)
                     </td>
                     <td>
-                        @Html.ActionLink("Detalhes", "Details", new { id = item.VehicleId })
+                        @Html.ActionLink("Detalhes", "Details", new { id = item.VehicleId }) |
+                        @Html.ActionLink("Mudar Estado", "ChangeRentState", new {item.RentId })
                     </td>
                 </tr>
             }
