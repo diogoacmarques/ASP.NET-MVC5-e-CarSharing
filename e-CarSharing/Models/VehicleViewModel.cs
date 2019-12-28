@@ -73,36 +73,32 @@ namespace e_CarSharing.Models
     {
         public int VehicleId { get; set; }
 
+        [Display(Name = "Propriatário")]
+        public ApplicationUser Owner { get; set; }
+
         [Display(Name = "Marca")]
         [ReadOnly(true)]
         public Brand Brand { get; set; }
 
-
         [Display(Name = "Modelo")]
         public Model Model { get; set; }
-
 
         [Display(Name = "Localização")]
         public Location Location { get; set; }
 
-
         [Display(Name = "Tipo")]
         public Type Type { get; set; }
-
 
         [Display(Name = "Cor")]
         public Colour Colour { get; set; }
 
-
         [Display(Name = "Número de passageiros")]
         public int vehiclePassengers { get; set; }
-
 
         [Display(Name = "Preço por hora")]
         [ReadOnly(true)]
         [DataType(DataType.Currency)]
         public float HourlyPrice { get; set; }
-
 
         [Display(Name = "Preço por dia")]
         [DataType(DataType.Currency)]

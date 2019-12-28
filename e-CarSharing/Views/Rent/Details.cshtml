@@ -1,0 +1,55 @@
+﻿@model e_CarSharing.Models.Rent
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h2>Detalhes Renda</h2>
+<hr />
+
+<div class="form-horizontal">
+    <hr />
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Vehicle, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Vehicle.Brand.BrandName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", disable = "disable" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BeginDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.BeginDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", disable = "disable" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", disable = "disable" } })
+            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PickUpLocationId, "Local de Levantamento ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PickUpLocation.LocationName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", disable = "disable" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DeliveryLocationId, "Local de Devolução", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DeliveryLocation.LocationName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", disable = "disable" } })
+
+        </div>
+    </div>
+</div>
+
+<div>
+    <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+        <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+    </button>
+</div>

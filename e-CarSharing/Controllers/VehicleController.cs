@@ -98,12 +98,8 @@ namespace e_CarSharing.Controllers
              .Include(v => v.Model)
              .Include(v => v.Colour)
              .Include(v => v.Location)
-             //.Include(v => v.HourlyPrice)
-             //.Include(v => v.DailyPrice)
-             //.Include(v => v.vehiclePassengers)
-             //.Include(v => v.VehicleState)
-             //.Where(v => v.User.UserStateId == UsersStatesConstants.USERSTATE_ACTIVE_ID)
-             //.Where(v => v.VehicleStateId == ActiveStateId && v.Deleted == false)
+             .Where(v => v.Deleted == false)
+             .Where(v => v.VehicleStateId == VehicleState.VEHICLESTATE_ACCEPTED_ID)
              .OrderBy(v => v.VehicleId);
 
             ViewModel.Vehicles = Vehicles.ToList();
@@ -242,6 +238,7 @@ namespace e_CarSharing.Controllers
                 VehicleDetails.IsAdmin = false;
 
             VehicleDetails.VehicleId = vehicle.VehicleId;
+            VehicleDetails.Owner = db.Users.Find(vehicle.UserId);
             VehicleDetails.Type = db.Types.Find(vehicle.TypeId);
             VehicleDetails.Brand = db.Brands.Find(vehicle.BrandId);
             VehicleDetails.Model = db.Models.Find(vehicle.ModelId);
@@ -326,22 +323,6 @@ namespace e_CarSharing.Controllers
             return View(MyVehicles);
         }
 
-
-
-        //public ActionResult ListAllVehicles()
-        //{
-        //    return View(VeiculoMockTmpData.ListaVeiculos);
-        //}
-
-        //public ActionResult ListMyCars(int id)
-        //{
-        //    return View();
-        //}
-
-        //public ActionResult VehiclesDetails(int id)
-        //{
-        //    return View(id);
-        //}
 
     }
 }

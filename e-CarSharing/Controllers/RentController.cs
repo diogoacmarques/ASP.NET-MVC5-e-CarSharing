@@ -18,7 +18,8 @@ namespace e_CarSharing.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Rent
-        public ActionResult Index()
+        [Authorize(Roles = AccountStaticRoles.ADMINISTRATOR)]
+        public ActionResult Index(int? RentState)
         {
             var list = db.Rents
                 .Include(r => r.RentState)
@@ -32,20 +33,22 @@ namespace e_CarSharing.Controllers
             return View(list);
         }
 
-        public ActionResult MyRents()
-        {
-            var UserId = User.Identity.GetUserId();
-            var Rents = db.Rents
-               .Include(r => r.RentState)
-               .Include(v => v.Vehicle.Brand)
-               .Include(p => p.Vehicle.User)
-               .Include(c => c.Client)
-               .Include(p => p.PickUpLocation)
-               .Include(d => d.DeliveryLocation)
-               .Where(i => i.Vehicle.UserId == UserId)
-               .ToList();
+        [Authorize(Roles = AccountStaticRoles.PRIVATE + "," + AccountStaticRoles.PROFESSIONAL + "," + AccountStaticRoles.MOBILITY)]
 
-            return View(Rents);
+        public ActionResult MyRents()
+        {    
+            RentViewModelSearch ViewModel = new RentViewModelSearch();
+            ViewModel = MyRentsFill(ViewModel);
+
+            return View(ViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult MyRents(RentViewModelSearch ViewModel)
+        {
+            ViewModel = MyRentsFill(ViewModel);
+
+            return View(ViewModel);
         }
 
         public ActionResult CheckVehicleAvailability(int Id)
@@ -53,7 +56,7 @@ namespace e_CarSharing.Controllers
             var list = db.Rents
                 .Include(v => v.Vehicle.Brand)
                 .Include(p => p.Vehicle.User)
-                .Where(r => r.RentId == Id)
+                .Where(v => v.VehicleId == Id)
                 .Where(r => r.RentStateId == RentState.RENTSTATE_ACCEPTED_ID)
                 .ToList();
 
@@ -85,7 +88,6 @@ namespace e_CarSharing.Controllers
         public ActionResult ChangeRentState(RentViewModelChangeState ViewModel)
         {
             var rentToChange = db.Rents.Find(ViewModel.Rent.RentId);
-            var tmp = rentToChange;
             if (ViewModel.Rent.RentStateId == RentState.RENTSTATE_ACCEPTED_ID)
             {
                 if (CheckAvailability(rentToChange.VehicleId, rentToChange.BeginDate, rentToChange.EndDate))
@@ -104,6 +106,7 @@ namespace e_CarSharing.Controllers
             {
                 rentToChange.RentStateId = ViewModel.Rent.RentStateId;
                 db.Entry(rentToChange).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("MyRents");
             }
 
@@ -111,6 +114,7 @@ namespace e_CarSharing.Controllers
             return View(ViewModel);
         }
 
+        [Authorize(Roles = AccountStaticRoles.MOBILITY)]
         public ActionResult Create(int? id)
         {
             if (id == null)
@@ -123,11 +127,15 @@ namespace e_CarSharing.Controllers
             var UserId = User.Identity.GetUserId();
             if (UserId == null)
                 ModelState.AddModelError(string.Empty, "Utilizador inválido");
-    
+
+
             ViewModel.ClientId = UserId;
             ViewModel.Client = db.Users.Find(UserId);
             ViewModel.VehicleId = (int)id;
             ViewModel.Vehicle = db.Vehicles.Find(ViewModel.VehicleId);
+            if(ViewModel.Vehicle.VehicleStateId != VehicleState.VEHICLESTATE_ACCEPTED_ID)
+                ModelState.AddModelError(string.Empty, "Estado do Veículo: Não aceite");
+
             ViewModel.Vehicle.Brand = db.Brands.Find(ViewModel.Vehicle.BrandId);
             
             ViewModel.Locations = new SelectList(db.Locations.Where(m => m.Deleted == false), "LocationId", "LocationName");
@@ -168,6 +176,22 @@ namespace e_CarSharing.Controllers
             return View(ViewModel);
         }
 
+        [Authorize(Roles = AccountStaticRoles.PRIVATE + "," + AccountStaticRoles.PROFESSIONAL + "," + AccountStaticRoles.MOBILITY + "," + AccountStaticRoles.ADMINISTRATOR)]
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Index","Home");
+
+            var rent = db.Rents
+                .Include(v => v.Vehicle.Brand)
+                .Include(l => l.PickUpLocation)
+                .Include(l => l.DeliveryLocation)
+                .Where(r => r.RentId == id)
+                .FirstOrDefault();
+
+            return View(rent);
+        }
+
         [NonAction]
         public bool CheckAvailability(int VehicleId,DateTime BeginDate, DateTime EndDate)
         {
@@ -189,6 +213,45 @@ namespace e_CarSharing.Controllers
             }
 
             return false;
+        }
+
+
+        [NonAction]
+        public RentViewModelSearch MyRentsFill(RentViewModelSearch model)
+        {
+            var UserId = User.Identity.GetUserId();
+            model.IsMobility = false;
+            if (User.IsInRole(AccountStaticRoles.MOBILITY))
+            {
+                model.IsMobility = true;
+                model.Rents = db.Rents
+               .Include(r => r.RentState)
+               .Include(v => v.Vehicle.Brand)
+               .Include(p => p.Vehicle.User)
+               .Include(c => c.Client)
+               .Include(p => p.PickUpLocation)
+               .Include(d => d.DeliveryLocation)
+               .Where(i => i.ClientId == UserId)
+               .ToList();
+            }
+            else
+            {
+                model.Rents = db.Rents
+              .Include(r => r.RentState)
+              .Include(v => v.Vehicle.Brand)
+              .Include(p => p.Vehicle.User)
+              .Include(c => c.Client)
+              .Include(p => p.PickUpLocation)
+              .Include(d => d.DeliveryLocation)
+              .Where(i => i.Vehicle.UserId == UserId)
+              .ToList();
+            }
+
+            if (model.RentSateId != null)
+                model.Rents = model.Rents.Where(r => r.RentState.RentStateId == model.RentSateId);
+
+            model.RentStateList = RentState.GetStatesList();
+            return model;
         }
 
 

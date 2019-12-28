@@ -1,0 +1,20 @@
+pesquisar veiculos:datas
+admin:veiculos->caracteristicas update buttons
+
+criar veiculo ter apenas as marcas para o tipo escolihdo...
+
+
+
+@Html.ActionLink("Detalhes", "Details", new { Area = "", id = item.VehicleId }, new { @class = "btn btn-primary btn-sm" })
+
+<div>
+    <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+        <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+    </button>
+</div>
+
+<div>
+    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("ListAdministrators","Admin", new { @area ="Administration"})'">
+        <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+    </button>
+</div>

@@ -13,61 +13,68 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.VehicleId)
-    @Html.HiddenFor(model => model.ClientId)
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.VehicleId)
+        @Html.HiddenFor(model => model.ClientId)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Vehicle, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-4">
-            @Html.EditorFor(model => model.Vehicle.Brand.BrandName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", disable = "disable" } })
-            @Html.ValidationMessageFor(model => model.Vehicle, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Vehicle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Vehicle.Brand.BrandName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", disable = "disable" } })
+                @Html.ValidationMessageFor(model => model.Vehicle, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-pull-1 col-md-5">
+                @Html.ActionLink("Ver Disponibilidades", "CheckVehicleAvailability", "Rent", new { area = "", id = Model.VehicleId }, new { @class = "btn btn-primary btn-large " })
+            </div>
         </div>
-        <div class="col-md-pull-1 col-md-5">
-            @Html.ActionLink("Ver Disponibilidades", "CheckVehicleAvailability", "Rent", new { area = "", id = Model.VehicleId }, new { @class = "btn btn-primary btn-large " })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BeginDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BeginDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.BeginDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PickUpLocationId, "Local de Levantamento ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.PickUpLocationId, Model.Locations, "Onde Levanto?", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PickUpLocationId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DeliveryLocationId, "Local de Devolução", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DeliveryLocationId, Model.Locations, "Onde Devolvo?", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DeliveryLocationId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Criar" class="btn btn-success" />
+            </div>
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.BeginDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.BeginDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-            @Html.ValidationMessageFor(model => model.BeginDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.PickUpLocationId, "Local de Levantamento ", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.PickUpLocationId, Model.Locations, "Onde Levanto?", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.PickUpLocationId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DeliveryLocationId, "Local de Devolução", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.DeliveryLocationId, Model.Locations, "Onde Devolvo?", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DeliveryLocationId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Criar" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
+
+<div>
+    <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+        <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+    </button>
+</div>

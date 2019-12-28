@@ -1,4 +1,4 @@
-﻿@model IEnumerable<e_CarSharing.Models.Rent>
+﻿@model e_CarSharing.Models.RentViewModelSearch
 
 @{
     ViewBag.Title = "My Rents";
@@ -8,7 +8,24 @@
 <h2>Alugueres</h2>
 <hr />
 
-@if (Model.Count() != 0)
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.LabelFor(model => model.Rents, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.DropDownListFor(m => m.RentSateId, Model.RentStateList, "Estado da Renda", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.RentSateId, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp; Pesquisar
+    </button>
+
+}
+<br />
+
+@if (Model.Rents.Count() != 0)
 {
     <div>
         <table class="table table-bordered table-responsive table-condensed table-striped">
@@ -42,7 +59,7 @@
                 </th>
             </tr>
 
-            @foreach (var item in Model)
+            @foreach (var item in Model.Rents)
             {
                 <tr>
                     <td>
@@ -70,8 +87,13 @@
                         @Html.DisplayFor(modelItem => item.DeliveryLocation.LocationName)
                     </td>
                     <td>
-                        @Html.ActionLink("Detalhes", "Details", new { id = item.VehicleId }) |
-                        @Html.ActionLink("Mudar Estado", "ChangeRentState", new {item.RentId })
+                        @Html.ActionLink("Detalhes", "Details", new { Area = "", id = item.RentId }, new { @class = "btn btn-primary btn-sm" })
+                        @if (!Model.IsMobility)
+                        {
+                            @Html.ActionLink("Mudar Estado", "ChangeRentState", new { Area = "", RentId = item.RentId }, new { @class = "btn btn-info btn-sm" })
+
+                        }
+
                     </td>
                 </tr>
             }
@@ -83,3 +105,9 @@ else
 {
     <h4>Ainda não existem alugueres.</h4>
 }
+
+    <div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Index","Home", new { @area =""})'">
+            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+        </button>
+    </div>

@@ -377,6 +377,7 @@
     <Content Include="Views\Rent\ChangeRentState.cshtml" />
     <Content Include="Views\Rent\MyRents.cshtml" />
     <Content Include="Views\Shared\ConfirmDelete.cshtml" />
+    <Content Include="Views\Rent\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

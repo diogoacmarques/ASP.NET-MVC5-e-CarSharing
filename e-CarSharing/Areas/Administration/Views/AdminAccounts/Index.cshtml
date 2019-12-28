@@ -23,16 +23,8 @@
             <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp; Pesquisar
         </button>
 
-
 }
-
-
-    @*<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Create","Accounts", new { @area = "Administration" })'">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;Criar&nbsp;Novo
-        </button>*@
-
 <hr />
-
 
 @if (Model.Users.Count() != 0)
 {
@@ -52,20 +44,23 @@
 
         @foreach (var item in Model.Users)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserRole)
-                </td>
-                <td>
-                    @Html.ActionLink("Eliminar", "Delete", new { Area = "Administration", id = item.Id })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserRole)
+            </td>
+            <td>
+                @Html.ActionLink("Detalhes", "UserProfile", "Account", new { area = "", id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                @Html.ActionLink("Eliminar", "Delete", new { Area = "Administration", id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+
+
+            </td>
+        </tr>
         }
 
     </table>

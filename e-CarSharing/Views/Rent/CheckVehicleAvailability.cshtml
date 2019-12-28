@@ -16,30 +16,30 @@
         <table class="table table-bordered table-responsive table-condensed table-striped">
             <tr>
                 <th>
+                    @Html.DisplayName("Veículo")
+                </th>
+                <th>
                     @Html.DisplayName("Data de Início")
                 </th>
                 <th>
                     @Html.DisplayName("Data de Fim")
                 </th>
-                <th>
-                    @Html.DisplayName("Ações")
-                </th>
             </tr>
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BeginDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EndDate)
-                    </td>
-                    <td>
-                        @*@Html.ActionLink("Detalhes", "Details", new { id = item.VehicleId })*@
-                        ---
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Vehicle.Brand.BrandName, "Details", "Vehicle", new { id = item.VehicleId }, null)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeginDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+
+            </tr>
             }
 
         </table>
@@ -49,3 +49,9 @@ else
 {
     <h4>Ainda não existem alugueres confirmados para este veículo.</h4>
 }
+
+<div>
+    <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+        <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+    </button>
+</div>
