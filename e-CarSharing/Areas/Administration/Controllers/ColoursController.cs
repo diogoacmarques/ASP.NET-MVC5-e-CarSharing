@@ -74,13 +74,6 @@ namespace e_CarSharing.Areas.Administration.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Colour colour = db.Colours.Find(id);
-            /* if (db.Vehicles.Where(v => v.BrandId == colour.BrandId && v.Deleted == false).Count() != 0 || db.Brands.Where(m => m.BrandId == brand.BrandId && m.Deleted == false).Count() != 0)
-             {
-                 ViewBag.AlertText = " A marca não pode ser eliminada por estar em utilização!";
-                 ViewBag.ShowAlert = true;
-                 return View(brand);
-
-             }*/
             colour.Deleted = true;
             db.Entry(colour).State = EntityState.Modified;
             db.SaveChanges();

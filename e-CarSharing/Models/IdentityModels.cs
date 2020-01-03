@@ -31,18 +31,16 @@ namespace e_CarSharing.Models
         [Display(Name = "Data de Nascimento")]
         public DateTime? BirthDate { get; set; }
 
-       // [MaxLength(10)]
         [Display(Name = "Número da Carta de Condução")]
         public string DriverLicenseNumber { get; set; }
 
         [Display(Name = "Número do Cartão de Cidadão")]
-       // [Range(8, 8, ErrorMessage = "Insira um número de 8 digitos")]
         public int CC { get; set; }
 
 
         public ApplicationUser() : base()
         {
-            //Vehicles = new HashSet<Vehicle>();
+    
         }
     }
 

@@ -158,7 +158,7 @@ namespace e_CarSharing.Controllers
                     return View(ViewModel);              
                 }
 
-                //create rent(pendente)
+                //create rent no estado pendente
                 Rent newRent = new Rent();
                 newRent.VehicleId = ViewModel.VehicleId;
                 newRent.ClientId = ViewModel.ClientId;

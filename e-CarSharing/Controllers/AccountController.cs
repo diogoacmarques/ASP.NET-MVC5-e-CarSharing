@@ -93,6 +93,7 @@ namespace e_CarSharing.Controllers
             }
             catch (Exception e)
             {
+                var tmp = e;
                 ModelState.AddModelError("", "Tentativa de login inválida.");
                 return View(model);
             }

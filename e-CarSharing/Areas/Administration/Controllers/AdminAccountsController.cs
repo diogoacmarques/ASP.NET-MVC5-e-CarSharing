@@ -83,7 +83,6 @@ namespace e_CarSharing.Areas.Administration.Controllers
                     Email = model.Email,
                     UserRole = AccountStaticRoles.ADMINISTRATOR,
                 };
-                //user.UserStateId = UsersStatesConstants.USERSTATE_ACTIVE_ID;
                 userManager.Create(user, model.Password);
                 userManager.AddToRole(user.Id, AccountStaticRoles.ADMINISTRATOR);
                 db.SaveChanges();

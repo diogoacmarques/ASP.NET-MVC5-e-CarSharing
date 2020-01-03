@@ -37,8 +37,6 @@ namespace e_CarSharing.Models
         {
             base.OnModelCreating(modelBuilder);
 
-
-            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
     }

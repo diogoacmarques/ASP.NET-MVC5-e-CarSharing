@@ -167,8 +167,6 @@ namespace e_CarSharing.Controllers
                     Deleted = false
                 };
                 db.Vehicles.Add(newVehicle);
-                //var VehicleEvaluation = new VehicleEvaluation() { VehicleId = NovoVeiculo.VehicleId };
-                //db.VehicleEvaluations.Add(VehicleEvaluation);
                 db.SaveChanges();
                 return RedirectToAction("Index");
 
@@ -205,30 +203,58 @@ namespace e_CarSharing.Controllers
             vehicle.Brand = db.Brands.Find(vehicle.BrandId);
             vehicle.Model = db.Models.Find(vehicle.ModelId);
             vehicle.Colour = db.Colours.Find(vehicle.ColourId);
-
             vehicle.Location = db.Locations.Find(vehicle.LocationId);
-
             vehicle.User = db.Users.Find(vehicle.UserId);
+            vehicle.VehicleState = db.VehicleStates.Find(vehicle.VehicleStateId);
 
 
             return View(vehicle);
         }
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Vehicle vehicle)
         {
-            //    Veiculo v = VeiculoMockTmpData.ListaVeiculos.FirstOrDefault(s => s.Id == id);
-            //    if (v == null) return RedirectToAction("Index");
 
-            //    try
-            //    {
-            //        VeiculoMockTmpData.ListaVeiculos.Remove(v);
-            //        return RedirectToAction("Index");
-            //    }
-            //    catch
-            //    {
-            return View();
-            //    }
+            var vehicleToReturn = db.Vehicles.Find(vehicle.VehicleId);
+
+
+            if (ModelState.IsValid){
+                if (vehicle == null)
+                {
+                    ModelState.AddModelError("", "Veículo Inválido.");
+                }
+                else
+                {
+                    var list = db.Rents
+                        .Where(v => v.VehicleId == vehicle.VehicleId)
+                        .Where(r => r.RentState.RentStateId == RentState.RENTSTATE_ACCEPTED_ID)
+                        .Count();
+
+                    if(list != 0)
+                    {
+                        ModelState.AddModelError("", "Este Veículo tem rendas po realizar");
+                    }
+                    else
+                    {
+                        vehicleToReturn.Deleted = true;
+                        db.Entry(vehicleToReturn).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("MyVehicles");
+                    }
+                }
+            }
+
+            vehicleToReturn.Type = db.Types.Find(vehicleToReturn.TypeId);
+            vehicleToReturn.Brand = db.Brands.Find(vehicleToReturn.BrandId);
+            vehicleToReturn.Model = db.Models.Find(vehicleToReturn.ModelId);
+            vehicleToReturn.Colour = db.Colours.Find(vehicleToReturn.ColourId);
+            vehicleToReturn.Location = db.Locations.Find(vehicleToReturn.LocationId);
+            vehicleToReturn.User = db.Users.Find(vehicleToReturn.UserId);
+            vehicleToReturn.VehicleState = db.VehicleStates.Find(vehicleToReturn.VehicleStateId);
+
+
+            return View(vehicleToReturn);
+  
         }
 
 
