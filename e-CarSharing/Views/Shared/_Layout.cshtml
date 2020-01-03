@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <link rel="shortcut icon" type="image/ico" href="~/favicon.ico">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>e-CarSharing</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -16,8 +17,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <div class="item active">
+                        <img src="~/Content/home_1.jpg" alt="Los Angeles">
+                    </div>
                 </button>
-                @Html.ActionLink("e-CarSharing", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="@Url.Action("Index", "Home")" title="e-CarSharing" class="navbar-brand" style="padding:8px;">
+                    <img alt="" src="@Url.Content("~/Content/logo.png")" style="display:inline;" />
+                    e-CarSharing
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 @Html.Partial("_NavbarOptions")

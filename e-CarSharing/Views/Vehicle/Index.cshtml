@@ -183,7 +183,10 @@
                     (@Html.DisplayFor(modelItem => item.User.UserRole))
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Location.LocationName)
+                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModal">
+                        <span class="glyphicon glyphicon-map-marker"></span>&nbsp;  @Html.DisplayFor(modelItem => item.Location.LocationName)
+                    </button>
+
                 </td>
                 <td>
                     @Html.ActionLink("Detalhes", "Details", new { Area = "", id = item.VehicleId }, new { @class = "btn btn-primary btn-sm" })
@@ -205,4 +208,21 @@ else
 </div>
 
 
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Marca - @Html.DisplayFor(model => model.LocationId) </h4>
+            </div>
+            <div class="modal-body">
+              To Do...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div> 

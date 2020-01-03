@@ -1,9 +1,9 @@
 ﻿@using e_CarSharing.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "Login";
 }
-
+<br/>
 <h2>@ViewBag.Title.</h2>
 <div class="row">
     <div class="col-md-8">
@@ -35,19 +35,21 @@
                             @Html.LabelFor(m => m.RememberMe)
                         </div>
                     </div>
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBox("ShowPassword", false, new { onclick = "ShowPasswordsOnLogin();" })
+                            @Html.Label("Mostrar Senha", new { @for = "ShowPassword" })
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Log in" class="btn btn-default" />
                     </div>
                 </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
+                @*<button type="button" class="btn btn-primary " onclick="location.href='@Url.Action("Register","Account")'">
+                    Registrar na plataforma &nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+                </button>*@
             }
         </section>
     </div>
@@ -60,4 +62,14 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        function ShowPasswordsOnLogin() {
+            if (document.getElementById("Password").type === "password")
+                document.getElementById("Password").type = "text";
+            else
+                document.getElementById("Password").type = "password";
+
+        }
+    </script>
 }

@@ -105,6 +105,7 @@ namespace e_CarSharing.Models
         public float DailyPrice { get; set; }
 
         public bool IsAdmin { get; set; }
+        public bool CanRent { get; set; }
 
         [Display(Name = "Estado do Veículo")]
         public int VehicleStateId { get; set; }

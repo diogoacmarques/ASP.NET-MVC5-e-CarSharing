@@ -213,7 +213,7 @@ namespace e_CarSharing.Controllers
         }
 
 
-
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -223,19 +223,30 @@ namespace e_CarSharing.Controllers
 
             VehicleViewModelDetails VehicleDetails = new VehicleViewModelDetails();
             Vehicle vehicle = db.Vehicles.Find(id);
+    
             if (vehicle == null)
             {
                 return HttpNotFound();
             }
 
+
+
+            var user = db.Users.Find(User.Identity.GetUserId());
+
             if (User.IsInRole(AccountStaticRoles.ADMINISTRATOR))
             {
                 VehicleDetails.IsAdmin = true;
                 VehicleDetails.States = new SelectList(db.VehicleStates, "VehicleStateId", "VehicleStateName");
+            }else if (User.IsInRole(AccountStaticRoles.MOBILITY) || user == null)
+            {
+                VehicleDetails.CanRent = true;
             }
-               
             else
+            {
                 VehicleDetails.IsAdmin = false;
+                VehicleDetails.CanRent = false;
+            }
+
 
             VehicleDetails.VehicleId = vehicle.VehicleId;
             VehicleDetails.Owner = db.Users.Find(vehicle.UserId);
@@ -257,9 +268,7 @@ namespace e_CarSharing.Controllers
             {
                 VehicleDetails.VehicleStateId = -1;
             }
-           
-
-
+          
             return View(VehicleDetails);
         }
 
@@ -286,7 +295,6 @@ namespace e_CarSharing.Controllers
             }
             VehicleDetails.States = new SelectList(db.VehicleStates, "VehicleStateId", "VehicleStateName");
             return View(VehicleDetails);
-            //    }
         }
 
         [Authorize(Roles = AccountStaticRoles.PRIVATE + "," + AccountStaticRoles.PROFESSIONAL + "," + AccountStaticRoles.ADMINISTRATOR)]

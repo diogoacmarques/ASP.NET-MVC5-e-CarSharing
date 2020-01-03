@@ -153,9 +153,13 @@
     <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
         <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
     </button>
-    <button type="button" class="btn btn-success btn-sm" onclick="location.href='@Url.Action("Create","Rent", new { Area ="", id = Model.VehicleId})'">
-        <span class="glyphicon glyphicon-road"></span>&nbsp;Alugar
-    </button>
+    @if (Model.CanRent)
+    {
+        <button type="button" class="btn btn-success btn-sm" onclick="location.href='@Url.Action("Create","Rent", new { Area ="", id = Model.VehicleId})'">
+            <span class="glyphicon glyphicon-road"></span>&nbsp;Alugar
+        </button>
+    }
+
 </div>
 
 
