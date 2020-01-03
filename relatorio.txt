@@ -1,0 +1,149 @@
+1:
+3 Tipos de contas publicas:Mobilidade/Particular/Profissional
+Particular/Profissional - Podem adicionar veiculos á plataforma e aceitar/rejeitar alugueres
+Mobilidade - Podem usufruir dos veiculos disponiveis, criando um aluguer
+
+2:
+Anonimo: 
+-pesquisar veiculos
+-verificar disponiblidade do veiculo
+
+Administrador
+-Read/Dlete Todas as contas existentes na plataforma
+-Criar contas administrador
+-R/D/E todos os veiculos exitentes na plataforma
+-CRUD - localizações
+-CRUD - Tipos de veiculos
+-CRUD - marcas
+-CRUD - modelos
+-RD - Alugueres
+
+Particular/profissional
+-CRD veiculo
+-aceitar/rejeitar alugueres
+
+Mobilidade
+-Criar aluguer
+
+3:
+
+4:
+Antl 3.5.0.2
+bootstrap 4.4.1
+EntetiyFramework 6.4.0
+PagedList 1.17.0
+...
+
+5:
+AccountStaticRoles
+AccountViewModel
+ApplicationDbContext
+Brand
+Colour
+IdentityModel
+Location
+ManageViewModel
+Model
+Rent
+RentState
+RentViewModel
+Type
+Vehicle
+VehicleState
+VehicleViewModel
+
+6:
+IdentityModel
+AccountViewModel
+
+7:
+Administracao:
+-AdminAccounts
+-Brands
+-Colours
+-Locations
+-Models
+-Types
+Normal
+-Account
+-Home
+-Rent
+-Vehicle
+
+8:
+Account
+
+9:
+-AdminAccounts (Create/Delete/Index)
+-Brands (Create/Delete/Index)
+-Colours (Create/Delete/Index)
+-Locations(Create/Delete/Edit/Index)
+-Models (Create/Delete/Index)
+-Types (Create/Delete/Index)
+-Account (_ExternalLoginListPartial/ConfirmEmail/ExternalLoginConfirmation/ExternalLoginFailure/ForgotPassword/
+ForgotPasswordConfirmation/Login/Register/ResetPassword/ResetPasswordConfirmation/SendCode/UserProfile/VerifyCode)
+-Home (About/Contact/Index)
+-Rent (ChangeRentState/CheckAvailability/Craete/Details/Index/MyRents)
+-Vehicle (Create/Delete/Details/Index/MyVehicles)
+Shared(Layout/_LoginPartial/_NavbarOptions/ConfirmDelete/Error/Lockout)
+
+10:
+Account:Login/Register/UserProfile
+Home:About/Contact/Index
+Manage(Index)
+
+11:
+-AccountViewModel/SearchAccountViewModel
+-BrandViewModel/BrandViewModelCreate
+-ModelViewModel/ModelViewModelCreate
+----
+-ExternalLoginConfirmationViewModel/ExternalLoginListViewModel/SendCodeViewModel/VerifyCodeViewModel/ForgotViewModel/
+LoginViewModel/RegisterViewModel/ResetPasswordViewModel/ForgotPasswordViewModel
+-ManageViewModel/IndexViewModel/ManageLoginsViewModel/FactorViewModel/SetPasswordViewModel/ChangePasswordViewModel/AddPhoneNumberViewModel
+VerifyPhoneNumberViewModel/ConfigureTwoFactorViewModel/
+-RentViewModel/RentViewModelCreate/RentViewModelChangeState/RentViewModelSearch
+-VehicleViewModel/VehicleViewModelCreate/VehicleViewModelDetails/SearchVehicleViewModel
+
+12:
+AccountViewModel(RegisterViewModel)
+
+13:
+_Layout
+_LoginPartial
+_NavbarOptions
+ConfirmDelete
+Error
+Lockout
+
+14:
+_Layout
+_LoginPartial
+_NavbarOptions
+
+15:
+--
+
+16:
+view side
+[Required]
+[MaxLength(10)]
+[Range]
+[DataType(DataType.Currency)]
+server side:
+todos os necessários...
+
+17:
+?
+
+18:
+---
+
+19:
+Admin,Admin123_,"Administrador"
+Diogo,Diogo123_,"Profissional"
+Daniela,Daniela123_,"Particular"
+Andre,Andre123_,"Mobilidade"
+
+20:
+
+

@@ -1,5 +1,4 @@
 pesquisar veiculos:datas
-vehicle->delete tab
 
 @Html.ActionLink("Detalhes", "Details", new { Area = "", id = item.VehicleId }, new { @class = "btn btn-primary btn-sm" })
 

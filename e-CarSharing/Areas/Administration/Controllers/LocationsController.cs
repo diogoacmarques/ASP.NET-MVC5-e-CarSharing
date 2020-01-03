@@ -97,8 +97,9 @@ namespace e_CarSharing.Areas.Administration.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LocalName,GoogleMapsURL,LocalId")] Location location)
+        public ActionResult Edit(Location location)
         {
+            var tmp = location;
             if (ModelState.IsValid)
             {
                 Location locationToEdit = db.Locations.Find(location.LocationId);

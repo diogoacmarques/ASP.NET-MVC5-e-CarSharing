@@ -61,7 +61,7 @@ namespace e_CarSharing.Models
 
     public class RentViewModelSearch
     {
-        [Display(Name = "Renda")]
+        [Display(Name = "Aluguer")]
         public IEnumerable<Rent> Rents { get; set; }
 
         public SelectList RentStateList { get; set; }

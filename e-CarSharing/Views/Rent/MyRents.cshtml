@@ -14,7 +14,7 @@
 
     @Html.LabelFor(model => model.Rents, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.DropDownListFor(m => m.RentSateId, Model.RentStateList, "Estado da Renda", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.RentSateId, Model.RentStateList, "Estado do Aluguer", new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.RentSateId, "", new { @class = "text-danger" })
     </div>
 

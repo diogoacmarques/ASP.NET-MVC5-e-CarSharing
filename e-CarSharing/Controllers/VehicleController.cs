@@ -232,7 +232,7 @@ namespace e_CarSharing.Controllers
 
                     if(list != 0)
                     {
-                        ModelState.AddModelError("", "Este Veículo tem rendas po realizar");
+                        ModelState.AddModelError("", "Este Veículo tem aluguer po realizar");
                     }
                     else
                     {
