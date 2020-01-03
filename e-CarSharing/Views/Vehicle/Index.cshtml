@@ -33,8 +33,6 @@
 
             @if (Model.TypeId != null)
             {
-
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.BrandId, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-4">
@@ -183,10 +181,12 @@
                     (@Html.DisplayFor(modelItem => item.User.UserRole))
                 </td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModal">
+                    <a type="button" class="btn btn-info btn-sm" href="@item.Location.GoogleMapsURL" value="Localização" target="_blank">
+                        <span class="glyphicon glyphicon-map-marker"></span>&nbsp;@Html.DisplayFor(modelItem => item.Location.LocationName)
+                    </a>
+                    @*<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModal">
                         <span class="glyphicon glyphicon-map-marker"></span>&nbsp;  @Html.DisplayFor(modelItem => item.Location.LocationName)
-                    </button>
-
+                    </button>*@
                 </td>
                 <td>
                     @Html.ActionLink("Detalhes", "Details", new { Area = "", id = item.VehicleId }, new { @class = "btn btn-primary btn-sm" })

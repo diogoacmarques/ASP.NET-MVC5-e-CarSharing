@@ -9,7 +9,7 @@
 <h2>Marcas</h2>
 <br />
 <p>
-    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Create","Brands")'">
+    <button type="button" class="btn btn-success btn-sm" onclick="location.href='@Url.Action("Create","Brands")'">
         <span class="glyphicon glyphicon-plus"></span>&nbsp;Criar&nbsp;Nova
     </button>
 </p>
@@ -40,7 +40,7 @@
                     @Html.DisplayFor(modelItem => item.Type.TypeName)
                 </td>
                 <td>
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.BrandId })
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.BrandId }, new { @class = "btn btn-danger btn-sm" })
                 </td>
             </tr>
         }
@@ -51,3 +51,9 @@ else
 {
     <h5>Ainda não existem marcas criadas.</h5>
 }
+
+    <div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+        </button>
+    </div>

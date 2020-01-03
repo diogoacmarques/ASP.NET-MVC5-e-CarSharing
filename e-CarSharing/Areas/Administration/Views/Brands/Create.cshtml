@@ -1,12 +1,12 @@
 ﻿
-@model e_CarSharing.Areas.Administration.ViewModels.BrandViewModel
+@model e_CarSharing.Areas.Administration.ViewModels.BrandViewModelCreate
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <br />
-<h2>Criar</h2>
+<h2>Criar Marca</h2>
 
 @using (Html.BeginForm())
 {
@@ -18,7 +18,8 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TypeId, "BrandId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+
             <div class="col-md-10">
                 @Html.DropDownListFor(m => m.TypeId, Model.Types, "Marca", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })

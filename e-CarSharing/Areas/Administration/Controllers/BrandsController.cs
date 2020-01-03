@@ -27,7 +27,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
         // GET: Administration/Brands/Create#################################################################################
         public ActionResult Create()
         {
-            BrandViewModel ViewModel = new BrandViewModel
+            BrandViewModelCreate ViewModel = new BrandViewModelCreate
             {   
             Types = new SelectList(db.Types.Where(t => t.Deleted == false), "TypeId", "TypeName")
             };
@@ -37,7 +37,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
         // POST: Administration/Brands/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BrandViewModel ViewModel)
+        public ActionResult Create(BrandViewModelCreate ViewModel)
         {
             Brand brand = new Brand
             {

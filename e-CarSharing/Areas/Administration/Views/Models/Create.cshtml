@@ -4,25 +4,26 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<br />
+<h2>Criar Modelo</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Model</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.BrandId, "BrandId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.BrandId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(m => m.BrandId, Model.Brands, "Marca", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.BrandId, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             @Html.LabelFor(model => model.ModelName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -40,8 +41,8 @@
     </div>
 }
 
-    <div>
-        <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
-            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
-        </button>
-    </div>
+<div>
+    <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+        <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+    </button>
+</div>

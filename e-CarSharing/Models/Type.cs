@@ -16,11 +16,11 @@ namespace e_CarSharing.Models
         }
 
         [Key]
-        [Display(Name = "Type")]
+        [Display(Name = "Tipo")]
         public int TypeId { get; set; }
 
         [Required]
-        [Display(Name = "Type")]
+        [Display(Name = "Tipo")]
         public string TypeName { get; set; }
 
         public bool Deleted { get; set; }

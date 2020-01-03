@@ -5,35 +5,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Eliminar</h2>
+<h2>Eliminar Cor</h2>
 
-<h3>Deseja eliminar este item?</h3>
 <div>
     <hr />
-    @if (ViewBag.ShowAlert != null && ViewBag.ShowAlert == true)
-    {
-        @Html.Partial("_ShowAlert");
-    }
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ColourName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ColourName)
-        </dd>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ColourName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ColourName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", disable = "disable" } })
 
-    </dl>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
 
     <div class="form-actions no-color">
         <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
             <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
         </button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
             <span class="glyphicon glyphicon-trash"></span>&nbsp;Elminar
         </button>
     </div>
-
+    
 </div>
 
 

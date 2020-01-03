@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace e_CarSharing.Areas.Administration.ViewModels
 {
-    public class BrandViewModel
+    public class BrandViewModelCreate
     {
         [Required(ErrorMessage = "Insira a marca")]
         [Display(Name = "Marca")]

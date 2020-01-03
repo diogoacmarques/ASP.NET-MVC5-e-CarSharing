@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<e_CarSharing.Models.Colour>
 
 @{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    ViewBag.Title = "Index";
 }
+
 <br />
 <h2>Cores</h2>
 <br />
 <p>
-    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Create","Colours")'">
+    <button type="button" class="btn btn-success btn-sm" onclick="location.href='@Url.Action("Create","Colours")'">
         <span class="glyphicon glyphicon-plus"></span>&nbsp;Criar&nbsp;Nova
     </button>
 </p>
@@ -23,9 +23,6 @@
                 @Html.DisplayNameFor(model => model.ColourName)
             </th>
             <th>
-                ID
-            </th>
-            <th>
                 @Html.DisplayName("Ações")
             </th>
         </tr>
@@ -37,10 +34,7 @@
                     @Html.DisplayFor(modelItem => item.ColourName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ColourId)
-                </td>
-                <td>
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.ColourId })
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.ColourId }, new { @class = "btn btn-danger btn-sm" })
                 </td>
             </tr>
         }
@@ -51,3 +45,9 @@ else
 {
     <h5>Ainda não existem cores criadas.</h5>
 }
+
+    <div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+        </button>
+    </div>

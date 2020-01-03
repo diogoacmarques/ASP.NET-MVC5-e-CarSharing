@@ -9,7 +9,7 @@
 <h2>Tipo</h2>
 <br />
 <p>
-    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Create","Types")'">
+    <button type="button" class="btn btn-success btn-sm" onclick="location.href='@Url.Action("Create","Types")'">
         <span class="glyphicon glyphicon-plus"></span>&nbsp;Criar&nbsp;Novo
     </button>
 </p>
@@ -34,7 +34,7 @@
                     @Html.DisplayFor(modelItem => item.TypeName)
                 </td>
                 <td>
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.TypeId })
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.TypeId }, new { @class = "btn btn-danger btn-sm" })
                 </td>
             </tr>
         }
@@ -45,3 +45,9 @@ else
 {
     <h5>Ainda não existem tipos criados.</h5>
 }
+
+    <div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+        </button>
+    </div>
