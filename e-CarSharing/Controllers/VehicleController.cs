@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Net;
 using PagedList;
+using Newtonsoft.Json;
 
 namespace e_CarSharing.Controllers
 {
@@ -113,6 +114,20 @@ namespace e_CarSharing.Controllers
             return ViewModel;
         }
 
+        [Authorize]
+        public string GetModelViaBrandId(int Id)
+        {
+            var list = db.Models.Where(m => m.BrandId == Id && m.Deleted == false).ToList();
+
+            var dropdown = new List<SelectListItem>();
+            foreach (var m in list)
+            {
+                dropdown.Add(new SelectListItem { Text = m.ModelName, Value = m.ModelId.ToString() });
+            }
+            return JsonConvert.SerializeObject(dropdown);
+        }
+
+
         [Authorize(Roles = AccountStaticRoles.PRIVATE + "," + AccountStaticRoles.PROFESSIONAL)]
         public ActionResult Create()
         {
@@ -125,14 +140,18 @@ namespace e_CarSharing.Controllers
                 Types = new SelectList(db.Types.Where(t => t.Deleted == false), "TypeId", "TypeName"),
                 Colours = new SelectList(db.Colours.Where(c => c.Deleted == false), "ColourId", "ColourName")
             };
+
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Create(VehicleViewModelCreate vehicle)
-        {
+        {   
+
             if (ModelState.IsValid)
             {
+                
+
                 var newVehicle = new Vehicle
                 {
                     TypeId = vehicle.TypeId,

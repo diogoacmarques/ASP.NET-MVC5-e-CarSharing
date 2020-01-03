@@ -8,7 +8,7 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "myForm" }))
 {
     @Html.AntiForgeryToken()
 
@@ -35,6 +35,7 @@
                         @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.BrandId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -115,10 +116,58 @@
 }
 
 
-    <div>
-        <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
-            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
-        </button>
-    </div>
+<div>
+    <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1); return false;" href="#">
+        <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+    </button>
+</div>
 
+<div id="test" class="hidden">
+    teste
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            changeModel();
+
+            $("#BrandId").on("change", function () {
+                changeModel();
+            });
+        });
+
+
+        function changeModel() {
+            var length = 0;
+                   var SelectedBrandId = $("#BrandId").val();
+                if (SelectedBrandId != "") {
+                    $.ajax({
+                        url: '@Url.Action("GetModelViaBrandId", "Vehicle",new { area=""})'+"?Id="+ SelectedBrandId,
+                        method: "GET",
+                        datatype: "application/json",
+                        success: function (data) {
+                            var jsonString = JSON.parse(data);
+                            $("#ModelId").html("");
+                            $('#ModelId').append('<option value="">Escolha o modelo</option>');
+
+                            for (var i = 0; i < jsonString.length; i++) {
+                                $('#ModelId').append('<option value="' + jsonString[i].Value +'">' + jsonString[i].Text +'</option>');
+                            }
+                        }
+                    });
+                }
+                else {
+                    $("#ModelId").html("");
+                    var option = document.createElement("option");
+                    $('#ModelId').append('<option value="">Escolha a marca</option>');
+                   
+                }
+        }
+
+
+
+    </script>
+}
 

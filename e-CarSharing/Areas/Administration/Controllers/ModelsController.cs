@@ -54,7 +54,7 @@ namespace e_CarSharing.Areas.Administration.Controllers
                 }
                 else if (db.Models.Where(m => m.ModelName == model.ModelName && m.Deleted == true).Count() != 0)
                 {
-                    Model modelExists = db.Models.Where(m => m.ModelName == model.ModelName).First();
+                    Model modelExists = db.Models.Where(m => m.ModelName == model.ModelName).FirstOrDefault();
                     modelExists.Deleted = false;
                     modelExists.BrandId = model.BrandId;
                     db.Entry(modelExists).State = EntityState.Modified;

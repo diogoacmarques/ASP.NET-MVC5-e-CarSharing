@@ -1,9 +1,6 @@
 pesquisar veiculos:datas
 admin:veiculos->caracteristicas update buttons
 
-criar veiculo ter apenas as marcas para o tipo escolihdo...
-
-
 
 @Html.ActionLink("Detalhes", "Details", new { Area = "", id = item.VehicleId }, new { @class = "btn btn-primary btn-sm" })
 
