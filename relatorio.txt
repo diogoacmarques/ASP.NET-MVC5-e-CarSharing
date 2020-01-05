@@ -6,7 +6,6 @@ Mobilidade - Podem usufruir dos veiculos disponiveis, criando um aluguer
 2:
 Anonimo: 
 -pesquisar veiculos
--verificar disponiblidade do veiculo
 
 Administrador
 -Read/Dlete Todas as contas existentes na plataforma
@@ -73,6 +72,7 @@ Normal
 8:
 Account
 
+
 9:
 -AdminAccounts (Create/Delete/Index)
 -Brands (Create/Delete/Index)
@@ -97,15 +97,20 @@ Manage(Index)
 -BrandViewModel/BrandViewModelCreate
 -ModelViewModel/ModelViewModelCreate
 ----
--ExternalLoginConfirmationViewModel/ExternalLoginListViewModel/SendCodeViewModel/VerifyCodeViewModel/ForgotViewModel/
+-ExternalLoginConfirmationViewModel/ExternalLoginListViewModel/
+SendCodeViewModel/VerifyCodeViewModel/ForgotViewModel/
 LoginViewModel/RegisterViewModel/ResetPasswordViewModel/ForgotPasswordViewModel
--ManageViewModel/IndexViewModel/ManageLoginsViewModel/FactorViewModel/SetPasswordViewModel/ChangePasswordViewModel/AddPhoneNumberViewModel
+-ManageViewModel/IndexViewModel/ManageLoginsViewModel/FactorViewModel/
+SetPasswordViewModel/ChangePasswordViewModel/AddPhoneNumberViewModel
 VerifyPhoneNumberViewModel/ConfigureTwoFactorViewModel/
 -RentViewModel/RentViewModelCreate/RentViewModelChangeState/RentViewModelSearch
--VehicleViewModel/VehicleViewModelCreate/VehicleViewModelDetails/SearchVehicleViewModel
+-VehicleViewModel/VehicleViewModelCreate/VehicleViewModelDetails/
+SearchVehicleViewModel
 
 12:
 AccountViewModel(RegisterViewModel)
+•	IndexViewModel
+manageViewModel
 
 13:
 _Layout
