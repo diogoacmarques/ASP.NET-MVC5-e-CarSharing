@@ -9,16 +9,13 @@ UserName:Admin
 Password:Admin123_
 
 -----------Particular--------------
-
 UserName:Daniela
 Password:Daniela123_
 
 -----------Profissional-------------
-
 UserName:Diogo
 Password:Diogo123_
 
 ----------Mobilidade---------------
-
 UserName:Andre
 Password:Andre123_
